@@ -6,12 +6,6 @@ async function getExternalcollabText(page: Page) {
   return externalText
 }
 
-async function getExternalcollabTokenDropdown(page) {
-  const externalTokenDropdown = page.locator("//div[@aria-haspopup='listbox']")
-  await expect(externalTokenDropdown).toBeVisible({ timeout: 5000 })
-  return externalTokenDropdown
-}
-
 async function getExternalCollaborateBtn(page: Page) {
   const externalCollaborateBtn = page.getByRole("button", { name: "Collaborate" })
   await expect(externalCollaborateBtn).toBeVisible({ timeout: 5000 })
@@ -61,6 +55,18 @@ async function getExternalcollabInboxMessageArea(page) {
   const externalMessageArea = page.locator("//textarea[@placeholder]")
   await expect(externalMessageArea).toBeVisible({ timeout: 5000 })
   return externalMessageArea
+}
+
+async function getExternalcollabCommunityDropdown(page) {
+  const externalcollabCommunityDropdown = page.locator("//input[contains(@placeholder,'community')]/parent::div")
+  await expect(externalcollabCommunityDropdown).toBeVisible({ timeout: 5000 })
+  return externalcollabCommunityDropdown
+}
+
+async function getExternalcollab24KARAToption(page) {
+  const externalcollab24KARAToption = page.locator("//div[text()='24KARAT']/ancestor::li")
+  await expect(externalcollab24KARAToption).toBeVisible({ timeout: 5000 })
+  return externalcollab24KARAToption
 }
 
 // Partner matching tab locators start
@@ -119,7 +125,7 @@ async function getExternalcollabDashboardColumnHeader(page: Page) {
 
 // Compose message locators start
 async function getExternalComposeToToken(page) {
-  const externalComposeToToken = page.locator("//input[@placeholder='Enter a token name']")
+  const externalComposeToToken = page.locator("//input[@placeholder='Enter a community name']")
   await expect(externalComposeToToken).toBeVisible({ timeout: 5000 })
   return externalComposeToToken
 }
@@ -247,7 +253,7 @@ async function getExternalFeaturedToken(page) {
 }
 
 async function getExternalFeaturedPageShown(page) {
-  const externalFeaturedPageShown = page.locator("//p[text()='Token page shown']/following-sibling::div/div")
+  const externalFeaturedPageShown = page.locator("//p[text()='Community page shown']/following-sibling::div/div")
   await expect(externalFeaturedPageShown).toBeVisible({ timeout: 5000 })
   return externalFeaturedPageShown
 }
@@ -266,12 +272,12 @@ async function getExternalAllowCollaborateText(page) {
   return externalAllowCollaborateText
 }
 
-async function getExternalCollabTokenList(page) {
-  const externalCollabSettingTokenList = page.locator(
+async function getExternalCollabCommunityList(page) {
+  const externalCollabSettingCommunityList = page.locator(
     "//h6[contains(text(),'recommend')]/parent::div/parent::div/following-sibling::div[2]"
   )
-  await expect(externalCollabSettingTokenList).toBeVisible({ timeout: 5000 })
-  return externalCollabSettingTokenList
+  await expect(externalCollabSettingCommunityList).toBeVisible({ timeout: 5000 })
+  return externalCollabSettingCommunityList
 }
 
 async function getExternalCollabSettingBackBtn(page) {
@@ -363,8 +369,7 @@ export {
   getExternalCollabSwapSelect,
   getExternalcollabTabs,
   getExternalcollabText,
-  getExternalcollabTokenDropdown,
-  getExternalCollabTokenList,
+  getExternalCollabCommunityList,
   getExternalComposeCloseBtn,
   getExternalComposeGreeting,
   getExternalComposeSendBtn,
@@ -388,4 +393,6 @@ export {
   getExternalSwapNewUserToggle,
   getExternalSwapToTokenDropdown,
   getExternalSwapToTokenInput,
+  getExternalcollabCommunityDropdown,
+  getExternalcollab24KARAToption
 }

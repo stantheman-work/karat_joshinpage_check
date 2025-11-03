@@ -1,5 +1,5 @@
 import { brandAddTokenDetails } from "@/functions/check-create-edit-sanity"
-import { getBrandCreateTokenButton } from "@/locators/brand-admin-dashboard-loc"
+import { getBrandCreateTokenButton } from "@/specs/general/dashboard.locator"
 import { AuthUtils } from "@/utils/auth-utils"
 import { PageUtils } from "@/utils/page-utils"
 import { expect, test } from "@playwright/test"

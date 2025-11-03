@@ -1,59 +1,74 @@
 import {
   getActivitygraphCategoryTab,
   getActivitygraphExportBtn,
+  getActivitygraphNoData,
   getActivitygraphLeftRightBtn,
   getActivitygraphText,
   getActivitygraphTokenDropdown,
   getActivitygraphTotalWalletText,
-  getActivitygraphYearDropdown,
-} from "@/locators/brand-admin-activitygraph-loc"
+  getActivitygraphYearDropdown
+} from "@/locators/activitygraph.locator"
 import {
   getArticleColumnHeader,
   getArticleCreateBtn,
   getArticleSearchFilter,
   getArticleStatusDropdown,
   getArticleTagDropdown,
-  getArticleText,
-} from "@/locators/brand-admin-article-loc"
+  getArticleText
+} from "../contents/article/article.locator"
 import {
   getCampaignColumnHeader,
   getCampaignCreateBtn,
   getCampaignSearchFilter,
   getCampaignText,
-} from "@/locators/brand-admin-campaign-loc"
-import { getDailytrendMenuSelected } from "@/locators/brand-admin-dailytrend-loc"
+  getCampaignTypeFilter
+} from "@/specs/campaign/campaign.locator"
+import { getDailytrendMenuSelected } from "@/locators/dailytrend.locator"
 import {
-  getBrandCreateTokenButton,
   getBrandEditButton,
-  getBrandHomeText,
-  getBrandTokenSettingsButton,
-  getBrandTokenText,
+  getBrandCommunityCreateBtn,
+  getBrandCommunityTabs,
+  getBrandSearchFilter,
+  getBrandVisibilityFilter,
+  getBrandStatusFilter,
+  getBrandCommunityColumnHeaders,
   getSideBarItems,
-  getSideBarParentMenu,
-} from "@/locators/brand-admin-dashboard-loc"
-import { getDevAPIKeysText, getDevColumnHeaders, getDevCreateNewAPIBtn } from "@/locators/brand-admin-developertool-loc"
+  getSideBarParentMenu
+} from "@/specs/general/dashboard.locator"
+import {
+  getDevAPIKeysText,
+  getDevColumnHeaders,
+  getDevCreateNewAPIBtn
+} from "../developer-tool/developer-apikey/developer-apikey.locator"
 import {
   getGamecornerColumnHeaders,
   getGamecornerCreateGameBtn,
   getGamecornerSearchFilter,
   getGamecornerStatusFilter,
   getGamecornerText,
-  getGamecornerTokenFilter,
-} from "@/locators/brand-admin-gamecorner-loc"
+  getGamecornerCommunityFilter
+} from "@/specs/contents/game-corner/game-corner.locator"
 import {
   getLeaderboardColumnHeader,
   getLeaderboardSearchFilter,
   getLeaderboardStatusRoleFilter,
   getLeaderboardText,
-  getLeaderboardTokenDropdown,
-} from "@/locators/brand-admin-leaderboard-loc"
+  getLeaderboardTokenDropdown
+} from "@/locators/leaderboard.locator"
+import {
+  getUsersearchText, 
+  getUsersearchAllcommunitiesDropdown,
+  getUsersearchSearchfilter,
+  getUsersearchSearchBy,
+  getUsersearchSearchBtn
+} from "@/specs/reports/usersearch.locator"
 import {
   getLINELIFFAppColumnHeaders,
   getLINELIFFAppCreateBtn,
   getLINELIFFAppSearchFilter,
-  getLINELIFFAppText,
-} from "@/locators/brand-admin-lineliffappsettings-loc"
-import { getLogsColumnHeader, getLogsRefreshBtn, getLogsSearchEntityFilter } from "@/locators/brand-admin-logs-loc"
+  getLINELIFFAppText
+} from "@/locators/lineliffappsetting.locator"
+import { getLogsColumnHeader, getLogsRefreshBtn, getLogsSearchFilter } from "@/specs/general/logs.locator"
 import {
   getAirdropColumnHeader,
   getAirdropCreatebtn,
@@ -61,84 +76,125 @@ import {
   getMessageColumnHeader,
   getMessageCreateBtn,
   getMessageTab,
-  getMessageText,
-} from "@/locators/brand-admin-message-loc"
+  getMessageText
+} from "@/specs/message/message.locator"
 import {
   getDropdownFilters,
   getMissionCardListView,
   getMissionCreateBtn,
   getMissionSearchFilter,
-  getMissionText,
-} from "@/locators/brand-admin-mission-loc"
+  getMissionText
+} from "@/specs/contents/mission/mission.locator"
 import {
-  getMysteryboxColumnHeader,
-  getMysteryboxCreatebtn,
-  getMysteryboxTab,
-  getMysteryboxTokenFilter,
-  getNFTCollectionFilter,
-  getNFTCollectionManagementBtn,
-  getNFTColumnHeader,
-  getNFTCreateBtn,
-  getNFTSearchNFTFilter,
+  getCommunitypostColumnHeaders,
+  getCommunityFilter,
+  getCommunitypostCreatePost,
+  getSearchFilter,
+  getCommunitypostTab,
+  getFeedText,
+  getSocialpostAccountBtn,
+  getSocialpostColumnHeaders,
+  getSocialpostDateFilter,
+  getSocialpostRefreshBtn,
+  getSocialpostSourcesFilter,
+  getSocialpostTab
+} from "../contents/feed/feed.locator"
+import {
   getNFTtab,
-  getNFTTokenFilter,
-} from "@/locators/brand-admin-nftmysterybox-loc"
+  getNFTSearchNFTFilter,
+  getNFTCollectionFilter,
+  getNFTCommunityFilter,
+  getNFTCreateBtn,
+  getNFTColumnHeader
+} from "../digital-item/nft/nft.locator"
+import {
+  getCollectionManagementBtn
+} from "../digital-item/nft/collectionmanagement.locator"
+import {
+  getMysteryboxTab,
+  getMysteryboxCreatebtn,
+  getMysteryboxSearchFilter,
+  getMysteryboxCommunityFilter,
+  getMysteryboxColumnHeader
+} from "../digital-item/mysterybox/mysterybox.locator"
 import {
   getProposalCheckSubmissionBtn,
   getProposalColumnHeader,
   getProposalStatusDropdown,
-  getProposalText,
-} from "@/locators/brand-admin-proposal-loc"
+  getProposalText
+} from "@/locators/proposal.locator"
 import {
   getQuizColumnHeader,
   getQuizCreateBtn,
   getQuizSearchFilter,
   getQuizTemplateBtn,
   getQuizText,
-  getQuizUploadBtn,
-} from "@/locators/brand-admin-quiz-loc"
-import { getScanColumnHeader, getScanNewScanBtn, getScanText } from "@/locators/brand-admin-scan-loc"
+  getQuizUploadBtn
+} from "@/specs/contents/quiz/quiz.locator"
+import { 
+  getSalesreportText, 
+  getSalesreportColumnHeader
+} from "@/specs/reports/salesreport.locator"
+import { 
+  getScanColumnHeader, 
+  getScanNewScanBtn, 
+  getScanText
+} from "@/locators/scans.locator"
 import {
   getSocialroomCardHeader,
   getSocialroomCardSettingBtn,
   getSocialroomCreateroomBtn,
   getSocialroomSearchFilter,
   getSocialroomText,
-  getSocialroomTokenDropdown,
-} from "@/locators/brand-admin-socialroom-loc"
+  getSocialroomCommunityFilter
+} from "@/specs/contents/social room/social-room.locator"
+import {
+  getVideoText,
+  getVideoSearchFilter,
+  getVideoAddBtn,
+  getVideoColumnHeader
+} from "@/specs/contents/video/video.locator"
 import {
   getStamppassportColumnHeader,
   getStamppassportCreateBtn,
   getStamppassportSearchFilter,
-  getStamppassportText,
-} from "@/locators/brand-admin-stamppassport-loc"
+  getStamppassportText
+} from "../digital-item/stamppassport/stamp-passport.locator"
 import {
   getSurveyColumnHeader,
   getSurveyCreateBtn,
   getSurveySearchFilter,
   getSurveyTemplateBtn,
   getSurveyText,
-  getSurveyUploadBtn,
-} from "@/locators/brand-admin-survey-loc"
+  getSurveyUploadBtn
+} from "@/specs/contents/survey/survey.locator"
 import {
-  getTeamColumnHeader,
-  getTeamDateFilter,
-  getTeamInviteBtn,
-  getTeamRoleSelectFilter,
-  getTeamSearchUserFilter,
-} from "@/locators/brand-admin-team-loc"
+  getMemberInviteBtn,
+  getMemberSearchFilter,
+  getMemberRoleFilter,
+  getMemberDateJoinedFilter,
+  getMemberColumnHeaders
+} from "@/specs/general/member.locator"
 import {
   getVMMysteryboxColumnHeader,
   getVMMysteryboxSearchBoxFilter,
   getVMMysteryboxTab,
   getVMNFTColumnHeader,
   getVMNFTSearchNFTFilter,
-  getVMNFTtab,
-} from "@/locators/brand-admin-vendingmachine-loc"
+  getVMNFTtab
+} from "@/locators/vendingmachine.locator"
 import { AuthUtils } from "@/utils/auth-utils"
-import { scrollToElement, waitForAnElement, waitForPageToLoad } from "@/utils/load-helper"
+import { 
+  scrollToElement, 
+  waitForAnElement, 
+  waitForPageToLoad 
+} from "@/utils/load-helper"
 import { PageUtils } from "@/utils/page-utils"
-import { expect, Page, test } from "@playwright/test"
+import { 
+  expect, 
+  Page, 
+  test 
+} from "@playwright/test"
 import {
   getExternalcollabDashboardColumnHeader,
   getExternalcollabDashboardSearchFilter,
@@ -153,7 +209,7 @@ import {
   getExternalcollabSettingBtn,
   getExternalcollabTabs,
   getExternalcollabText,
-  getExternalcollabTokenDropdown,
+  getExternalcollabCommunityDropdown
 } from "../collaboration/external/external.locator"
 import {
   getInternalcollabAddCollabBtn,
@@ -190,155 +246,191 @@ async function brandDashboardSanity(page: Page) {
     await scrollToElement(page, subMenu[i])
     await subMenu[i].click()
     if (i == 0) {
-      // in Home page
+      // in Home page. Check Community, Member and Logs tab
       await brandHomePageCheck(page)
+      await brandCommunityMemberTabCheck(page)
+      await brandCommunityLogsTabCheck(page)
     } else if (i == 1) {
-      // in Team page
-      await brandTeamPageCheck(page)
-    } else if (i == 2) {
-      // in Logs page
-      await brandLogsPageCheck(page)
-    } else if (i == 3) {
       // in NFT / Mysterybox page
       await brandNFTMysteryboxPageCheck(page)
-    } else if (i == 4) {
+    } else if (i == 2) {
       // in Stamp passport page
       await brandStamppassportPageCheck(page)
-    } else if (i == 5) {
+    } else if (i == 3) {
       // in Vending machine page
       await brandVendingMachinePageCheck(page)
-    } else if (i == 6) {
+    } else if (i == 4) {
       // in Campaign page
       await brandCampaignPageCheck(page)
-    } else if (i == 7) {
+    } else if (i == 5) {
+      // in Feed page
+      await brandFeedPageCheck(page)
+    } else if (i == 6) {
       // in Mission page
       await brandMissionPageCheck(page)
-    } else if (i == 8) {
+    } else if (i == 7) {
       // in Quiz page
       await brandQuizPageCheck(page)
-    } else if (i == 9) {
+    } else if (i == 8) {
       // in Survey page
       await brandSurveyPageCheck(page)
-    } else if (i == 10) {
+    } else if (i == 9) {
       // in Proposal page
       await brandProposalPageCheck(page)
-    } else if (i == 11) {
+    } else if (i == 10) {
       // in Articles page
       await brandArticlePageCheck(page)
-    } else if (i == 12) {
+    } else if (i == 11) {
       // in Game corner page
       await brandGamecornerPageCheck(page)
+    } else if (i == 12) {
+      // In Social Room page
+      try {
+        await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.searchRooms !== undefined, { timeout: 10000 })
+        await brandSocialroomPageCheck(page)
+      } catch (error) {
+        console.log("This community does not have any social rooms")
+      }
     } else if (i == 13) {
+      // In Video page
+      try {
+        await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.findVideos !== undefined, { timeout: 10000 })
+        await brandVideoPageCheck(page)
+      } catch (error) {
+        console.log("This community does not have any videos")
+      }
+    } else if (i == 14) {
       // in Messages page
       await brandMessagePageCheck(page)
-    } else if (i == 14) {
+    } else if (i == 15) {
       // in Dailytrend page
       await brandDailytrendPageCheck(page)
-    } else if (i == 15) {
-      // in Activitygraph page
-      await brandActivitygraphPageCheck(page)
     } else if (i == 16) {
+      // in Activitygraph page
+      try {
+        await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.brandStats !== undefined, { timeout: 10000 })
+        await brandActivitygraphPageCheck(page)
+      } catch (error) {
+        console.log("This community does not have any activities")
+      }
+    } else if (i == 17) {
       // in Leaderboard page
       await brandLeaderboardPageCheck(page)
-    } else if (i == 17) {
-      // in Developer tool
-      await brandDevelopertoolPageCheck(page)
     } else if (i == 18) {
-      // in LINE LIFF APP page
-      await brandLINELIFFAppSettings(page)
+      // in Leaderboard page
+      await brandUsersearchPageCheck(page)
     } else if (i == 19) {
-      // in External collab page
-      // await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.collaborationRooms !== undefined)
-      // await brandExternalcollabPageCheck(page)
+      // in Sales report page
+      await brandSalesreportPageCheck(page)
     } else if (i == 20) {
-      // in Internal collab page
-      // await brandInternalcollabPageCheck(page)
+      // in External collab page
+      await brandExternalcollabPageCheck(page)
     } else if (i == 21) {
+      // in Internal collab page
+      await brandInternalcollabPageCheck(page)
+    } else if (i == 22) {
       // in Scan page
       await brandScanPageCheck(page)
+    } else if (i == 23) {
+      // in Developer tool
+      await brandDevelopertoolPageCheck(page)
     } else {
-      // in Socialroom page
-      await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.searchRooms !== undefined)
-      await brandSocialroomPageCheck(page)
+      // in LINE LIFF APP page
+      await brandLINELIFFAppSettings(page)
     }
   }
   console.log("[INFO] Brand Dashboard Sanity end.")
 }
 
 async function brandHomePageCheck(page) {
-  console.log("[INFO] Start Home page check.")
-  await waitForPageToLoad(page)
-  const brandHomeText = await getBrandHomeText(page)
-  const brandEditBtn = await getBrandEditButton(page)
-  const brandCreateTokenBtn = await getBrandCreateTokenButton(page)
-  const brandTokenText = await getBrandTokenText(page)
-  const brandTokenSettingBtn = (await getBrandTokenSettingsButton(page))[0]
-  await expect(brandHomeText).toBeVisible()
-  await expect(brandEditBtn).toBeVisible()
-  await expect(brandCreateTokenBtn).toBeVisible()
-  await expect(brandTokenText).toBeVisible()
-  await expect(brandTokenSettingBtn).toBeVisible()
-  console.log("[INFO] End Home page check.")
+  console.log("[INFO] Start community tab check.")
+  await waitForPageToLoad(page);
+  const comEditBtn = await getBrandEditButton(page)
+  const comCreateCommunityBtn = await getBrandCommunityCreateBtn(page)
+  const comCommunityTab = (await getBrandCommunityTabs(page))[0]
+  const comMemberTab = (await getBrandCommunityTabs(page))[1]
+  const comLogsTab = (await getBrandCommunityTabs(page))[2]
+  const comSearchFilter = await getBrandSearchFilter(page)
+  const comVisibilityFilter = await getBrandVisibilityFilter(page)
+  const comStatusFilter = await getBrandStatusFilter(page)
+  const comCommunityColumnHeaders = (await getBrandCommunityColumnHeaders(page))[0]
+  await expect(comEditBtn).toBeVisible()
+  await expect(comCreateCommunityBtn).toBeVisible()
+  await expect(comCommunityTab).toBeVisible()
+  await expect(comMemberTab).toBeVisible()
+  await expect(comLogsTab).toBeVisible()
+  await expect(comSearchFilter).toBeVisible()
+  await expect(comVisibilityFilter).toBeVisible()
+  await expect(comStatusFilter).toBeVisible()
+  await expect(comCommunityColumnHeaders).toBeVisible()
+  console.log("[INFO] End community tab check.")
 }
 
-async function brandTeamPageCheck(page) {
-  console.log("[INFO] Start Team page check.")
+async function brandCommunityMemberTabCheck(page) {
+  console.log("[INFO] Start community member tab check.")
+  const comMemberTab = (await getBrandCommunityTabs(page))[1]
+  console.log("The value of member tab = " + comMemberTab)
+  await expect(comMemberTab).toBeVisible();
+  await comMemberTab.click()
   await waitForPageToLoad(page)
-  const teamSearchUserFilter = await getTeamSearchUserFilter(page)
-  const teamRoleSelectFilter = await getTeamRoleSelectFilter(page)
-  const teamDateFilter = await getTeamDateFilter(page)
-  const teamInviteBtn = await getTeamInviteBtn(page)
-  const teamColumnHeader = (await getTeamColumnHeader(page))[0]
-  await expect(teamSearchUserFilter).toBeVisible()
-  await expect(teamRoleSelectFilter).toBeVisible()
-  await expect(teamDateFilter).toBeVisible()
-  await expect(teamInviteBtn).toBeVisible()
-  await expect(teamColumnHeader).toBeVisible()
-  console.log("[INFO] End Team page check.")
+  const memInviteBtn = await getMemberInviteBtn(page)
+  const memSearchFilter = await getMemberSearchFilter(page)
+  const memRoleFilter = await getMemberRoleFilter(page)
+  const memDateJoinedFilter = await getMemberDateJoinedFilter(page)
+  const memColumnHeaders = (await getMemberColumnHeaders(page))[0]
+  await expect(memInviteBtn).toBeVisible()
+  await expect(memSearchFilter).toBeVisible()
+  await expect(memRoleFilter).toBeVisible()
+  await expect(memDateJoinedFilter).toBeVisible()
+  await expect(memColumnHeaders).toBeVisible()
+  console.log("[INFO] End community member tab check.")
 }
 
-async function brandLogsPageCheck(page) {
-  console.log("[INFO] Start Logs page check.")
+async function brandCommunityLogsTabCheck(page) {
+  console.log("[INFO] Start community logs tab check.")
+  const comLogsTab = (await getBrandCommunityTabs(page))[2]
+  await comLogsTab.click()
   await waitForPageToLoad(page)
-  const logsSearchEntityFilter = await getLogsSearchEntityFilter(page)
+  const logsSearchFilter = await getLogsSearchFilter(page)
   const logsRefreshBtn = await getLogsRefreshBtn(page)
   const logsColumnHeader = (await getLogsColumnHeader(page))[0]
-  await expect(logsSearchEntityFilter).toBeVisible()
+  await expect(logsSearchFilter).toBeVisible()
   await expect(logsRefreshBtn).toBeVisible()
   await expect(logsColumnHeader).toBeVisible()
-  console.log("[INFO] End Logs page check.")
+  console.log("[INFO] End community logs tab check.")
 }
 
 async function brandNFTMysteryboxPageCheck(page) {
   console.log("[INFO] Start NFT / Mysterybox page check.")
   await waitForPageToLoad(page)
   const nftTab = await getNFTtab(page)
-  const mysteryboxTab = await getMysteryboxTab(page)
   const nftSearchNFTFilter = await getNFTSearchNFTFilter(page)
   const nftCollectionFilter = await getNFTCollectionFilter(page)
-  const nftTokenFilter = await getNFTTokenFilter(page)
-  const nftColumnHeader = (await getNFTColumnHeader(page))[0]
-  const nftCollectionManagementBtn = await getNFTCollectionManagementBtn(page)
+  const nftCommunityFilter = await getNFTCommunityFilter(page)
+  const collectionManagementBtn = await getCollectionManagementBtn(page)
   const nftCreateBtn = await getNFTCreateBtn(page)
+  const nftColumnHeader = (await getNFTColumnHeader(page))[0]
   console.log("[INFO] Start checking NFT tab.")
-  await expect(nftColumnHeader).toHaveText("NFT Name")
   await expect(nftTab).toBeVisible()
-  await expect(mysteryboxTab).toBeVisible()
+  await expect(collectionManagementBtn).toBeVisible()
+  await expect(nftCreateBtn).toBeVisible()
   await expect(nftSearchNFTFilter).toBeVisible()
   await expect(nftCollectionFilter).toBeVisible()
-  await expect(nftTokenFilter).toBeVisible()
+  await expect(nftCommunityFilter).toBeVisible()
+  await expect(nftColumnHeader).toHaveText("NFT Name")
   await expect(nftColumnHeader).toBeVisible()
-  await expect(nftCollectionManagementBtn).toBeVisible()
-  await expect(nftCreateBtn).toBeVisible()
   console.log("[INFO] Done checking NFT tab.")
   console.log("[INFO] Start checking Mysterybox tab.")
+  const mysteryboxTab = await getMysteryboxTab(page)
   await mysteryboxTab.click() // switch to mysterybox tab
   const mysteryboxCreateBtn = await getMysteryboxCreatebtn(page)
-  const mysteryboxTokenFilter = await getMysteryboxTokenFilter(page)
+  const mysteryboxSearchFilter = await getMysteryboxSearchFilter(page)
+  const mysteryboxCommunityFilter = await getMysteryboxCommunityFilter(page)
   const mysteryboxColumnHeader = (await getMysteryboxColumnHeader(page))[0]
   await expect(nftColumnHeader).toHaveText("Box Name")
   await expect(mysteryboxCreateBtn).toBeVisible()
-  await expect(mysteryboxTokenFilter).toBeVisible()
+  await expect(mysteryboxSearchFilter).toBeVisible()
+  await expect(mysteryboxCommunityFilter).toBeVisible()
   await expect(mysteryboxColumnHeader).toBeVisible()
   console.log("[INFO] Done checking Mysterybox tab.")
   console.log("[INFO] End NFT / Mysterybox page check.")
@@ -389,12 +481,51 @@ async function brandCampaignPageCheck(page) {
   const campaignText = await getCampaignText(page)
   const campaignCreateBtn = await getCampaignCreateBtn(page)
   const campaignSearchFilter = await getCampaignSearchFilter(page)
+  const campaignTypeFilter = await getCampaignTypeFilter(page)
   const campaignColumnHeader = (await getCampaignColumnHeader(page))[0]
   await expect(campaignText).toBeVisible()
   await expect(campaignCreateBtn).toBeVisible()
   await expect(campaignSearchFilter).toBeVisible()
+  await expect(campaignTypeFilter).toBeVisible()
   await expect(campaignColumnHeader).toBeVisible()
   console.log("[INFO] End Campaign page check.")
+}
+
+async function brandFeedPageCheck(page) {
+  console.log("[INFO] Start Feed page check.")
+  await waitForPageToLoad(page)
+  const feedText = await getFeedText(page)
+  console.log("[INFO] Social post tab check start")
+  const socialpostTab = await getSocialpostTab(page)
+  await socialpostTab.click();
+  const socialpostRefreshBtn = await getSocialpostRefreshBtn(page)
+  const socialpostAccountBtn = await getSocialpostAccountBtn(page)
+  const socialpostSearchFilter = await getSearchFilter(page)
+  const socialpostDateFilter = await getSocialpostDateFilter(page)
+  const socialpostSourcesFilter = await getSocialpostSourcesFilter(page)
+  const socialpostColumnHeaders = (await getSocialpostColumnHeaders(page))[0]
+  await expect(feedText).toBeVisible()
+  await expect(socialpostRefreshBtn).toBeVisible()
+  await expect(socialpostAccountBtn).toBeVisible()
+  await expect(socialpostSearchFilter).toBeVisible()
+  await expect(socialpostDateFilter).toBeVisible()
+  await expect(socialpostSourcesFilter).toBeVisible()
+  await expect(socialpostColumnHeaders).toBeVisible()
+  console.log("[INFO] Social post tab check end")
+  console.log("[INFO] Community post tab check start")
+  const communitypostTab = await getCommunitypostTab(page)
+  await expect(communitypostTab).toBeVisible()
+  await communitypostTab.click()
+  const communityFilter = await getCommunityFilter(page)
+  const communitypostCreateBtn = await getCommunitypostCreatePost(page)
+  const communitypostSearchFilter = await getSearchFilter(page)
+  const communitypostColumnHeaders = (await getCommunitypostColumnHeaders(page))[0]
+  await expect(communityFilter).toBeVisible()
+  await expect(communitypostCreateBtn).toBeVisible()
+  await expect(communitypostSearchFilter).toBeVisible()
+  await expect(communitypostColumnHeaders).toBeVisible()
+  console.log("[INFO] Community post tab check end")
+  console.log("[INFO] End Feed page check.")
 }
 
 async function brandMissionPageCheck(page) {
@@ -470,18 +601,26 @@ async function brandProposalPageCheck(page) {
 async function brandArticlePageCheck(page) {
   console.log("[INFO] Start Article page check.")
   await waitForPageToLoad(page)
-  const articleText = await getArticleText(page)
-  const articleSearchDropdown = await getArticleSearchFilter(page)
-  const articleTagDropdown = await getArticleTagDropdown(page)
-  const articleStatusDropdown = await getArticleStatusDropdown(page)
-  const articleCreateBtn = await getArticleCreateBtn(page)
-  const articleColumnHeader = (await getArticleColumnHeader(page))[0]
-  await expect(articleText).toBeVisible()
-  await expect(articleSearchDropdown).toBeVisible()
-  await expect(articleTagDropdown).toBeVisible()
-  await expect(articleStatusDropdown).toBeVisible()
-  await expect(articleCreateBtn).toBeVisible()
-  await expect(articleColumnHeader).toBeVisible()
+  let articleFlag = false
+  try {
+    await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.findArticles !== undefined, { timeout: 5000 })
+    console.log("There are existing article/s")
+    const articleText = await getArticleText(page)
+    const articleSearchFilter = await getArticleSearchFilter(page)
+    const articleTagDropdown = await getArticleTagDropdown(page)
+    const articleStatusDropdown = await getArticleStatusDropdown(page)
+    const articleCreateBtn = await getArticleCreateBtn(page)
+    const articleColumnHeader = (await getArticleColumnHeader(page))[0]
+    await expect(articleText).toBeVisible()
+    await expect(articleSearchFilter).toBeVisible()
+    await expect(articleTagDropdown).toBeVisible()
+    await expect(articleStatusDropdown).toBeVisible()
+    await expect(articleCreateBtn).toBeVisible()
+    await expect(articleColumnHeader).toBeVisible()
+    articleFlag = true;
+  } catch (error) {
+    console.log("There are no existing article/s")
+  }
   console.log("[INFO] End Article page check.")
 }
 
@@ -491,16 +630,55 @@ async function brandGamecornerPageCheck(page) {
   const gamecornerText = await getGamecornerText(page)
   const gamecornerCreategameBtn = await getGamecornerCreateGameBtn(page)
   const gamecornerSearchFilter = await getGamecornerSearchFilter(page)
-  const gamecornerTokenFilter = await getGamecornerTokenFilter(page)
+  const gamecornerCommunityFilter = await getGamecornerCommunityFilter(page)
   const gamecornerStatusFilter = await getGamecornerStatusFilter(page)
   const gamecornerColumnHeaders = (await getGamecornerColumnHeaders(page))[0]
   await expect(gamecornerText).toBeVisible()
   await expect(gamecornerCreategameBtn).toBeVisible()
   await expect(gamecornerSearchFilter).toBeVisible()
-  await expect(gamecornerTokenFilter).toBeVisible()
+  await expect(gamecornerCommunityFilter).toBeVisible()
   await expect(gamecornerStatusFilter).toBeVisible()
   await expect(gamecornerColumnHeaders).toBeVisible()
   console.log("[INFO] End Gamecorner page check.")
+}
+
+async function brandSocialroomPageCheck(page) {
+  console.log("[INFO] Start Socialroom page check.")
+  await waitForPageToLoad(page)
+  const socialroomText = await getSocialroomText(page)
+  const socialroomCreateroomBtn = await getSocialroomCreateroomBtn(page)
+  const socialroomSearchFilter = await getSocialroomSearchFilter(page)
+  const socialroomCommunityFilter = await getSocialroomCommunityFilter(page)
+  await expect(socialroomText).toBeVisible()
+  await expect(socialroomCreateroomBtn).toBeVisible()
+  await expect(socialroomSearchFilter).toBeVisible()
+  await expect(socialroomCommunityFilter).toBeVisible()
+  // Check if brand has social rooms created
+  try {
+    const socialroomCardHeader = (await getSocialroomCardHeader(page))[0]
+    await waitForAnElement(page, socialroomCardHeader)
+    console.log("Brand has at least 1 social room, checking room setting button")
+    const socialroomCardSettingBtn = (await getSocialroomCardSettingBtn(page))[0]
+    await waitForAnElement(page, socialroomCardSettingBtn)
+    console.log("Room has setting button")
+  } catch (error) {
+    console.log("Brand has no social room, skipping this part")
+  }
+  console.log("[INFO] End Socialroom page check.")
+}
+
+async function brandVideoPageCheck(page) {
+  console.log("[INFO] Start video page check.")
+  await waitForPageToLoad(page)
+  const videoText = await getVideoText(page)
+  const videoSearchFilter = await getVideoSearchFilter(page)
+  const videoAddBtn = await getVideoAddBtn(page)
+  const videoColumnheader = (await getVideoColumnHeader(page))[0]
+  await expect(videoText).toBeVisible()
+  await expect(videoSearchFilter).toBeVisible()
+  await expect(videoAddBtn).toBeVisible()
+  await expect(videoColumnheader).toBeVisible()
+  console.log("[INFO] End Video page check.")
 }
 
 async function brandMessagePageCheck(page) {
@@ -527,65 +705,47 @@ async function brandMessagePageCheck(page) {
 }
 
 async function brandDailytrendPageCheck(page) {
-  /*
-    Use this for now because loading of this page is quite random (sometimes it's too long)
-    Need to look for an alternate way to check dailytrendText
-    */
   console.log("[INFO] Start Dailytrend page check.")
   const dailytrendMenuSelected = await getDailytrendMenuSelected(page)
   await expect(dailytrendMenuSelected).toBeVisible()
   console.log("[INFO] End Dailytrend page check.")
-  /*
-    let flag = false;
-    let flagCtr = 0;
-    while(flag == false && flagCtr < 5) {
-      try {
-        await page.waitForTimeout(5000);
-        const iframe = await getDailytrendIframe(page);
-        const dailytrendText = await getDailytrendText(iframe);
-        await expect(dailytrendText).toBeVisible();
-        flag = true;
-        flagCtr = 5;
-        console.log("Daily trend text is present.");
-      } catch (error) {
-        console.log("Wait for a few more seconds....");
-        flagCtr++;
-        console.log("flagCtr value = "+flagCtr);
-      }
-   }
-    */
 }
 
 async function brandActivitygraphPageCheck(page) {
   console.log("[INFO] Start Activitygraph page check.")
-  await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.brandStats !== undefined)
-  let flag = false
-  let flagCtr = 0
-  while (flag == false && flagCtr < 5) {
-    try {
-      await page.waitForTimeout(3000)
-      const activitygraphExportBtn = await getActivitygraphExportBtn(page)
-      await expect(activitygraphExportBtn).toBeVisible()
-      flag = true
-      flagCtr = 5
-    } catch (error) {
-      console.log("Wait for a few more seconds....")
-      flagCtr++
-      console.log("flagCtr value = " + flagCtr)
+  try {
+    let flag = false
+    let flagCtr = 0
+    while (flag == false && flagCtr < 5) {
+      try {
+        await page.waitForTimeout(3000)
+        const activitygraphExportBtn = await getActivitygraphExportBtn(page)
+        await expect(activitygraphExportBtn).toBeVisible()
+        flag = true
+        flagCtr = 5
+      } catch (error) {
+        console.log("Wait for a few more seconds....")
+        flagCtr++
+        console.log("flagCtr value = " + flagCtr)
+      }
     }
+    const activitygraphText = await getActivitygraphText(page)
+    const activitygraphTokenDropdown = await getActivitygraphTokenDropdown(page)
+    const activitygraphTotalWalletText = await getActivitygraphTotalWalletText(page)
+    const activitygraphYearDropdown = await getActivitygraphYearDropdown(page)
+    const activitygraphLeftRightBtn = (await getActivitygraphLeftRightBtn(page))[0]
+    const activitygraphCategoryTab = (await getActivitygraphCategoryTab(page))[0]
+    await expect(activitygraphTokenDropdown).toBeVisible()
+    await expect(activitygraphText).toBeVisible()
+    await expect(activitygraphTotalWalletText).toBeVisible()
+    await expect(activitygraphYearDropdown).toBeVisible()
+    await expect(activitygraphLeftRightBtn).toBeVisible()
+    await expect(activitygraphCategoryTab).toBeVisible()
+  } catch (error) {
+    const activitygraphNoData = await getActivitygraphNoData(page)
+    await expect(activitygraphNoData).toBeVisible()
+    console.log("This community has no data")
   }
-  const activitygraphText = await getActivitygraphText(page)
-  const activitygraphTokenDropdown = await getActivitygraphTokenDropdown(page)
-  const activitygraphTotalWalletText = await getActivitygraphTotalWalletText(page)
-  const activitygraphYearDropdown = await getActivitygraphYearDropdown(page)
-  const activitygraphLeftRightBtn = (await getActivitygraphLeftRightBtn(page))[0]
-  const activitygraphCategoryTab = (await getActivitygraphCategoryTab(page))[0]
-  await expect(activitygraphTokenDropdown).toBeVisible()
-  await expect(activitygraphText).toBeVisible()
-  await expect(activitygraphTotalWalletText).toBeVisible()
-  await expect(activitygraphYearDropdown).toBeVisible()
-  await expect(activitygraphLeftRightBtn).toBeVisible()
-  await expect(activitygraphCategoryTab).toBeVisible()
   console.log("[INFO] End Activitygraph page check.")
 }
 
@@ -607,102 +767,110 @@ async function brandLeaderboardPageCheck(page) {
   console.log("[INFO] End Leaderboard page check.")
 }
 
-async function brandDevelopertoolPageCheck(page) {
-  console.log("[INFO] Start Developer page check.")
-  const devAPIKeysText = await getDevAPIKeysText(page)
-  const devColumnHeaders = (await getDevColumnHeaders(page))[0]
-  const devCreateNewAPIBtn = await getDevCreateNewAPIBtn(page)
-  await expect(devAPIKeysText).toBeVisible()
-  await expect(devColumnHeaders).toBeVisible()
-  await expect(devCreateNewAPIBtn).toBeVisible()
-  console.log("[INFO] End Developer page check.")
+async function brandUsersearchPageCheck(page) {
+  console.log("[INFO] Start User search page check.")
+  await waitForPageToLoad(page)
+  const usersearchText = await getUsersearchText(page)
+  const usersearchAllcommunitiesDropdown = await getUsersearchAllcommunitiesDropdown(page)
+  const usersearchSearchfilter = await getUsersearchSearchfilter(page)
+  const usersearchSearchBy = await getUsersearchSearchBy(page)
+  const usersearchSearchBtn = await getUsersearchSearchBtn(page)
+  await expect(usersearchText).toBeVisible()
+  await expect(usersearchAllcommunitiesDropdown).toBeVisible()
+  await expect(usersearchSearchfilter).toBeVisible()
+  await expect(usersearchSearchBy).toBeVisible()
+  await expect(usersearchSearchBtn).toBeVisible()
+  console.log("[INFO] End User page check.")
 }
 
-async function brandLINELIFFAppSettings(page) {
-  console.log("[INFO] Start LINE LIFF APP Settings page check.")
-  const lineLIFFAppText = await getLINELIFFAppText(page)
-  const lineLIFFAppSearchFilter = await getLINELIFFAppSearchFilter(page)
-  const lineLIFFAppCreateBtn = await getLINELIFFAppCreateBtn(page)
-  const lineLIFFAppColumnHeaders = (await getLINELIFFAppColumnHeaders(page))[0]
-  await expect(lineLIFFAppText).toBeVisible()
-  await expect(lineLIFFAppSearchFilter).toBeVisible()
-  await expect(lineLIFFAppCreateBtn).toBeVisible()
-  await expect(lineLIFFAppColumnHeaders).toBeVisible()
-  console.log("[INFO] End LINE LIFF APP Settings page check.")
+async function brandSalesreportPageCheck(page) {
+  console.log("[INFO] Start Sales report page check.")
+  await waitForPageToLoad(page)
+  const salesreportText = await getSalesreportText(page)
+  const salesreportColumnHeader = (await getSalesreportColumnHeader(page))[0]
+  await expect(salesreportText).toBeVisible()
+  await expect(salesreportColumnHeader).toBeVisible()
+  console.log("[INFO] End Sales report page check.")
 }
 
 async function brandExternalcollabPageCheck(page: Page) {
   console.log("[INFO] Start External collab page check.")
-
+  await waitForPageToLoad(page)
   let flag = false
   let flagCtr = 0
   await waitForPageToLoad(page)
-  while (flag == false && flagCtr < 5) {
+  while (flag == false && flagCtr < 3) {
     try {
-      await page.waitForTimeout(3000)
+      await page.waitForTimeout(2000)
       const externalCollaborateBtn = await getExternalCollaborateBtn(page)
       await expect(externalCollaborateBtn).toBeVisible()
+      console.log("There are existing chats on the page")
       flag = true
-      flagCtr = 5
+      flagCtr = 3
     } catch (error) {
       console.log("Wait for a few more seconds....")
       flagCtr++
       console.log("flagCtr value = " + flagCtr)
     }
   }
-  const externalText = await getExternalcollabText(page)
-  await expect(externalText).toBeVisible()
-  const externalTokenDropdown = await getExternalcollabTokenDropdown(page)
-  await expect(externalTokenDropdown).toBeVisible()
+  if (flag == true) { // If there are existing collaborations
+    const externalText = await getExternalcollabText(page)
+    await expect(externalText).toBeVisible()
+    const externalCommunityDropdown = await getExternalcollabCommunityDropdown(page)
+    await expect(externalCommunityDropdown).toBeVisible()
 
-  const externalSettingBtn = await getExternalcollabSettingBtn(page)
-  await expect(externalSettingBtn).toBeVisible()
+    const externalSettingBtn = await getExternalcollabSettingBtn(page)
+    await expect(externalSettingBtn).toBeVisible()
 
-  const [
-    externalInboxTab,
-    externalPartnermatchTab,
-    externalDashboardTab,
-    externalTokenInforTab,
-    externalCollaborationTab,
-  ] = await getExternalcollabTabs(page)
+    const [
+      externalInboxTab,
+      externalPartnermatchTab,
+      externalDashboardTab,
+      externalTokenInforTab,
+      externalCollaborationTab,
+    ] = await getExternalcollabTabs(page)
 
-  await expect(externalInboxTab).toBeVisible()
-  await expect(externalPartnermatchTab).toBeVisible()
-  await expect(externalDashboardTab).toBeVisible()
+    await expect(externalInboxTab).toBeVisible()
+    await expect(externalPartnermatchTab).toBeVisible()
+    await expect(externalDashboardTab).toBeVisible()
 
-  // Show info tab
+    // Show info tab
 
-  await expect(externalTokenInforTab).toBeHidden()
-  await expect(externalCollaborationTab).toBeHidden()
+    await expect(externalTokenInforTab).toBeHidden()
+    await expect(externalCollaborationTab).toBeHidden()
 
-  const externalInboxSearchFilter = await getExternalcollabInboxSearchFilter(page)
-  await expect(externalInboxSearchFilter).toBeVisible()
+    const externalInboxSearchFilter = await getExternalcollabInboxSearchFilter(page)
+    await expect(externalInboxSearchFilter).toBeVisible()
 
-  const externalInboxComposeMessageBtn = await getExternalcollabInboxComposeMessageBtn(page)
-  await expect(externalInboxComposeMessageBtn).toBeVisible()
+    const externalInboxComposeMessageBtn = await getExternalcollabInboxComposeMessageBtn(page)
+    await expect(externalInboxComposeMessageBtn).toBeVisible()
 
-  const externalInboxMessageArea = await getExternalcollabInboxMessageArea(page)
-  await expect(externalInboxMessageArea).toBeVisible()
-  await externalPartnermatchTab.click()
-  // Check if notification window exists
-  try {
-    const externalPartnermatchNotifWindow = await getExternalcollabPartnermatchNotificationWindow(page)
-    await waitForAnElement(page, externalPartnermatchNotifWindow)
-    console.log("Notification window exists, closing it")
-    const notifCloseBtn = await getExternalcollabPartnermatchNotificationXBtn(page)
-    await notifCloseBtn.click()
-  } catch (error) {
-    console.log("Partner matching info window not shown, skipping this part")
+    const externalInboxMessageArea = await getExternalcollabInboxMessageArea(page)
+    await expect(externalInboxMessageArea).toBeVisible()
+    await externalPartnermatchTab.click()
+    // Check if notification window exists
+    try {
+      const externalPartnermatchNotifWindow = await getExternalcollabPartnermatchNotificationWindow(page)
+      await waitForAnElement(page, externalPartnermatchNotifWindow)
+      console.log("Notification window exists, closing it")
+      const notifCloseBtn = await getExternalcollabPartnermatchNotificationXBtn(page)
+      await notifCloseBtn.click()
+    } catch (error) {
+      console.log("Partner matching info window not shown, skipping this part")
+    }
+    const externalPartnermatchSearchFilter = await getExternalcollabPartnermatchSearchFilter(page)
+    const externalPartnermatchColumnHeader = (await getExternalcollabPartnermatchColumnHeader(page))[0]
+    await expect(externalPartnermatchSearchFilter).toBeVisible()
+    await expect(externalPartnermatchColumnHeader).toBeVisible()
+    await externalDashboardTab.click()
+    const externalDashboardSearchFilter = await getExternalcollabDashboardSearchFilter(page)
+    const externalDashboardColumnHeader = (await getExternalcollabDashboardColumnHeader(page))[0]
+    await expect(externalDashboardSearchFilter).toBeVisible()
+    await expect(externalDashboardColumnHeader).toBeVisible()
   }
-  const externalPartnermatchSearchFilter = await getExternalcollabPartnermatchSearchFilter(page)
-  const externalPartnermatchColumnHeader = (await getExternalcollabPartnermatchColumnHeader(page))[0]
-  await expect(externalPartnermatchSearchFilter).toBeVisible()
-  await expect(externalPartnermatchColumnHeader).toBeVisible()
-  await externalDashboardTab.click()
-  const externalDashboardSearchFilter = await getExternalcollabDashboardSearchFilter(page)
-  const externalDashboardColumnHeader = (await getExternalcollabDashboardColumnHeader(page))[0]
-  await expect(externalDashboardSearchFilter).toBeVisible()
-  await expect(externalDashboardColumnHeader).toBeVisible()
+  else {
+    console.log("There are no existing collaboration chat/s")
+  }
   console.log("[INFO] End External collab page check.")
 }
 
@@ -730,27 +898,26 @@ async function brandScanPageCheck(page) {
   console.log("[INFO] End Scan page check.")
 }
 
-async function brandSocialroomPageCheck(page) {
-  console.log("[INFO] Start Socialroom page check.")
-  await waitForPageToLoad(page)
-  const socialroomText = await getSocialroomText(page)
-  const socialroomCreateroomBtn = await getSocialroomCreateroomBtn(page)
-  const socialroomSearchFilter = await getSocialroomSearchFilter(page)
-  const socialroomTokenDropdown = await getSocialroomTokenDropdown(page)
-  await expect(socialroomText).toBeVisible()
-  await expect(socialroomCreateroomBtn).toBeVisible()
-  await expect(socialroomSearchFilter).toBeVisible()
-  await expect(socialroomTokenDropdown).toBeVisible()
-  // Check if brand has social rooms created
-  try {
-    const socialroomCardHeader = (await getSocialroomCardHeader(page))[0]
-    await waitForAnElement(page, socialroomCardHeader)
-    console.log("Brand has at least 1 social room, checking room setting button")
-    const socialroomCardSettingBtn = (await getSocialroomCardSettingBtn(page))[0]
-    await waitForAnElement(page, socialroomCardSettingBtn)
-    console.log("Room has setting button")
-  } catch (error) {
-    console.log("Brand has no social room, skipping this part")
-  }
-  console.log("[INFO] End Socialroom page check.")
+async function brandDevelopertoolPageCheck(page) {
+  console.log("[INFO] Start Developer page check.")
+  const devAPIKeysText = await getDevAPIKeysText(page)
+  const devColumnHeaders = (await getDevColumnHeaders(page))[0]
+  const devCreateNewAPIBtn = await getDevCreateNewAPIBtn(page)
+  await expect(devAPIKeysText).toBeVisible()
+  await expect(devColumnHeaders).toBeVisible()
+  await expect(devCreateNewAPIBtn).toBeVisible()
+  console.log("[INFO] End Developer page check.")
+}
+
+async function brandLINELIFFAppSettings(page) {
+  console.log("[INFO] Start LINE LIFF APP Settings page check.")
+  const lineLIFFAppText = await getLINELIFFAppText(page)
+  const lineLIFFAppSearchFilter = await getLINELIFFAppSearchFilter(page)
+  const lineLIFFAppCreateBtn = await getLINELIFFAppCreateBtn(page)
+  const lineLIFFAppColumnHeaders = (await getLINELIFFAppColumnHeaders(page))[0]
+  await expect(lineLIFFAppText).toBeVisible()
+  await expect(lineLIFFAppSearchFilter).toBeVisible()
+  await expect(lineLIFFAppCreateBtn).toBeVisible()
+  await expect(lineLIFFAppColumnHeaders).toBeVisible()
+  console.log("[INFO] End LINE LIFF APP Settings page check.")
 }

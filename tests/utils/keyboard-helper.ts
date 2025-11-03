@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test"
+import { Page, Locator } from "@playwright/test"
 
 // Helper function to for keyboard related functions
 async function closeWindowPopup(page: Page) {
@@ -7,4 +7,11 @@ async function closeWindowPopup(page: Page) {
   console.log("Button / Popup has been closed")
 }
 
-export { closeWindowPopup }
+async function addDataOnTextfield(page: Page, locator: Locator, value: string) {
+  await locator.fill(value)
+}
+
+export { 
+  closeWindowPopup,
+  addDataOnTextfield
+}

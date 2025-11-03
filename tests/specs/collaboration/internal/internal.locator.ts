@@ -127,14 +127,14 @@ async function getInternalSFStartCollabBtn(page) {
 }
 
 // Token Feature
-async function getInternalFeatureFromToken(page) {
-  const internalFeatureFromToken = page.locator("//p[text()='Token to feature']/following-sibling::div/div/div")
+async function getInternalfeatureFromCommunity(page) {
+  const internalFeatureFromToken = page.locator("//p[text()='Community to feature']/following-sibling::div/div/div")
   await expect(internalFeatureFromToken).toBeVisible({ timeout: 5000 })
   return internalFeatureFromToken
 }
 
-async function getInternalFeatureToToken(page) {
-  const internalFeatureToToken = page.locator("//p[text()='Token page shown']/following-sibling::div/div/div")
+async function getInternalfeatureToCommunity(page) {
+  const internalFeatureToToken = page.locator("//p[text()='Community page shown']/following-sibling::div/div/div")
   await expect(internalFeatureToToken).toBeVisible({ timeout: 5000 })
   return internalFeatureToToken
 }
@@ -146,8 +146,8 @@ export {
   getInternalcollabAddCollabBtn,
   getInternalcollabColumnHeader,
   getInternalcollabText,
-  getInternalFeatureFromToken,
-  getInternalFeatureToToken,
+  getInternalfeatureFromCommunity,
+  getInternalfeatureToCommunity,
   getInternalNewUserToggle,
   getInternalSFCancelBtn,
   getInternalSFExpireDateToggle,
