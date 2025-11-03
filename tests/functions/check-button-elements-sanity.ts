@@ -1,33 +1,4 @@
 import {
-  getCreatearticleDescription,
-  getCreatearticleLink,
-  getCreatearticleReward,
-  getCreatearticleRewardType,
-  getCreatearticleSpecificTokenDropdown,
-  getCreatearticleTags,
-  getCreateArticleThumbnail,
-  getCreatearticleTitle,
-  getCreatearticleTokenAssigned,
-} from "@/locators/brand-admin-article-loc"
-import {
-  getBrandCancelBtn,
-  getBrandCategoryBtn,
-  getBrandDescription,
-  getBrandEditBackBtn,
-  getBrandEditText,
-  getBrandImage,
-  getBrandName,
-  getBrandSaveBtn,
-} from "@/locators/brand-admin-brandinfo-loc"
-import {
-  getDevAPIKeysText,
-  getDevCancelBtn,
-  getDevColumnHeaders,
-  getDevCreateAPIName,
-  getDevCreateBtn,
-  getDevCreateNewAPIBtn,
-} from "@/locators/brand-admin-developertool-loc"
-import {
   getCreategameAddOptionBtn,
   getCreategameCancelBtn,
   getCreategameFrequencyAmt,
@@ -40,8 +11,8 @@ import {
   getCreategameTimezone,
   getCreategameTitle,
   getCreategameTokenAmount,
-  getCreategameTokenDropdown,
-} from "@/locators/brand-admin-gamecorner-loc"
+  getCreategameCommunityDropdown,
+} from "@/specs/contents/game-corner/game-corner.locator"
 import {
   getEditMissionText,
   getMissionAddTaskBtn,
@@ -68,7 +39,8 @@ import {
   getTaskRewardAmount,
   getTaskRewardToggle,
   getTaskTokenRewardDropdown,
-} from "@/locators/brand-admin-mission-loc"
+} from "@/specs/contents/mission/mission.locator"
+/*
 import {
   getCollectionManagementCloseBtn,
   getCollectionManagementColumnHeader,
@@ -79,7 +51,6 @@ import {
   getCreateMysteryboxCreateBtn,
   getCreateMysteryboxName,
   getCreateMysteryboxText,
-  getCreateMysteryboxTokenDropdown,
   getCreateMysteryboxTotalBoxes,
   getCreateMysteryboxUploadImage,
   getCreateNFTCancel,
@@ -103,6 +74,7 @@ import {
   getEditNFTText,
   getEditNFTUploadedImage,
 } from "@/locators/brand-admin-nftmysterybox-loc"
+*/
 import {
   getCreateQuizText,
   getQuizCancelBtn,
@@ -112,27 +84,7 @@ import {
   getQuizSaveBtn,
   getQuizTag,
   getQuizTitle,
-} from "@/locators/brand-admin-quiz-loc"
-import {
-  getCreateSocialroomAddNFTBtn,
-  getCreatesocialroomBackBtn,
-  getCreatesocialroomCreateBtn,
-  getCreateSocialroomDescription,
-  getCreateSocialroomName,
-  getCreateSocialroomRequireNFTToggle,
-  getCreateSocialroomText,
-  getCreateSocialroomTokenDropdown,
-  getCreateSocialroomUploadImage,
-} from "@/locators/brand-admin-socialroom-loc"
-import {
-  getStamppassportCancelBtn,
-  getStamppassportCreateText,
-  getStamppassportDisplayToggle,
-  getStamppassportName,
-  getStamppassportRewardToggle,
-  getStamppassportSaveBtn,
-  getStamppassportUploadImage,
-} from "@/locators/brand-admin-stamppassport-loc"
+} from "@/specs/contents/quiz/quiz.locator"
 import {
   getSurveyAddNewQuestion,
   getSurveyAddTag,
@@ -142,23 +94,38 @@ import {
   getSurveyQuestionType,
   getSurveySaveCreate,
   getSurveyTitle,
-} from "@/locators/brand-admin-survey-loc"
-import { getTeamInviteEmail, getTeamInviteText, getTeamRoleDropdown } from "@/locators/brand-admin-team-loc"
+} from "@/specs/contents/survey/survey.locator"
 import {
-  getTokenActivityGraph,
-  getTokenAddsection,
-  getTokenBackBtn,
-  getTokenBrandinfoEdit,
-  getTokenCreatetokenBtn,
-  getTokenDescription,
-  getTokenName,
-  getTokenPreview,
-  getTokenSaveBtn,
-  getTokenUploadFile,
-} from "@/locators/brand-admin-tokeninfo-loc"
+  //getTeamInviteEmail, 
+  //getTeamInviteText, 
+  //getTeamRoleDropdown 
+} from "@/specs/general/member.locator"
 import {
-  getInternalFeatureFromToken,
-  getInternalFeatureToToken,
+  getCommunityAddSection,
+  getCommunityAddsectionBtn,
+  getCommunityBackBtn,
+  getCommunityBacktoDashboardBtn,
+  getCommunityBrandinfoEdit,
+  getCommunityCancelBtn,
+  getCommunityDescription,
+  getCommunityDraftBtn,
+  getCommunityEnabletokenToggle,
+  getCommunityImguploadElement,
+  getCommunityImguploadFile,
+  getCommunityName,
+  getCommunityNextBtn,
+  getCommunityPreview,
+  getCommunitySaveBtn,
+  getCommunitySectionContent,
+  getCommunitySectionName,
+  getCommunitySubmitBtn,
+  getCommunityTokenDoublecheckBtn,
+  getCommunityTokenGobackBtn,
+  getCommunityTokenName
+} from "../specs/general/tokeninfo.locator"
+import {
+  getInternalfeatureFromCommunity,
+  getInternalfeatureToCommunity,
   getInternalSFExpireDateToggle,
   getInternalSFTwoWaysToggle,
   getInternalStartEndDate,
@@ -166,60 +133,7 @@ import {
 import { scrollToElement, waitForPageToLoad } from "@/utils/load-helper"
 import { expect, Page } from "@playwright/test"
 
-async function brandEditCheck(page) {
-  // console.log("Start Brand edit page check.")
-  await waitForPageToLoad(page)
-  const brandEditBackBtn = await getBrandEditBackBtn(page)
-  const brandEditText = await getBrandEditText(page)
-  const brandImage = await getBrandImage(page)
-  const brandName = await getBrandName(page)
-  const brandDesc = await getBrandDescription(page)
-  const brandAddCategoryBtn = await getBrandCategoryBtn(page)
-  const brandCancelBtn = await getBrandCancelBtn(page)
-  const brandSaveBtn = await getBrandSaveBtn(page)
-  await expect(brandEditBackBtn).toBeVisible()
-  await expect(brandEditText).toBeVisible()
-  await expect(brandImage).toBeVisible()
-  await expect(brandName).toBeVisible()
-  await scrollToElement(page, brandName)
-  await expect(brandDesc).toBeVisible()
-  await scrollToElement(page, brandAddCategoryBtn)
-  await expect(brandAddCategoryBtn).toBeVisible()
-  await scrollToElement(page, brandDesc)
-  await expect(brandCancelBtn).toBeVisible()
-  await scrollToElement(page, brandCancelBtn)
-  await expect(brandSaveBtn).toBeVisible()
-  console.log("End Brand edit page check.")
-}
-
-async function brandTokenCreateCheck(page) {
-  console.log("Start token create page check.")
-  await waitForPageToLoad(page)
-  const tokenBackBtn = await getTokenBackBtn(page)
-  const tokenUploadTokenImg = (await getTokenUploadFile(page))[0]
-  const tokenUploadCoverImg = (await getTokenUploadFile(page))[1]
-  const tokenUploadBannerImg = (await getTokenUploadFile(page))[2]
-  const tokenName = await getTokenName(page)
-  const tokenActivityGraph = await getTokenActivityGraph(page)
-  const tokenBrandInfoEdit = await getTokenBrandinfoEdit(page)
-  const tokenDesc = await getTokenDescription(page)
-  const tokenAddSection = await getTokenAddsection(page)
-  const tokenPreview = await getTokenPreview(page)
-  const tokenCreateBtn = await getTokenCreatetokenBtn(page)
-  await expect(tokenBackBtn).toBeVisible()
-  await expect(tokenUploadTokenImg).toBeVisible()
-  await expect(tokenUploadCoverImg).toBeVisible()
-  await expect(tokenUploadBannerImg).toBeVisible()
-  await expect(tokenName).toBeVisible()
-  await expect(tokenActivityGraph).toBeVisible()
-  await expect(tokenBrandInfoEdit).toBeVisible()
-  await expect(tokenDesc).toBeVisible()
-  await expect(tokenAddSection).toBeVisible()
-  await expect(tokenPreview).toBeVisible()
-  await expect(tokenCreateBtn).toBeVisible()
-  console.log("End token create page check.")
-}
-
+/*
 async function brandTokenEditCheck(page) {
   console.log("Start token edit page check.")
   await page.waitForTimeout(3000)
@@ -247,7 +161,9 @@ async function brandTokenEditCheck(page) {
   await expect(tokenSaveBtn).toBeVisible()
   console.log("End token edit page check.")
 }
+*/
 
+/*
 async function brandTeamInviteBtnCheck(page) {
   const teamInviteText = await getTeamInviteText(page)
   const teamInviteEmail = await getTeamInviteEmail(page)
@@ -256,7 +172,9 @@ async function brandTeamInviteBtnCheck(page) {
   await expect(teamInviteEmail).toBeVisible()
   await expect(teamRoleDropdown).toBeVisible()
 }
+*/
 
+/*
 async function brandCreateNFTPageCheck(page) {
   await page.waitForTimeout(3000)
   const createNFTText = await getCreateNFTText(page)
@@ -284,7 +202,9 @@ async function brandCreateNFTPageCheck(page) {
   await expect(createNFTCancel).toBeVisible()
   await expect(createNFTSave).toBeVisible()
 }
+*/
 
+/*
 async function brandEditNFTPageCheck(page) {
   await page.waitForTimeout(3000)
   const editNFTUploadImage = (await getCreateNFTUploadFile(page))[0]
@@ -314,68 +234,9 @@ async function brandEditNFTPageCheck(page) {
   await expect(editListingBtn).toBeVisible()
   await expect(editPreview).toBeVisible()
 }
+*/
 
-async function brandCreateStamppassportCheck(page) {
-  console.log("Start create stamp passport check.")
-  await page.waitForTimeout(3000)
-  const passportCreate = await getStamppassportCreateText(page)
-  const passportUploadImg = await getStamppassportUploadImage(page)
-  const passportName = await getStamppassportName(page)
-  const passportRewardToggle = await getStamppassportRewardToggle(page)
-  const passportDisplayToggle = await getStamppassportDisplayToggle(page)
-  const passportCancelBtn = await getStamppassportCancelBtn(page)
-  const passportSaveBtn = await getStamppassportSaveBtn(page)
-  await expect(passportCreate).toBeVisible()
-  await expect(passportUploadImg).toBeVisible()
-  await expect(passportName).toBeVisible()
-  await expect(passportRewardToggle).toBeVisible()
-  await expect(passportDisplayToggle).toBeVisible()
-  await expect(passportCancelBtn).toBeVisible()
-  await expect(passportSaveBtn).toBeVisible()
-  console.log("End create stamp passport check.")
-}
-
-async function brandCollectionManagementPageCheck(page: Page) {
-  let waitCtr = 0
-  const collectionMgmtInfoText = await getCollectionManagementInfoText(page)
-  while (waitCtr < 5) {
-    try {
-      await getCollectionManagementColumnHeader(page)
-      //await expect(collectionMgmtColumnHeader).toBeVisible()
-      waitCtr = 5
-    } catch (error) {
-      console.log("[ERROR] Items have not yet loaded, waiting for a few seconds...", error)
-      await page.waitForTimeout(3500)
-      waitCtr++
-    }
-  }
-  const collectionMgmtSearchFilter = await getCollectionManagementSearchFilter(page)
-  const collectionMgmtCreateBtn = await getCollectionManagementCreateCollectionBtn(page)
-  const collectionMgmtCloseBtn = await getCollectionManagementCloseBtn(page)
-  await expect(collectionMgmtInfoText).toBeVisible()
-  await expect(collectionMgmtSearchFilter).toBeVisible()
-  await expect(collectionMgmtCreateBtn).toBeVisible()
-  await expect(collectionMgmtCloseBtn).toBeVisible()
-}
-
-async function brandCreateMysteryboxPageCheck(page: Page) {
-  await page.waitForTimeout(3000)
-  const createMysteryboxText = await getCreateMysteryboxText(page)
-  const createMysteryboxUploadImage = await getCreateMysteryboxUploadImage(page)
-  const createMysteryboxTokenDropdown = await getCreateMysteryboxTokenDropdown(page)
-  const createMysteryboxName = await getCreateMysteryboxName(page)
-  const createMysteryboxTotalBoxes = await getCreateMysteryboxTotalBoxes(page)
-  const createMysteryboxCancelBtn = await getCreateMysteryboxCancelBtn(page)
-  const createMysteryboxCreateBtn = await getCreateMysteryboxCreateBtn(page)
-  await expect(createMysteryboxText).toBeVisible()
-  await expect(createMysteryboxUploadImage).toBeVisible()
-  await expect(createMysteryboxTokenDropdown).toBeVisible()
-  await expect(createMysteryboxName).toBeVisible()
-  await expect(createMysteryboxTotalBoxes).toBeVisible()
-  await expect(createMysteryboxCancelBtn).toBeVisible()
-  await expect(createMysteryboxCreateBtn).toBeVisible()
-}
-
+/*
 async function brandEditMysteryboxPageCheck(page: Page) {
   await waitForPageToLoad(page)
   const editMysteryboxText = await getEditMysteryboxText(page)
@@ -395,7 +256,9 @@ async function brandEditMysteryboxPageCheck(page: Page) {
   await expect(editMysteryboxBackBtn).toBeVisible()
   await expect(editMysteryboxSaveChangesBtn).toBeVisible()
 }
+*/
 
+/*
 async function brandEditMissionPageCheck(page: Page) {
   console.log("Start Edit mission page check.")
   await waitForPageToLoad(page)
@@ -555,7 +418,9 @@ async function brandEditMissionPageCheck(page: Page) {
   // End check locators on page 3
   console.log("End Edit mission page check.")
 }
+*/
 
+/*
 async function brandCreateQuizPageCheck(page) {
   await page.waitForTimeout(3000)
   const quizCreateText = await getCreateQuizText(page)
@@ -575,7 +440,9 @@ async function brandCreateQuizPageCheck(page) {
   await expect(quizCancelBtn).toBeVisible()
   await expect(quizSaveBtn).toBeVisible()
 }
+*/
 
+/*
 async function brandCreateSurveyPageCheck(page) {
   await page.waitForTimeout(3000)
   const surveyTitle = await getSurveyTitle(page)
@@ -596,39 +463,13 @@ async function brandCreateSurveyPageCheck(page) {
   await expect(surveyCancelCreate).toBeVisible()
   await expect(surveySaveCreate).toBeVisible()
 }
+*/
 
-async function brandCreateArticlePageCheck(page) {
-  await page.waitForTimeout(3000)
-  const createarticleTokenAssigned = (await getCreatearticleTokenAssigned(page))[1]
-  await expect(createarticleTokenAssigned).toBeVisible()
-  await createarticleTokenAssigned.click()
-  const createarticleSpecificTokenDropdown = await getCreatearticleSpecificTokenDropdown(page)
-  await expect(createarticleSpecificTokenDropdown).toBeVisible()
-  const createarticleLink = await getCreatearticleLink(page)
-  const createarticleThumbnail = await getCreateArticleThumbnail(page)
-  if ((await createarticleThumbnail.count()) > 0) {
-    console.log("Thumbnail input exists")
-  } else {
-    console.error("Thumbnail input does not exist")
-  }
-  const createarticleTitle = await getCreatearticleTitle(page)
-  const createarticleDescription = await getCreatearticleDescription(page)
-  const createarticleTags = await getCreatearticleTags(page)
-  await expect(createarticleLink).toBeVisible()
-  await expect(createarticleTitle).toBeVisible()
-  await expect(createarticleDescription).toBeVisible()
-  await expect(createarticleTags).toBeVisible()
-  const createarticleReward = await getCreatearticleReward(page)
-  await expect(createarticleReward).toBeVisible()
-  await createarticleReward.click()
-  const createarticleRewardType = await getCreatearticleRewardType(page)
-  await expect(createarticleRewardType).toBeVisible()
-}
-
+/*
 async function brandCreateGamePageCheck(page) {
   await page.waitForTimeout(3000)
   const creategameTitle = await getCreategameTitle(page)
-  const creategameTokenDropdown = await getCreategameTokenDropdown(page)
+  const creategameTokenDropdown = await getCreategameCommunityDropdown(page)
   const creategameTokenAmount = await getCreategameTokenAmount(page)
   const creategamePeriodToggle = await getCreategamePeriodToggle(page)
   await expect(creategamePeriodToggle).toBeVisible()
@@ -656,28 +497,13 @@ async function brandCreateGamePageCheck(page) {
   await expect(creategameCancelBtn).toBeVisible()
   await expect(creategameSaveBtn).toBeVisible()
 }
-async function brandDeveloperToolPageCheck(page: Page) {
-  await page.waitForTimeout(3000)
-  const devAPIKeysText = await getDevAPIKeysText(page)
-  const devColumnHeaders = (await getDevColumnHeaders(page))[0]
-  const devCreateNewAPIBtn = await getDevCreateNewAPIBtn(page)
-  await expect(devAPIKeysText).toBeVisible()
-  await expect(devColumnHeaders).toBeVisible()
-  await expect(devCreateNewAPIBtn).toBeVisible()
-  await devCreateNewAPIBtn.click()
-  await waitForPageToLoad(page)
-  const devCreateAPIName = await getDevCreateAPIName(page)
-  const devCancelBtn = await getDevCancelBtn(page)
-  const devCreateBtn = await getDevCreateBtn(page)
-  await expect(devCreateAPIName).toBeVisible()
-  await expect(devCancelBtn).toBeVisible()
-  await expect(devCreateBtn).toBeVisible()
-}
+*/
 
+/*
 async function brandInternalCollabFeatureTokenPageCheck(page) {
   await page.waitForTimeout(3000)
-  const internalFeatureFromToken = await getInternalFeatureFromToken(page)
-  const internalFeatureToToken = await getInternalFeatureToToken(page)
+  const internalFeatureFromToken = await getInternalfeatureFromCommunity(page)
+  const internalFeatureToToken = await getInternalfeatureToCommunity(page)
   const internalSFTwoWaysToggle = await getInternalSFTwoWaysToggle(page)
   await expect(internalFeatureFromToken).toBeVisible()
   await expect(internalFeatureToToken).toBeVisible()
@@ -692,104 +518,19 @@ async function brandInternalCollabFeatureTokenPageCheck(page) {
   await expect(internalStartDate).toBeVisible()
   await expect(internalEndDate).toBeVisible()
 }
-
-async function brandCreateSocialroomPageCheck(page) {
-  await page.waitForTimeout(3000)
-  const createSocialroomText = await getCreateSocialroomText(page)
-  const createSocialroomUploadImage = await getCreateSocialroomUploadImage(page)
-  const createSocialroomName = await getCreateSocialroomName(page)
-  const createSocialroomDescription = await getCreateSocialroomDescription(page)
-  const createSocialroomTokenDropdown = await getCreateSocialroomTokenDropdown(page)
-  const createSocialroomRequireNFTToggle = await getCreateSocialroomRequireNFTToggle(page)
-  const createSocialroomBackBtn = await getCreatesocialroomBackBtn(page)
-  const createSocialroomCreateBtn = await getCreatesocialroomCreateBtn(page)
-  await expect(createSocialroomText).toBeVisible()
-  await expect(createSocialroomUploadImage).toBeVisible()
-  await expect(createSocialroomName).toBeVisible()
-  await expect(createSocialroomDescription).toBeVisible()
-  await expect(createSocialroomTokenDropdown).toBeVisible()
-  await expect(createSocialroomRequireNFTToggle).toBeVisible()
-  await expect(createSocialroomBackBtn).toBeVisible()
-  await expect(createSocialroomCreateBtn).toBeVisible()
-  await createSocialroomRequireNFTToggle.click()
-  const createSocialroomAddNFTBtn = await getCreateSocialroomAddNFTBtn(page)
-  await expect(createSocialroomAddNFTBtn).toBeVisible()
-}
-/*
-Scrapped.  Not needed anymore.
-  async function brandTokenEditCheck(page, counter) {
-    console.log("Start token edit page check.");
-    await page.waitForTimeout(3500);
-    const tokenBackBtn = await getTokenBackBtn(page);
-    const tokenUploadTokenImg = (await getTokenUploadFile(page))[0];
-    const tokenUploadCoverImg = (await getTokenUploadFile(page))[1];
-    const tokenUploadBannerImg = (await getTokenUploadFile(page))[2];
-    const tokenName = await getTokenName(page);
-    const tokenActivityGraph = await getTokenActivityGraph(page);
-    const tokenBrandInfoEdit = await getTokenBrandinfoEdit(page);
-    const tokenENDesc = (await getTokenDescription(page))[0];
-    const tokenJPDesc = (await getTokenDescription(page))[1];
-    const tokenAddSection = await getTokenAddsection(page);
-    const tokenPreview = await getTokenPreview(page);
-    const tokenSaveBtn = await getTokenSaveBtn(page);
-    await expect(tokenBackBtn).toBeVisible();
-    await expect(tokenUploadTokenImg).toBeVisible();
-    await expect(tokenUploadCoverImg).toBeVisible();
-    await expect(tokenUploadBannerImg).toBeVisible();
-    await expect(tokenName).toBeVisible();
-    await expect(tokenActivityGraph).toBeVisible();
-    await expect(tokenBrandInfoEdit).toBeVisible();
-    await expect(tokenENDesc).toBeVisible();
-    await expect(tokenJPDesc).toBeVisible();
-    await expect(tokenAddSection).toBeVisible();
-    await expect(tokenPreview).toBeVisible();
-    await expect(tokenSaveBtn).toBeVisible();
-    if(counter === 0) {
-      // Add changes on token name and description, to check if edit works fine
-      const tokenNameOrigText = await tokenName.getAttribute("value");
-      tokenEditDesc.push(tokenNameOrigText);
-      console.log("Value of tokenNameOrigText = "+tokenNameOrigText);
-      await scrollToElement(page, tokenName);
-      await tokenName.fill(""); // clear existing text
-      await tokenName.fill(tokenNameOrigText + " EDIT");
-      const tokenENDescOrigText = await tokenENDesc.textContent();
-      tokenEditDesc.push(tokenENDescOrigText);
-      await scrollToElement(page, tokenENDesc);
-      await tokenENDesc.fill(""); // clear existing text
-      await tokenENDesc.fill(tokenENDescOrigText + " EDIT");
-      const tokenJPDescOrigText = await tokenJPDesc.textContent();
-      tokenEditDesc.push(tokenJPDescOrigText);
-      await scrollToElement(page, tokenJPDesc);
-      await tokenJPDesc.fill(""); // clear existing text
-      await tokenJPDesc.fill(tokenJPDescOrigText + " EDIT");
-    } else {
-      // Revert back to original text
-      await tokenName.fill(tokenEditDesc[0]);
-      await tokenENDesc.fill(tokenEditDesc[1]);
-      await tokenJPDesc.fill(tokenEditDesc[2]);
-    }
-    await tokenSaveBtn.click();
-    console.log("End token edit page check.");
-  }
-  */
+*/
 
 export {
-  brandCollectionManagementPageCheck,
-  brandCreateArticlePageCheck,
   brandCreateGamePageCheck,
-  brandCreateMysteryboxPageCheck,
   brandCreateNFTPageCheck,
   brandCreateQuizPageCheck,
-  brandCreateSocialroomPageCheck,
-  brandCreateStamppassportCheck,
   brandCreateSurveyPageCheck,
-  brandDeveloperToolPageCheck,
-  brandEditCheck,
   brandEditMissionPageCheck,
   brandEditMysteryboxPageCheck,
   brandEditNFTPageCheck,
-  brandInternalCollabFeatureTokenPageCheck,
+  brandInternalCollabFeatureTokenPageCheck
+  /*
   brandTeamInviteBtnCheck,
-  brandTokenCreateCheck,
-  brandTokenEditCheck,
+  brandTokenEditCheck
+  */
 }

@@ -11,8 +11,8 @@ import {
   getCreategameTimezone,
   getCreategameTitle,
   getCreategameTokenAmount,
-  getCreategameTokenDropdown,
-} from "@/locators/brand-admin-gamecorner-loc"
+  getCreategameCommunityDropdown,
+} from "@/specs/contents/game-corner/game-corner.locator"
 import { AuthUtils } from "@/utils/auth-utils"
 import { scrollToElement } from "@/utils/load-helper"
 import { LocatorUtils } from "@/utils/locator-utils"
@@ -35,7 +35,11 @@ test.describe("Contents > Game Corner", () => {
       .first()
     await childMenu.click()
 
-    await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.findGameRoulettes !== undefined)
+    try {
+      await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.findGameRoulettes !== undefined, { timeout: 10000 })
+    } catch (error) {
+      console.error("This community does not have any games")
+    }
   })
 
   test("Create game", async ({ page }) => {
@@ -51,8 +55,9 @@ test.describe("Contents > Game Corner", () => {
 })
 
 async function brandCreateGamePageCheck(page) {
+  console.log("[INFO] Create game check START")
   const creategameTitle = await getCreategameTitle(page)
-  const creategameTokenDropdown = await getCreategameTokenDropdown(page)
+  const creategameCommunityDropdown = await getCreategameCommunityDropdown(page)
   const creategameTokenAmount = await getCreategameTokenAmount(page)
   const creategamePeriodToggle = await getCreategamePeriodToggle(page)
   await expect(creategamePeriodToggle).toBeVisible()
@@ -69,7 +74,7 @@ async function brandCreateGamePageCheck(page) {
   const creategameCancelBtn = await getCreategameCancelBtn(page)
   const creategameSaveBtn = await getCreategameSaveBtn(page)
   await expect(creategameTitle).toBeVisible()
-  await expect(creategameTokenDropdown).toBeVisible()
+  await expect(creategameCommunityDropdown).toBeVisible()
   await expect(creategameTokenAmount).toBeVisible()
   await expect(creategameStartendDate).toBeVisible()
   await expect(creategameTimezone).toBeVisible()
@@ -79,4 +84,5 @@ async function brandCreateGamePageCheck(page) {
   await expect(creategameAddOptionBtn).toBeVisible()
   await expect(creategameCancelBtn).toBeVisible()
   await expect(creategameSaveBtn).toBeVisible()
+  console.log("[INFO] Create game check END")
 }

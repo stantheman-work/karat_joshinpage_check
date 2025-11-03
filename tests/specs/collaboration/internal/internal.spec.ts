@@ -1,7 +1,7 @@
 import {
   getInternalcollabAddCollabBtn,
-  getInternalFeatureFromToken,
-  getInternalFeatureToToken,
+  getInternalfeatureFromCommunity,
+  getInternalfeatureToCommunity,
   getInternalNewUserToggle,
   getInternalSFCancelBtn,
   getInternalSFExpireDateToggle,
@@ -46,6 +46,7 @@ test.describe("Collaboration > Internal page", () => {
   })
 
   test("Swap token", async ({ page }) => {
+    console.log("[INFO] Swap token check start")
     const internalAddCollabBtn = await getInternalcollabAddCollabBtn(page)
     await internalAddCollabBtn.click()
     const internalSwapTokenChoice = await getInternalSwapTokenChoice(page)
@@ -81,22 +82,22 @@ test.describe("Collaboration > Internal page", () => {
     const internalEndDate = (await getInternalStartEndDate(page))[1]
     await expect(internalStartDate).toBeVisible()
     await expect(internalEndDate).toBeVisible()
-
     await internalSFCancelBtn.click()
+    console.log("[INFO] Swap token check end")
   })
 
   test("Feature token", async ({ page }) => {
+    console.log("[INFO] Feature token check start")
     const internalAddCollabBtn = await getInternalcollabAddCollabBtn(page)
     await internalAddCollabBtn.click()
     const internalFeatureTokenChoice = await getInternalTokenFeatureChoice(page)
     await internalFeatureTokenChoice.click()
     await waitForPageToLoad(page)
-
-    const internalFeatureFromToken = await getInternalFeatureFromToken(page)
-    const internalFeatureToToken = await getInternalFeatureToToken(page)
+    const internalFeatureFromCommunity = await getInternalfeatureFromCommunity(page)
+    const internalFeatureToCommunity = await getInternalfeatureToCommunity(page)
     const internalSFTwoWaysToggle = await getInternalSFTwoWaysToggle(page)
-    await expect(internalFeatureFromToken).toBeVisible()
-    await expect(internalFeatureToToken).toBeVisible()
+    await expect(internalFeatureFromCommunity).toBeVisible()
+    await expect(internalFeatureToCommunity).toBeVisible()
     await expect(internalSFTwoWaysToggle).toBeVisible()
     const internalSFExpireDateToggle = await getInternalSFExpireDateToggle(page)
     await expect(internalSFExpireDateToggle).toBeVisible()
@@ -107,8 +108,8 @@ test.describe("Collaboration > Internal page", () => {
     const internalEndDate = (await getInternalStartEndDate(page))[1]
     await expect(internalStartDate).toBeVisible()
     await expect(internalEndDate).toBeVisible()
-
     const internalSFCancelBtn = await getInternalSFCancelBtn(page)
     await internalSFCancelBtn.click()
+    console.log("[INFO] Feature token check end")
   })
 })

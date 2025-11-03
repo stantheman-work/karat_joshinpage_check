@@ -8,7 +8,7 @@ import {
   getTokenSectionName,
   getTokenSubmitTokenBtn,
   getTokenUploadImageElement,
-} from "@/locators/brand-admin-tokeninfo-loc"
+} from "@/specs/general/tokeninfo.locator"
 import { PageUtils } from "@/utils/page-utils"
 import { Page } from "@playwright/test"
 import * as path from "path"
@@ -51,29 +51,6 @@ async function brandAddTokenDetails(page: Page) {
   await tokenCreateBtn.click()
   const tokenSubmitBtn = await getTokenSubmitTokenBtn(page)
   await tokenSubmitBtn.click()
-  /*
-   * The code below will wait for the URL to not contain tokens/new
-   */
-
-  // await page.waitForFunction(() => !window.location.href.includes("/tokens/new"))
-  // console.log(`[DEBUG] Stored Token Name: ${tokenNameStore}`)
-  // Loop 5 times. If element is not present, close the test
-  // while (tokenListCtr < 5) {
-  //   try {
-  //     const tokenList = await getTokenList(page, tokenNameStore)
-  //     await expect(tokenList).toBeVisible()
-  //     console.log("Token found!")
-  //     tokenListFlag = true
-  //     tokenListCtr = 5
-  //   } catch (error) {
-  //     console.log("Token not present, wait for a little while.")
-  //     tokenListCtr++
-  //   }
-  // }
-  // if (tokenListFlag == false) {
-  //   console.error("Token does not exist, please check.")
-  // }
-  // console.log("[INFO] End creating a new token.")
 }
 
 export { brandAddTokenDetails }

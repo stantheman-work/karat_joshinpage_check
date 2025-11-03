@@ -1,9 +1,9 @@
-import { getBrandSelectDropdown } from "@/locators/brand-admin-dashboard-loc"
+import { getBrandSelectDropdown } from "@/specs/general/dashboard.locator"
 import { expect, Locator, Page } from "@playwright/test"
 import { AuthUtils } from "./auth-utils"
 
 export class PageUtils {
-  static async gotoToHome(page: Page) {
+    static async gotoToHome(page: Page) {
     await page.goto(`/${AuthUtils.getDefaultBrand().id}`)
 
     await this.waitForGraphqlResponse(page, (json) => json.data?.brandNotificationCount !== undefined)

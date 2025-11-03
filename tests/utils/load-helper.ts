@@ -68,3 +68,7 @@ export async function refreshPage(page: Page) {
   await waitForPageToLoad(page)
   // console.log("Page has been refreshed.")
 }
+
+export async function waitForElementToBeHidden(page: Page, locator: Locator) {
+  await expect(locator).toBeHidden({ timeout: 5000 })
+}
