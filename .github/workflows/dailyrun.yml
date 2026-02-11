@@ -3,8 +3,9 @@ name: Daily automation run in github
 on:
   workflow_dispatch:
   schedule:
-    # 8:00 PM Manila time (UTC+8) = 12:00 UTC
+    # 7:15 PM Manila time (UTC+8) = 12:00 UTC
     - cron: "15 10 * * *"
+
 
 jobs:
   run-automation:
