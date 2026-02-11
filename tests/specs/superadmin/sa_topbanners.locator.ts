@@ -12,10 +12,15 @@ async function getTopbannersCreateBannerBtn(page) {
   return topbannersCreateBannerBtn
 }
 
-async function getAddbannerText(page) {
-  const addbannerText = page.locator("//h4[text()='Add new banner']")
-  await expect(addbannerText).toBeVisible({ timeout: 5000 })
-  return addbannerText
+async function getTopbannersColumnHeaders(page) {
+  return page.locator("//th[text()]")
+}
+
+// The locators below are accessible when add new banner button is clicked
+async function getAddbannerBtn(page) {
+  const addbannerBtn = page.locator("//button[text()='Add new Banner']")
+  await expect(addbannerBtn).toBeVisible({ timeout: 5000 })
+  return addbannerBtn
 }
 
 async function getEditbannerText(page) {
@@ -66,18 +71,21 @@ async function getBannerButtonToggle(page) {
   return bannerButtonToggle
 }
 
+// Appears when getBannerButtonToggle is enabled
 async function getBannerButtonName(page) {
   const bannerButtonName = page.locator("//input[@name='buttonName']")
   await expect(bannerButtonName).toBeVisible({ timeout: 5000 })
   return bannerButtonName
 }
 
+// Appears when getBannerButtonToggle is enabled
 async function getBannerZAPLink(page) {
   const bannerZAPLink = page.locator("//input[@name='zapLink']")
   await expect(bannerZAPLink).toBeVisible({ timeout: 5000 })
   return bannerZAPLink
 }
 
+// This is ON by default
 async function getBannerDisplayonZAP(page) {
   const bannerDisplayonZAP = page.locator("//input[@name='display']")
   await expect(bannerDisplayonZAP).toBeVisible({ timeout: 5000 })
@@ -97,7 +105,7 @@ async function getBannerSaveBtn(page) {
 }
 
 export {
-  getAddbannerText,
+  getAddbannerBtn,
   getBannerButtonName,
   getBannerButtonToggle,
   getBannerCancelBtn,
@@ -111,6 +119,7 @@ export {
   getBannerUploadimageField,
   getBannerZAPLink,
   getEditbannerText,
+  getTopbannersColumnHeaders,
   getTopbannersCreateBannerBtn,
   getTopbannersText
 }

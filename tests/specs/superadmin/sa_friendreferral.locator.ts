@@ -1,10 +1,10 @@
 import { Page } from "@playwright/test";
 
-export class sa_zapSettingsTab {
+export class FriendReferralPage {
   constructor(private page: Page) {}
 
-  friendreferralBtn() {
-    return this.page.getByRole('tab', { name: '24kZAP friend referral' });
+  button() {
+    return this.page.getByRole('button', { name: '24kZAP friend referral' });
   }
 
   toggle() {
@@ -20,6 +20,6 @@ export class sa_zapSettingsTab {
   }
 
   saveButton() {
-    return this.page.getByText('Save');
+    return this.page.getByRole('button', { name: 'Save' });
   }
 }

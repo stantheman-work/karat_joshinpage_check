@@ -1,39 +1,25 @@
-import { expect, Locator, Page } from "@playwright/test"
+import { Page } from "@playwright/test";
 
-async function getCashrequestText(page) {
-  const cashrequestText = page.locator("//h5[text()='Cashout request']")
-  await expect(cashrequestText).toBeVisible({ timeout: 5000 })
-  return cashrequestText
-}
+export class sa_cashoutRequestPage {
+  constructor(private page: Page) {}
 
-async function getCashrequestSearchFilter(page) {
-  const cashrequestSearchFilter = page.locator("//input[@placeholder='Search ID']")
-  await expect(cashrequestSearchFilter).toBeVisible({ timeout: 5000 })
-  return cashrequestSearchFilter
-}
+  cashrequestTitle() {
+    return this.page.getByText('Cashout request');
+  }
 
-async function getCashrequestStatusFilter(page) {
-  const cashrequestStatusFilter = page.locator("//input/preceding-sibling::div[@role='combobox'][1]")
-  await expect(cashrequestStatusFilter).toBeVisible({ timeout: 5000 })
-  return cashrequestStatusFilter
-}
+  searchFilter() {
+    return this.page.getByPlaceholder('Search ID');
+  }
 
-async function getCashrequestDateFilter(page) {
-  const cashrequestDateFilter = page.locator("//input[@placeholder='Select date range']")
-  await expect(cashrequestDateFilter).toBeVisible({ timeout: 5000 })
-  return cashrequestDateFilter
-}
+  statusFilter() {
+    return this.page.getByRole('combobox').first();
+  }
 
-async function getCashrequestColumnHeaders(page) {
-  const cashrequestColumnHeaders = page.locator("//th[text()]")
-  await expect(cashrequestColumnHeaders).toBeVisible({ timeout: 5000 })
-  return cashrequestColumnHeaders
-}
+  dateFilter() {
+    return this.page.getByPlaceholder('Select date range');
+  }
 
-export {
-  getCashrequestColumnHeaders,
-  getCashrequestDateFilter,
-  getCashrequestSearchFilter,
-  getCashrequestStatusFilter,
-  getCashrequestText
+  columnHeaders() {
+    return this.page.locator('//th[text()]');
+  }
 }
