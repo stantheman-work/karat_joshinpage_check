@@ -1,10 +1,16 @@
 import { expect, Locator, Page } from "@playwright/test"
 import { waitForAnElement } from "@/utils/load-helper"
 
-async function getCreateNFTText(page) {
-  const createNFTText = page.locator("//h5[text()='Create NFT']")
-  await expect(createNFTText).toBeVisible({ timeout: 5000 })
-  return createNFTText
+async function getNFTTemplatesText(page) {
+  const nftTemplatesText = page.locator("//div[text()='NFT Templates']")
+  await expect(nftTemplatesText).toBeVisible({ timeout: 5000 })
+  return nftTemplatesText
+}
+
+async function getNFTSelectionModeToggle(page) {
+  const nftSelectionModeToggle = page.locator("//input[@type='checkbox']")
+  await expect(nftSelectionModeToggle).toBeVisible({ timeout: 5000 })
+  return nftSelectionModeToggle
 }
 
 async function getCreateNFTUploadFile(page: Page) {
@@ -225,48 +231,6 @@ async function getEditNFTListingBtn(page) {
   return editNFTListingBtn
 }
 
-async function getCollectionManagementInfoText(page) {
-  const collectionMgmtInfoText = page.locator("//h5[contains(text(),'Information')]")
-  await expect(collectionMgmtInfoText).toBeVisible({ timeout: 5000 })
-  return collectionMgmtInfoText
-}
-
-async function getCollectionManagementSearchFilter(page: Page) {
-  const collectionMgmtSearchFilter = page.locator("//input[@placeholder='Search']")
-  await expect(collectionMgmtSearchFilter).toBeVisible({ timeout: 5000 })
-  return collectionMgmtSearchFilter
-}
-
-async function getCollectionManagementColumnHeader(page: Page) {
-  const collectionMgmtColumnHeader = page.locator(
-    "//h5[contains(text(),'Information')]/parent::h2/following-sibling::div/div[2]/descendant::th[text()]"
-  )
-  const count = await collectionMgmtColumnHeader.count()
-  let columns: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    columns.push(collectionMgmtColumnHeader.nth(i))
-  }
-  return columns
-}
-
-async function getCollectionManagementCreateCollectionBtn(page) {
-  const collectionMgmtCreateCollectionBtn = page.locator("//span[text()='Create collection']/parent::button")
-  await expect(collectionMgmtCreateCollectionBtn).toBeVisible({ timeout: 5000 })
-  return collectionMgmtCreateCollectionBtn
-}
-
-async function getCollectionManagementCloseBtn(page) {
-  const collectionMgmtCreateCloseBtn = page.locator("//button[text()='Close']")
-  await expect(collectionMgmtCreateCloseBtn).toBeVisible({ timeout: 5000 })
-  return collectionMgmtCreateCloseBtn
-}
-
-async function getNFTtab(page) {
-  const nftTab = page.locator("//button[contains(text(),'NFT')]")
-  await expect(nftTab).toBeVisible({ timeout: 5000 })
-  return nftTab
-}
-
 async function getNFTSearchNFTFilter(page) {
   const nftSearchNFTFilter = page.locator("//input[@placeholder='Search']")
   await expect(nftSearchNFTFilter).toBeVisible({ timeout: 5000 })
@@ -274,7 +238,7 @@ async function getNFTSearchNFTFilter(page) {
 }
 
 async function getNFTCollectionFilter(page) {
-  const nftCollectionFilter = page.locator("//input[@role='combobox']")
+  const nftCollectionFilter = page.locator("//label[text()='Collection']/following-sibling::div/child::input")
   await expect(nftCollectionFilter).toBeVisible({ timeout: 5000 })
   return nftCollectionFilter
 }
@@ -285,22 +249,38 @@ async function getNFTCommunityFilter(page) {
   return nftTokenFilter
 }
 
-async function getNFTCollectionManagementBtn(page) {
-  const nftCollectionManagementBtn = page.locator("//span[contains(text(),'Collection')]/parent::button")
-  await expect(nftCollectionManagementBtn).toBeVisible({ timeout: 5000 })
-  return nftCollectionManagementBtn
-}
-
 async function getNFTCreateBtn(page) {
   const nftCreateBtn = page.locator("//button[contains(text(),'template')]")
   await expect(nftCreateBtn).toBeVisible({ timeout: 5000 })
   return nftCreateBtn
 }
 
-async function getNFTMoreOptions(page) {
+async function getNFTCreateMoreOptionsDropdown(page) {
+  const nftCreateMoreOptions = page.locator("//*[name()='svg' and @data-testid='ExpandMoreIcon']/parent::button")
+  await expect(nftCreateMoreOptions).toBeVisible({ timeout: 5000 })
+  return nftCreateMoreOptions
+}
+
+async function getNFTCreateMoreOptionsDropdownItems(page: Page) {
+  const nftCreateMoreOptionsDropdownItems = page.locator("//div/li")
+  const count = await nftCreateMoreOptionsDropdownItems.count()
+
+  let textFieldArray: Locator[] = []
+  for (let i = 0; i < count; i++) {
+    textFieldArray.push(nftCreateMoreOptionsDropdownItems.nth(i))
+  }
+  console.log("This is the value of NFT column header = " + textFieldArray.length + "\n")
+
+  return textFieldArray
+}
+
+async function getNFTMoreOptions(page: Page) {
+  /*
   const nftMoreOptions = page.locator("//*[name()='svg' and @data-testid='MoreHorizIcon']/parent::button")
   await expect(nftMoreOptions).toBeVisible({ timeout: 5000 })
   return nftMoreOptions
+  */
+  return page.locator("//*[name()='svg' and @data-testid='MoreHorizIcon']/parent::button")
 }
 
 async function getNFTListingBtn(page) {
@@ -310,6 +290,7 @@ async function getNFTListingBtn(page) {
 }
 
 async function getNFTColumnHeader(page: Page) {
+  /*
   const nftColumnHeader = page.locator("//th[text()]")
   const count = await nftColumnHeader.count()
 
@@ -320,6 +301,8 @@ async function getNFTColumnHeader(page: Page) {
   console.log("This is the value of NFT column header = " + textFieldArray.length + "\n")
 
   return textFieldArray
+  */
+ return page.locator("//th[text()]")
 }
 
 async function getNFTColumnLoadingIcon(page) {
@@ -329,36 +312,28 @@ async function getNFTColumnLoadingIcon(page) {
 }
 
 export {
-  /*
-  getCollectionManagementCloseBtn,
-  getCollectionManagementColumnHeader,
-  getCollectionManagementCreateCollectionBtn,
-  getCollectionManagementInfoText,
-  getCollectionManagementSearchFilter,
-  */
   getCreateNFTAdvancedoptions,
   getCreateNFTCancel,
   getCreateNFTChooseCollection,
   getCreateNFTCode,
   getCreateNFTCollectionTextfield,
+  getCreateNFTCommunityDropdown,
   getCreateNFTDescription,
   getCreateNFTExternalLink,
   getCreateNFTLimitUserTextfield,
   getCreateNFTLimitUserToggle,
+  getCreateNFTOwnershiptransferToggle,
   getCreateNFTOptionsLicenseDropdown,
   getCreateNFTOptionsLicenseToggle,
   getCreateNFTOptionsProperties,
   getCreateNFTOptionsPropertiesAdd,
   getCreateNFTOptionsUtilityCheckbox,
   getCreateNFTOptionsUtilityToggle,
-  getCreateNFTOwnershiptransferToggle,
   getCreateNFTPreview,
   getCreateNFTRoyaltyFee,
   getCreateNFTSave,
   getCreateNFTSupply,
-  getCreateNFTText,
   getCreateNFTTitle,
-  getCreateNFTCommunityDropdown,
   getCreateNFTUnlockDescription,
   getCreateNFTUnlockToggle,
   getCreateNFTUploadFile,
@@ -368,16 +343,18 @@ export {
   getEditNFTUploadedImage,
   getNFTBOXListingBtn,
   getNFTCollectionFilter,
-  //getNFTCollectionManagementBtn,
   getNFTColumnHeader,
+  getNFTColumnLoadingIcon,
+  getNFTCommunityFilter,
   getNFTCreateBtn,
+  getNFTCreateMoreOptionsDropdown,
+  getNFTCreateMoreOptionsDropdownItems,
   getNFTEditBtn,
   getNFTInformationText,
   getNFTListingBtn,
   getNFTMoreOptions,
   getNFTNameColumn,
   getNFTSearchNFTFilter,
-  getNFTCommunityFilter,
-  getNFTtab,
-  getNFTColumnLoadingIcon
+  getNFTSelectionModeToggle,
+  getNFTTemplatesText
 }
