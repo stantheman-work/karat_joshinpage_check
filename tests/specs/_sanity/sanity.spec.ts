@@ -236,127 +236,181 @@ test.describe("Sanity Check", () => {
   test.use({ storageState: AuthUtils.getSuperAdminAuthState() })
 
   test("Sanity Check", async ({ page }) => {
-    await PageUtils.gotoToHome(page)
+    await test.step("PageUtils.gotoToHome()", async () => {
+      await PageUtils.gotoToHome(page)
+    })
 
-    await brandDashboardSanity(page)
+    await test.step("brandDashboardSanity()", async () => {
+      await brandDashboardSanity(page)
+    })
   })
 })
 
 async function brandDashboardSanity(page: Page) {
-  console.log("[INFO] Brand Dashboard Sanity start")
+  await test.step("Brand Dashboard Sanity", async () => {
+    console.log("[INFO] Brand Dashboard Sanity start");
 
-  // Click dropdown
-  const parentMenu = await getSideBarParentMenu(page)
-  for (let i = 0; i < parentMenu.length; i++) {
-    await waitForPageToLoad(page)
-    await scrollToElement(page, parentMenu[i])
-    await parentMenu[i].click()
-  }
+    await test.step("Sidebar: expand parent menus", async () => {
+      const parentMenu = await getSideBarParentMenu(page);
+      for (let i = 0; i < parentMenu.length; i++) {
+        await waitForPageToLoad(page);
+        await scrollToElement(page, parentMenu[i]);
+        await parentMenu[i].click();
+      }
+    });
 
-  // Access all pages and check if it is working fine
-  const subMenu = await getSideBarItems(page)
-  for (let i = 0; i < subMenu.length; i++) {
-    await waitForPageToLoad(page)
-    await scrollToElement(page, subMenu[i])
-    await subMenu[i].click()
-    if (i == 0) {
-      // in Home page. Check Community, Member and Logs tab
-      await brandHomePageCheck(page)
-      await brandCommunityMemberTabCheck(page)
-      await brandCommunityLogsTabCheck(page)
-    } else if (i == 1) {
-      // in NFT page
-      await brandNFTPageCheck(page)
-    } else if (i == 2) {
-      // in NFT page
-      await brandMysteryboxPageCheck(page)
-    } else if (i == 3) {
-      // in Stamp passport page
-      await brandStamppassportPageCheck(page)
-    } else if (i == 4) {
-      // in Vending machine page
-      await brandVendingMachinePageCheck(page)
-    } else if (i == 5) {
-      // in Campaign page
-      await brandCampaignPageCheck(page)
-    } else if (i == 6) {
-      // in Feed page
-      await brandFeedPageCheck(page)
-    } else if (i == 7) {
-      // in Mission page
-      await brandMissionPageCheck(page)
-    } else if (i == 8) {
-      // in Quiz page
-      await brandQuizPageCheck(page)
-    } else if (i == 9) {
-      // in Survey page
-      await brandSurveyPageCheck(page)
-    } else if (i == 10) {
-      // in Proposal page
-      await brandProposalPageCheck(page)
-    } else if (i == 11) {
-      // in Articles page
-      await brandArticlePageCheck(page)
-    } else if (i == 12) {
-      // in Game corner page
-      await brandGamecornerPageCheck(page)
-    } else if (i == 13) {
-      // In Social Room page
-      try {
-        await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.searchRooms !== undefined, { timeout: 10000 })
-        await brandSocialroomPageCheck(page)
-      } catch (error) {
-        console.log("This community does not have any social rooms")
-      }
-    } else if (i == 14) {
-      // In Video page
-      try {
-        await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.findVideos !== undefined, { timeout: 10000 })
-        await brandVideoPageCheck(page)
-      } catch (error) {
-        console.log("This community does not have any videos")
-      }
-    } else if (i == 15) {
-      // in Messages page
-      await brandMessagePageCheck(page)
-    } else if (i == 16) {
-      // in Insights page
-      await brandInsightsPageCheck(page)
-    } else if (i == 17) {
-      // in Activitygraph page
-      try {
-        await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.brandStats !== undefined, { timeout: 10000 })
-        await brandActivitygraphPageCheck(page)
-      } catch (error) {
-        console.log("This community does not have any activities")
-      }
-    } else if (i == 18) {
-      // in Leaderboard page
-      await brandLeaderboardPageCheck(page)
-    } else if (i == 19) {
-      // in Leaderboard page
-      await brandUsersearchPageCheck(page)
-    } else if (i == 20) {
-      // in Sales report page
-      await brandSalesreportPageCheck(page)
-    } else if (i == 21) {
-      // in External collab page
-      await brandExternalcollabPageCheck(page)
-    } else if (i == 22) {
-      // in Internal collab page
-      await brandInternalcollabPageCheck(page)
-    } else if (i == 23) {
-      // in Scan page
-      await brandScanPageCheck(page)
-    } else if (i == 24) {
-      // in Developer API Clients page
-      await brandDeveloperAPIClientsPageCheck(page)
-    } else {
-      // in LINE LIFF APP page
-      await brandLINELIFFAppSettings(page)
+    const subMenu = await getSideBarItems(page);
+
+    for (let i = 0; i < subMenu.length; i++) {
+      await waitForPageToLoad(page);
+      await scrollToElement(page, subMenu[i]);
+
+      // Use visible sidebar text as the step name (best for reports)
+      const menuName = (await subMenu[i].innerText()).trim() || `Menu index ${i}`;
+
+      await test.step(`Open page: ${menuName}`, async () => {
+        await subMenu[i].click();
+
+        // Run the right checks under a sub-step that names the function(s)
+        if (i === 0) {
+          await test.step("Checks: brandHomePageCheck + Community tabs", async () => {
+            await brandHomePageCheck(page);
+            await brandCommunityMemberTabCheck(page);
+            await brandCommunityLogsTabCheck(page);
+          });
+        } else if (i === 1) {
+          await test.step("Checks: brandNFTPageCheck", async () => {
+            await brandNFTPageCheck(page);
+          });
+        } else if (i === 2) {
+          await test.step("Checks: brandMysteryboxPageCheck", async () => {
+            await brandMysteryboxPageCheck(page);
+          });
+        } else if (i === 3) {
+          await test.step("Checks: brandStamppassportPageCheck", async () => {
+            await brandStamppassportPageCheck(page);
+          });
+        } else if (i === 4) {
+          await test.step("Checks: brandVendingMachinePageCheck", async () => {
+            await brandVendingMachinePageCheck(page);
+          });
+        } else if (i === 5) {
+          await test.step("Checks: brandCampaignPageCheck", async () => {
+            await brandCampaignPageCheck(page);
+          });
+        } else if (i === 6) {
+          await test.step("Checks: brandFeedPageCheck", async () => {
+            await brandFeedPageCheck(page);
+          });
+        } else if (i === 7) {
+          await test.step("Checks: brandMissionPageCheck", async () => {
+            await brandMissionPageCheck(page);
+          });
+        } else if (i === 8) {
+          await test.step("Checks: brandQuizPageCheck", async () => {
+            await brandQuizPageCheck(page);
+          });
+        } else if (i === 9) {
+          await test.step("Checks: brandSurveyPageCheck", async () => {
+            await brandSurveyPageCheck(page);
+          });
+        } else if (i === 10) {
+          await test.step("Checks: brandProposalPageCheck", async () => {
+            await brandProposalPageCheck(page);
+          });
+        } else if (i === 11) {
+          await test.step("Checks: brandArticlePageCheck", async () => {
+            await brandArticlePageCheck(page);
+          });
+        } else if (i === 12) {
+          await test.step("Checks: brandGamecornerPageCheck", async () => {
+            await brandGamecornerPageCheck(page);
+          });
+        } else if (i === 13) {
+          await test.step("Checks: brandSocialroomPageCheck", async () => {
+            try {
+              await PageUtils.waitForGraphqlResponse(
+                page,
+                (json) => json.data?.searchRooms !== undefined,
+                { timeout: 10000 }
+              );
+              await brandSocialroomPageCheck(page);
+            } catch {
+              console.log("This community does not have any social rooms");
+            }
+          });
+        } else if (i === 14) {
+          await test.step("Checks: brandVideoPageCheck", async () => {
+            try {
+              await PageUtils.waitForGraphqlResponse(
+                page,
+                (json) => json.data?.findVideos !== undefined,
+                { timeout: 10000 }
+              );
+              await brandVideoPageCheck(page);
+            } catch {
+              console.log("This community does not have any videos");
+            }
+          });
+        } else if (i === 15) {
+          await test.step("Checks: brandMessagePageCheck", async () => {
+            await brandMessagePageCheck(page);
+          });
+        } else if (i === 16) {
+          await test.step("Checks: brandInsightsPageCheck", async () => {
+            await brandInsightsPageCheck(page);
+          });
+        } else if (i === 17) {
+          await test.step("Checks: brandActivitygraphPageCheck", async () => {
+            try {
+              await PageUtils.waitForGraphqlResponse(
+                page,
+                (json) => json.data?.brandStats !== undefined,
+                { timeout: 10000 }
+              );
+              await brandActivitygraphPageCheck(page);
+            } catch {
+              console.log("This community does not have any activities");
+            }
+          });
+        } else if (i === 18) {
+          await test.step("Checks: brandLeaderboardPageCheck", async () => {
+            await brandLeaderboardPageCheck(page);
+          });
+        } else if (i === 19) {
+          await test.step("Checks: brandUsersearchPageCheck", async () => {
+            await brandUsersearchPageCheck(page);
+          });
+        } else if (i === 20) {
+          await test.step("Checks: brandSalesreportPageCheck", async () => {
+            await brandSalesreportPageCheck(page);
+          });
+        } else if (i === 21) {
+          await test.step("Checks: brandExternalcollabPageCheck", async () => {
+            await brandExternalcollabPageCheck(page);
+          });
+        } else if (i === 22) {
+          await test.step("Checks: brandInternalcollabPageCheck", async () => {
+            await brandInternalcollabPageCheck(page);
+          });
+        } else if (i === 23) {
+          await test.step("Checks: brandScanPageCheck", async () => {
+            await brandScanPageCheck(page);
+          });
+        } else if (i === 24) {
+          await test.step("Checks: brandDeveloperAPIClientsPageCheck", async () => {
+            await brandDeveloperAPIClientsPageCheck(page);
+          });
+        } else {
+          await test.step("Checks: brandLINELIFFAppSettings", async () => {
+            await brandLINELIFFAppSettings(page);
+          });
+        }
+      });
     }
-  }
-  console.log("[INFO] Brand Dashboard Sanity end.")
+
+    console.log("[INFO] Brand Dashboard Sanity end.");
+  });
 }
 
 async function brandHomePageCheck(page) {
