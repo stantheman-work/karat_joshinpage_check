@@ -29,7 +29,9 @@ jobs:
       - name: Run sanity test only
         env:
           BASE_URL: ${{ secrets.BASE_URL }} # optional, but recommended
-        run: npx playwright test tests/specs/_sanity/sanity.spec.ts
+        run: npx playwright test \
+        tests/specs/_sanity/sanity.spec.ts \
+        tests/specs/superadmin/superadmin.spec.ts
 
       - name: Upload Playwright report
         if: always()

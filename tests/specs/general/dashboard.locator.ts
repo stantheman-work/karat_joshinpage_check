@@ -40,6 +40,14 @@ async function getSideBarItems(page: Page) {
   return textFieldArray
 }
 
+async function getBrandSelectionDropdown(page: Page) {
+  return page.locator("//*[name()='svg' and @alt='icon-down']/preceding-sibling::div/parent::div")
+}
+
+async function getBrandSelectionDropdownOptions(page: Page) {
+  return page.locator("//div/li")
+}
+
 async function getBrandSelectDropdown(page) {
   const brandSelectDropdown = page.locator(
     "//span[text()='Brand']/following-sibling::button/descendant::p[contains(text(),'24karat')]"
@@ -178,6 +186,8 @@ export {
   getBrandEditButton,
   getBrandSearchFilter,
   getBrandSelectDropdown,
+  getBrandSelectionDropdown,
+  getBrandSelectionDropdownOptions,
   getBrandStatusFilter,
   getBrandVisibilityFilter,
   getSideBarItems,

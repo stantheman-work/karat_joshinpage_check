@@ -18,21 +18,28 @@ async function getUsermanagementDataFilter(page) {
   return usermanagementDataFilter
 }
 
+async function getUsermanagementActionhistoryBtn(page) {
+  return page.locator("//button[text()='Action History']")
+}
+
+async function getUsermanagementBulkactionsDropdown(page) {
+  return page.locator("//button[text()='Bulk Actions']")
+}
+
+async function getUsermanagementBulkactionsDropdownOption(page) {
+  return page.locator("//ul")
+}
+
 async function getUsermanagementColumnHeaders(page: Page) {
-  const usermanagementColumnHeaders = page.locator("//th")
-  const count = await usermanagementColumnHeaders.count()
-
-  let textFieldArray: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    textFieldArray.push(usermanagementColumnHeaders.nth(i))
-  }
-
-  return textFieldArray
+  return page.locator("//th")
 }
 
 export {
+  getUsermanagementActionhistoryBtn,
   getUsermanagementAllUsersText,
-  getUsermanagementSearchFilter,
+  getUsermanagementBulkactionsDropdown,
+  getUsermanagementBulkactionsDropdownOption,
+  getUsermanagementColumnHeaders,
   getUsermanagementDataFilter,
-  getUsermanagementColumnHeaders
+  getUsermanagementSearchFilter
 }

@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test"
+import { expect, Page } from "@playwright/test"
 
 async function getReviewcommunityAllCommunitiesText(page) {
   const reviewcommunityAllCommunitiesText = page.locator("//h5[text()='All Communities']")
@@ -25,15 +25,7 @@ async function getReviewcommunityStatusFilter(page) {
 }
 
 async function getReviewcommunityColumnHeaders(page: Page) {
-  const reviewcommunitycolumnHeaders = page.locator("//th")
-  const count = await reviewcommunitycolumnHeaders.count()
-
-  let textFieldArray: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    textFieldArray.push(reviewcommunitycolumnHeaders.nth(i))
-  }
-
-  return textFieldArray
+  return page.locator("//th")
 }
 
 export {
