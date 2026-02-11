@@ -5,11 +5,16 @@ import {
 import {
   superadminReviewBrandTab,
   superadminReviewCommunitiesTab,
-  superadminUsermanagementTab
+  superadminUsermanagementTab,
+  superadminTopbannersTab,
+  superadminActivitiesgraphTab,
+  superadminNFTandMysteryboxTab,
+  superadminZAPSettings,
+  superadminCashoutRequest
 } from "../superadmin/checkSuperadminTabs"
 import { AuthUtils } from "@/utils/auth-utils"
 import { PageUtils } from "@/utils/page-utils"
-import { expect, test } from "@playwright/test"
+import { test } from "@playwright/test"
 
 test.describe("Superadmin Page", () => {
   test.use({ storageState: AuthUtils.getSuperAdminAuthState() })
@@ -27,6 +32,11 @@ test.describe("Superadmin Page", () => {
     await superadminReviewBrandTab(page)
     await superadminReviewCommunitiesTab(page)
     await superadminUsermanagementTab(page)
+    await superadminTopbannersTab(page)
+    await superadminActivitiesgraphTab(page)
+    await superadminNFTandMysteryboxTab(page)
+    await superadminZAPSettings(page)
+    await superadminCashoutRequest(page)
     console.log("[INFO] Superadmin page check END")
   })
 })

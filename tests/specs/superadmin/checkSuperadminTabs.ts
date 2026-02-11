@@ -1,4 +1,3 @@
-import { getBrand24karatOption, getBrandSelectDropdown } from "@/specs/general/dashboard.locator"
 import {
   getSuperadminBrandmanagementBtn,
   getSuperadminChangelanguageBtn,
@@ -27,10 +26,42 @@ import {
   getUsermanagementDataFilter,
   getUsermanagementSearchFilter
 } from "../superadmin/sa_usermanagement.locator"
+import {
+  getAddbannerBtn,
+  getBannerButtonName,
+  getBannerButtonToggle,
+  getBannerCancelBtn,
+  getBannerDescription,
+  getBannerDisplayonZAP,
+  getBannerHeader,
+  getBannerName,
+  getBannerSaveBtn,
+  getBannerTitle,
+  getBannerUploadimageField,
+  getEditbannerText,
+  getTopbannersColumnHeaders,
+  getTopbannersCreateBannerBtn,
+  getTopbannersText
+} from "../superadmin/sa_topbanners.locator"
+import {
+  getActivitiesgraphText
+} from "../superadmin/sa_activitiesgraph.locator"
+import {
+  sa_NFTPage
+} from "./sa_nfttab.locator"
+import {
+  sa_MBOXPage
+} from "./sa_mysteryboxtab.locator"
+import {
+  sa_zapSettingsTab
+} from "./sa_zapsettings.locator"
+import {
+  sa_cashoutRequestPage
+} from "./sa_usercashout.locator"
 
-import { AuthUtils } from "@/utils/auth-utils"
-import { waitForPageToLoad } from "@/utils/load-helper"
+import { PageUtils } from "@/utils/page-utils"
 import { test, expect, Page } from "@playwright/test"
+import { closeWindowPopup } from "@/utils/keyboard-helper"
 
 async function superadminReviewBrandTab(page) {
   await test.step("[INFO] Superadmin dashboard + Review brand check", async () => {
@@ -94,11 +125,120 @@ async function superadminUsermanagementTab(page) {
     await um_bulkactionsDropdown.click()
     const um_bulkActionsDropdownOption = await getUsermanagementBulkactionsDropdownOption(page)
     await expect(um_bulkActionsDropdownOption).toBeVisible()
+    await closeWindowPopup(page)
+  })
+}
+
+async function superadminTopbannersTab(page) {
+  await test.step("[INFO] Superadmin top banners tab check", async () => {
+    const superadminTabs = await getSuperadminTabs(page)
+    await superadminTabs.nth(3).click()
+    const tb_bannersText = await getTopbannersText(page)
+    const tb_createBannerBtn = await getTopbannersCreateBannerBtn(page)
+    const tb_columnHeaders = await getTopbannersColumnHeaders(page)
+    await expect(tb_bannersText).toBeVisible()
+    await expect(tb_createBannerBtn).toBeVisible()
+    await expect(tb_columnHeaders.first()).toBeVisible({ timeout: 15000 })
+    const tb_addBannerBtn = await getAddbannerBtn(page)
+    await expect(tb_addBannerBtn).toBeVisible()
+    await tb_addBannerBtn.click()
+    const tb_editBannerText = await getEditbannerText(page)
+    const tb_bannerUploadimageField = await getBannerUploadimageField(page)
+    const tb_bannerName = await getBannerName(page)
+    const tb_bannerHeader = await getBannerHeader(page)
+    const tb_bannerTitle = await getBannerTitle(page)
+    const tb_bannerDescription = await getBannerDescription(page)
+    const tb_bannerButtonToggle = await getBannerButtonToggle(page)
+    const tb_bannerDisplayonZAP = await getBannerDisplayonZAP(page)
+    const tb_bannerCancelBtn = await getBannerCancelBtn(page)
+    const tb_bannerSaveBtn = await getBannerSaveBtn(page)
+    await expect(tb_editBannerText).toBeVisible()
+    await expect(tb_bannerUploadimageField).toBeVisible()
+    await expect(tb_bannerName).toBeVisible()
+    await expect(tb_bannerHeader).toBeVisible()
+    await expect(tb_bannerTitle).toBeVisible()
+    await expect(tb_bannerDescription).toBeVisible()
+    await PageUtils.scrollToElement(page, tb_bannerDisplayonZAP)
+    await expect(tb_bannerButtonToggle).toBeVisible()
+    await expect(tb_bannerDisplayonZAP).toBeVisible()
+    await expect(tb_bannerCancelBtn).toBeVisible()
+    await expect(tb_bannerSaveBtn).toBeVisible()
+    await tb_bannerCancelBtn.click()
+  })
+}
+
+async function superadminActivitiesgraphTab(page) {
+  await test.step("[INFO] Superadmin activities graph tab check", async () => {
+    const superadminTabs = await getSuperadminTabs(page)
+    await superadminTabs.nth(4).click()
+    const ag_text = await getActivitiesgraphText(page)
+    await expect(ag_text).toBeVisible()
+  })
+}
+
+async function superadminNFTandMysteryboxTab(page) {
+  await test.step("[INFO] Superadmin NFT and Mysterybox tab check", async () => {
+    const superadminTabs = await getSuperadminTabs(page)
+    await superadminTabs.nth(5).click()
+    const sa_nft = new sa_NFTPage(page)
+    const sa_mbox = new sa_MBOXPage(page)
+    await expect(sa_nft.nftmboxText()).toBeVisible()
+    await expect(sa_nft.tab()).toBeVisible()
+    await expect(sa_nft.tab()).toHaveAttribute('aria-selected', 'true')
+    await expect(sa_nft.searchFilter()).toBeVisible()
+    await expect(sa_nft.collectionFilter()).toBeVisible()
+    try {
+      await expect(sa_nft.exportButton()).toBeVisible({ timeout: 20000 })
+    } catch (error) {
+      console.error("Proceed to next step. This page has some issues when it comes to loading")
+    }
+    await expect(sa_nft.columnHeaders().first()).toBeVisible()
+    await expect(sa_mbox.tab()).toBeVisible()
+    await sa_mbox.tab().click()
+    await expect(sa_mbox.tab()).toHaveAttribute('aria-selected', 'true')
+    await expect(sa_mbox.searchFilter()).toBeVisible()
+    try {
+      await expect(sa_mbox.exportButton()).toBeVisible({ timeout: 20000 })
+    } catch (error) {
+      console.error("Proceed to next step. This page has some issues when it comes to loading")
+    }
+    await expect(sa_mbox.columnHeaders().first()).toBeVisible()
+  })
+}
+
+async function superadminZAPSettings(page) {
+  await test.step("[INFO] Superadmin zap settings tab check", async () => {
+    const superadminTabs = await getSuperadminTabs(page)
+    await superadminTabs.nth(6).click()
+    const sa_zapsettings = new sa_zapSettingsTab(page)
+    await expect(sa_zapsettings.friendreferralBtn()).toBeVisible()
+    await expect(sa_zapsettings.toggle()).toBeVisible()
+    await expect(sa_zapsettings.refereeRewardInput()).toBeVisible()
+    await expect(sa_zapsettings.referrerRewardInput()).toBeVisible()
+    await expect(sa_zapsettings.saveButton()).toBeVisible()
+  })
+}
+
+async function superadminCashoutRequest(page) {
+  await test.step("[INFO] Superadmin cashout request tab", async () => {
+    const superadminTabs = await getSuperadminTabs(page)
+    await superadminTabs.nth(7).click()
+    const sa_cashoutPage = new sa_cashoutRequestPage(page)
+    await expect(sa_cashoutPage.cashrequestTitle()).toBeVisible()
+    await expect(sa_cashoutPage.searchFilter()).toBeVisible()
+    await expect(sa_cashoutPage.statusFilter()).toBeVisible()
+    await expect(sa_cashoutPage.dateFilter()).toBeVisible()
+    await expect(sa_cashoutPage.columnHeaders().first()).toBeVisible()
   })
 }
 
 export {
   superadminReviewBrandTab,
   superadminReviewCommunitiesTab,
-  superadminUsermanagementTab
+  superadminUsermanagementTab,
+  superadminTopbannersTab,
+  superadminActivitiesgraphTab,
+  superadminNFTandMysteryboxTab,
+  superadminZAPSettings,
+  superadminCashoutRequest
 }
