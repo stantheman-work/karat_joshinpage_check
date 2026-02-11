@@ -6,7 +6,7 @@ export class PageUtils {
     static async gotoToHome(page: Page) {
     await page.goto(`/${AuthUtils.getDefaultBrand().id}`)
 
-    await this.waitForGraphqlResponse(page, (json) => json.data?.brandNotificationCount !== undefined)
+    // await this.waitForGraphqlResponse(page, (json) => json.data?.brandNotificationCount !== undefined)
     try {
       await page.getByRole("button", { name: "Later" }).click()
     } catch {

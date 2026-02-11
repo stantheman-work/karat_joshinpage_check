@@ -444,7 +444,6 @@ async function brandCommunityMemberTabCheck(page) {
   await expect(comMemberTab).toBeVisible();
   await comMemberTab.click()
   await waitForPageToLoad(page)
-  
   const memInviteBtn = await getMemberInviteBtn(page)
   const memSearchFilter = await getMemberSearchFilter(page)
   const memRoleFilter = await getMemberRoleFilter(page)
@@ -899,6 +898,7 @@ async function brandExternalcollabPageCheck(page: Page) {
   let flag = false
   let flagCtr = 0
   await waitForPageToLoad(page)
+  /*
   while (flag == false && flagCtr < 3) {
     try {
       await page.waitForTimeout(2000)
@@ -913,12 +913,19 @@ async function brandExternalcollabPageCheck(page: Page) {
       console.log("flagCtr value = " + flagCtr)
     }
   }
+  */
+  try {
+      const externalCollaborateBtn = await getExternalCollaborateBtn(page)
+      await expect(externalCollaborateBtn).toBeVisible({timeout: 20000})
+      flag = true
+  } catch (error) {
+      console.error("This brand does not have any external collaborations")
+  }
   if (flag == true) { // If there are existing collaborations
     const externalText = await getExternalcollabText(page)
     await expect(externalText).toBeVisible()
     const externalCommunityDropdown = await getExternalcollabCommunityDropdown(page)
     await expect(externalCommunityDropdown).toBeVisible()
-
     const externalSettingBtn = await getExternalcollabSettingBtn(page)
     await expect(externalSettingBtn).toBeVisible()
 
