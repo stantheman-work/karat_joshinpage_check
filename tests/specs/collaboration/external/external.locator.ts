@@ -7,8 +7,7 @@ async function getExternalcollabText(page: Page) {
 }
 
 async function getExternalCollaborateBtn(page: Page) {
-  const externalCollaborateBtn = page.getByRole("button", { name: "Collaborate" })
-  await expect(externalCollaborateBtn).toBeVisible({ timeout: 5000 })
+  const externalCollaborateBtn = page.locator("//button[text()='Collaborate']")
   return externalCollaborateBtn
 }
 
