@@ -24,7 +24,8 @@ setup("authenticate as super-admin", async ({ page }) => {
   await page.locator("iframe").contentFrame().getByRole("textbox", { name: "Character 4." }).fill(otp[3])
   await page.locator("iframe").contentFrame().getByRole("textbox", { name: "Character 5." }).fill(otp[4])
   await page.locator("iframe").contentFrame().getByRole("textbox", { name: "Character 6." }).fill(otp[5])
-  await page.locator("iframe").contentFrame().getByRole("button", { name: "Continue", exact: true }).click()
+  // code below no longer needed. after entering OTP, continue automatically pressed
+  // await page.locator("iframe").contentFrame().getByRole("button", { name: "Continue", exact: true }).click()
 
   await page.waitForURL("https://brand.dev.24karat.io/")
 

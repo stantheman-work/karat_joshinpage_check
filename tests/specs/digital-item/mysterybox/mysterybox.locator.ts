@@ -1,9 +1,15 @@
 import { expect, Locator, Page } from "@playwright/test"
 
-async function getCreateMysteryboxText(page) {
-  const createMysteryboxText = page.locator("//span[text()='Create mystery box']")
-  await expect(createMysteryboxText).toBeVisible({ timeout: 5000 })
-  return createMysteryboxText
+async function getMysteryboxText(page) {
+  const mysteryboxText = page.locator("//div[text()='Mystery boxes']")
+  await expect(mysteryboxText).toBeVisible({ timeout: 5000 })
+  return mysteryboxText
+}
+
+async function getMysteryboxSelectionModeToggle(page) {
+  const selectionModeToggle = page.locator("//input[@type='checkbox']")
+  await expect(selectionModeToggle).toBeVisible({ timeout: 5000 })
+  return selectionModeToggle
 }
 
 async function getEditMysteryboxText(page) {
@@ -96,12 +102,6 @@ async function getEditMysteryboxSaveChangesBtn(page) {
   return editMysteryboxSaveChangesBtn
 }
 
-async function getMysteryboxTab(page) {
-  const mysteryboxTab = page.locator("//button[contains(text(),'Mystery')]")
-  await expect(mysteryboxTab).toBeVisible({ timeout: 5000 })
-  return mysteryboxTab
-}
-
 async function getMysteryboxCreatebtn(page) {
   const mysteryboxCreateBtn = page.locator("//button[text()='Mystery Box']")
   await expect(mysteryboxCreateBtn).toBeVisible({ timeout: 5000 })
@@ -118,6 +118,36 @@ async function getMysteryboxCommunityFilter(page) {
   const mysteryboxTokenFilter = page.locator("//label[text()='Community']/following-sibling::div")
   await expect(mysteryboxTokenFilter).toBeVisible({ timeout: 5000 })
   return mysteryboxTokenFilter
+}
+
+// This is the three dot icon located per mystery box which contains the edit, duplicate and launch setting
+async function getMysteryboxSettingToggle(page: Page) {
+  /*
+  const mysteryboxSettingToggle = page.locator("//*[name()='svg' and @data-testid='MoreHorizIcon']")
+  const count = await mysteryboxSettingToggle.count()
+
+  let textFieldArray: Locator[] = []
+  for (let i = 0; i < count; i++) {
+    textFieldArray.push(mysteryboxSettingToggle.nth(i))
+  }
+  return textFieldArray
+  */
+  return page.locator("//*[name()='svg' and @data-testid='MoreHorizIcon']")
+}
+
+// This contains the values inside the Mysterybox settings toggle
+async function getMysteryboxSettingToggleOptions(page: Page) {
+  /*
+  const mysteryboxSettingToggleOptions = page.locator("//div/li")
+  const count = await mysteryboxSettingToggleOptions.count()
+
+  let textFieldArray: Locator[] = []
+  for (let i = 0; i < count; i++) {
+    textFieldArray.push(mysteryboxSettingToggleOptions.nth(i))
+  }
+  return textFieldArray
+  */
+  return page.locator("//div/li")
 }
 
 async function getMysteryboxColumnHeader(page: Page) {
@@ -141,10 +171,9 @@ async function getMysteryColumnLoadingIcon(page) {
 
 export {
   getCreateMysteryboxCancelBtn,
+  getCreateMysteryboxCommunityDropdown,
   getCreateMysteryboxCreateBtn,
   getCreateMysteryboxName,
-  getCreateMysteryboxText,
-  getCreateMysteryboxCommunityDropdown,
   getCreateMysteryboxTotalBoxes,
   getCreateMysteryboxUploadImage,
   getEditMysteryboxBackBtn,
@@ -155,10 +184,13 @@ export {
   getMBOXBoxWindowListingBtn,
   getMBOXWindowInformationText,
   getMysteryboxColumnHeader,
+  getMysteryboxCommunityFilter,
   getMysteryboxCreatebtn,
   getMysteryboxNameColumn,
-  getMysteryboxTab,
   getMysteryboxSearchFilter,
-  getMysteryboxCommunityFilter,
-  getMysteryColumnLoadingIcon
+  getMysteryboxSettingToggle,
+  getMysteryboxSettingToggleOptions,
+  getMysteryboxText,
+  getMysteryColumnLoadingIcon,
+  getMysteryboxSelectionModeToggle
 }

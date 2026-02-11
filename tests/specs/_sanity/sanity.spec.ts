@@ -1,4 +1,7 @@
 import {
+  closeWindowPopup
+} from "@/utils/keyboard-helper"
+import {
   getActivitygraphCategoryTab,
   getActivitygraphExportBtn,
   getActivitygraphNoData,
@@ -23,7 +26,9 @@ import {
   getCampaignText,
   getCampaignTypeFilter
 } from "@/specs/campaign/campaign.locator"
-import { getDailytrendMenuSelected } from "@/locators/dailytrend.locator"
+import { 
+  getInsightsMenuSelected
+} from "@/locators/insights.locator"
 import {
   getBrandEditButton,
   getBrandCommunityCreateBtn,
@@ -36,6 +41,7 @@ import {
   getSideBarParentMenu
 } from "@/specs/general/dashboard.locator"
 import {
+  getDevAPIEditBtn,
   getDevAPIKeysText,
   getDevColumnHeaders,
   getDevCreateNewAPIBtn
@@ -83,7 +89,8 @@ import {
   getMissionCardListView,
   getMissionCreateBtn,
   getMissionSearchFilter,
-  getMissionText
+  getMissionText,
+  getMissionSettingsBtn
 } from "@/specs/contents/mission/mission.locator"
 import {
   getCommunitypostColumnHeaders,
@@ -100,22 +107,29 @@ import {
   getSocialpostTab
 } from "../contents/feed/feed.locator"
 import {
-  getNFTtab,
   getNFTSearchNFTFilter,
+  getNFTSelectionModeToggle,
   getNFTCollectionFilter,
   getNFTCommunityFilter,
   getNFTCreateBtn,
-  getNFTColumnHeader
+  getNFTColumnHeader,
+  getNFTCreateMoreOptionsDropdown,
+  getNFTCreateMoreOptionsDropdownItems,
+  getNFTMoreOptions
 } from "../digital-item/nft/nft.locator"
 import {
   getCollectionManagementBtn
 } from "../digital-item/nft/collectionmanagement.locator"
 import {
-  getMysteryboxTab,
+  getEditMysteryboxText,
+  getMysteryboxColumnHeader,
+  getMysteryboxCommunityFilter,
   getMysteryboxCreatebtn,
   getMysteryboxSearchFilter,
-  getMysteryboxCommunityFilter,
-  getMysteryboxColumnHeader
+  getMysteryboxSettingToggle,
+  getMysteryboxSettingToggleOptions,
+  getMysteryboxText,
+  getMysteryboxSelectionModeToggle
 } from "../digital-item/mysterybox/mysterybox.locator"
 import {
   getProposalCheckSubmissionBtn,
@@ -173,7 +187,7 @@ import {
   getMemberSearchFilter,
   getMemberRoleFilter,
   getMemberDateJoinedFilter,
-  getMemberColumnHeaders
+  getMemberColumnHeader
 } from "@/specs/general/member.locator"
 import {
   getVMMysteryboxColumnHeader,
@@ -251,39 +265,42 @@ async function brandDashboardSanity(page: Page) {
       await brandCommunityMemberTabCheck(page)
       await brandCommunityLogsTabCheck(page)
     } else if (i == 1) {
-      // in NFT / Mysterybox page
-      await brandNFTMysteryboxPageCheck(page)
+      // in NFT page
+      await brandNFTPageCheck(page)
     } else if (i == 2) {
+      // in NFT page
+      await brandMysteryboxPageCheck(page)
+    } else if (i == 3) {
       // in Stamp passport page
       await brandStamppassportPageCheck(page)
-    } else if (i == 3) {
+    } else if (i == 4) {
       // in Vending machine page
       await brandVendingMachinePageCheck(page)
-    } else if (i == 4) {
+    } else if (i == 5) {
       // in Campaign page
       await brandCampaignPageCheck(page)
-    } else if (i == 5) {
+    } else if (i == 6) {
       // in Feed page
       await brandFeedPageCheck(page)
-    } else if (i == 6) {
+    } else if (i == 7) {
       // in Mission page
       await brandMissionPageCheck(page)
-    } else if (i == 7) {
+    } else if (i == 8) {
       // in Quiz page
       await brandQuizPageCheck(page)
-    } else if (i == 8) {
+    } else if (i == 9) {
       // in Survey page
       await brandSurveyPageCheck(page)
-    } else if (i == 9) {
+    } else if (i == 10) {
       // in Proposal page
       await brandProposalPageCheck(page)
-    } else if (i == 10) {
+    } else if (i == 11) {
       // in Articles page
       await brandArticlePageCheck(page)
-    } else if (i == 11) {
+    } else if (i == 12) {
       // in Game corner page
       await brandGamecornerPageCheck(page)
-    } else if (i == 12) {
+    } else if (i == 13) {
       // In Social Room page
       try {
         await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.searchRooms !== undefined, { timeout: 10000 })
@@ -291,7 +308,7 @@ async function brandDashboardSanity(page: Page) {
       } catch (error) {
         console.log("This community does not have any social rooms")
       }
-    } else if (i == 13) {
+    } else if (i == 14) {
       // In Video page
       try {
         await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.findVideos !== undefined, { timeout: 10000 })
@@ -299,13 +316,13 @@ async function brandDashboardSanity(page: Page) {
       } catch (error) {
         console.log("This community does not have any videos")
       }
-    } else if (i == 14) {
+    } else if (i == 15) {
       // in Messages page
       await brandMessagePageCheck(page)
-    } else if (i == 15) {
-      // in Dailytrend page
-      await brandDailytrendPageCheck(page)
     } else if (i == 16) {
+      // in Insights page
+      await brandInsightsPageCheck(page)
+    } else if (i == 17) {
       // in Activitygraph page
       try {
         await PageUtils.waitForGraphqlResponse(page, (json) => json.data?.brandStats !== undefined, { timeout: 10000 })
@@ -313,27 +330,27 @@ async function brandDashboardSanity(page: Page) {
       } catch (error) {
         console.log("This community does not have any activities")
       }
-    } else if (i == 17) {
-      // in Leaderboard page
-      await brandLeaderboardPageCheck(page)
     } else if (i == 18) {
       // in Leaderboard page
-      await brandUsersearchPageCheck(page)
+      await brandLeaderboardPageCheck(page)
     } else if (i == 19) {
+      // in Leaderboard page
+      await brandUsersearchPageCheck(page)
+    } else if (i == 20) {
       // in Sales report page
       await brandSalesreportPageCheck(page)
-    } else if (i == 20) {
+    } else if (i == 21) {
       // in External collab page
       await brandExternalcollabPageCheck(page)
-    } else if (i == 21) {
+    } else if (i == 22) {
       // in Internal collab page
       await brandInternalcollabPageCheck(page)
-    } else if (i == 22) {
+    } else if (i == 23) {
       // in Scan page
       await brandScanPageCheck(page)
-    } else if (i == 23) {
-      // in Developer tool
-      await brandDevelopertoolPageCheck(page)
+    } else if (i == 24) {
+      // in Developer API Clients page
+      await brandDeveloperAPIClientsPageCheck(page)
     } else {
       // in LINE LIFF APP page
       await brandLINELIFFAppSettings(page)
@@ -373,16 +390,17 @@ async function brandCommunityMemberTabCheck(page) {
   await expect(comMemberTab).toBeVisible();
   await comMemberTab.click()
   await waitForPageToLoad(page)
+  
   const memInviteBtn = await getMemberInviteBtn(page)
   const memSearchFilter = await getMemberSearchFilter(page)
   const memRoleFilter = await getMemberRoleFilter(page)
   const memDateJoinedFilter = await getMemberDateJoinedFilter(page)
-  const memColumnHeaders = (await getMemberColumnHeaders(page))[0]
+  const memColumnHeaders = getMemberColumnHeader(page)
+  await expect((await memColumnHeaders).first()).toBeVisible({ timeout: 15000 })
   await expect(memInviteBtn).toBeVisible()
   await expect(memSearchFilter).toBeVisible()
   await expect(memRoleFilter).toBeVisible()
   await expect(memDateJoinedFilter).toBeVisible()
-  await expect(memColumnHeaders).toBeVisible()
   console.log("[INFO] End community member tab check.")
 }
 
@@ -400,40 +418,58 @@ async function brandCommunityLogsTabCheck(page) {
   console.log("[INFO] End community logs tab check.")
 }
 
-async function brandNFTMysteryboxPageCheck(page) {
-  console.log("[INFO] Start NFT / Mysterybox page check.")
+async function brandNFTPageCheck(page) {
+  console.log("[INFO] Start NFT page check.")
   await waitForPageToLoad(page)
-  const nftTab = await getNFTtab(page)
+  const nftSelectionModeToggle = await getNFTSelectionModeToggle(page)
   const nftSearchNFTFilter = await getNFTSearchNFTFilter(page)
   const nftCollectionFilter = await getNFTCollectionFilter(page)
   const nftCommunityFilter = await getNFTCommunityFilter(page)
   const collectionManagementBtn = await getCollectionManagementBtn(page)
   const nftCreateBtn = await getNFTCreateBtn(page)
-  const nftColumnHeader = (await getNFTColumnHeader(page))[0]
-  console.log("[INFO] Start checking NFT tab.")
-  await expect(nftTab).toBeVisible()
+  const nftColumnHeader = getNFTColumnHeader(page)
+  const nftMoreOptions = getNFTMoreOptions(page)
+  await expect(nftSelectionModeToggle).toBeVisible()
   await expect(collectionManagementBtn).toBeVisible()
   await expect(nftCreateBtn).toBeVisible()
   await expect(nftSearchNFTFilter).toBeVisible()
   await expect(nftCollectionFilter).toBeVisible()
   await expect(nftCommunityFilter).toBeVisible()
-  await expect(nftColumnHeader).toHaveText("NFT Name")
-  await expect(nftColumnHeader).toBeVisible()
-  console.log("[INFO] Done checking NFT tab.")
-  console.log("[INFO] Start checking Mysterybox tab.")
-  const mysteryboxTab = await getMysteryboxTab(page)
-  await mysteryboxTab.click() // switch to mysterybox tab
+  await expect((await nftMoreOptions).first()).toBeVisible({timeout: 15000})
+  await expect((await nftColumnHeader).first()).toBeVisible()
+  await expect((await nftColumnHeader).first()).toHaveText("NFT Name")
+  await expect((await nftColumnHeader).first()).toBeVisible()
+  const nftCreateMoreOptionsDropdown = await getNFTCreateMoreOptionsDropdown(page)
+  await expect(nftCreateMoreOptionsDropdown).toBeVisible()
+  await nftCreateMoreOptionsDropdown.click()
+  const nftCreateMoreOptionsDropdownItems = (await getNFTCreateMoreOptionsDropdownItems(page))[0]
+  await expect(nftCreateMoreOptionsDropdownItems).toBeVisible()
+  await closeWindowPopup(page)
+  console.log("[INFO] End NFT page check.")
+}
+
+async function brandMysteryboxPageCheck(page) {
+  console.log("[INFO] Start Mysterybox page check.")
+  const mysteryboxText = await getMysteryboxText(page)
+  const mysteryboxSelectionModeToggle = await getMysteryboxSelectionModeToggle(page)
   const mysteryboxCreateBtn = await getMysteryboxCreatebtn(page)
   const mysteryboxSearchFilter = await getMysteryboxSearchFilter(page)
   const mysteryboxCommunityFilter = await getMysteryboxCommunityFilter(page)
   const mysteryboxColumnHeader = (await getMysteryboxColumnHeader(page))[0]
-  await expect(nftColumnHeader).toHaveText("Box Name")
+  const mysteryboxSettingToggle = await getMysteryboxSettingToggle(page)
+  await expect(mysteryboxText).toBeVisible()
+  await expect(mysteryboxSelectionModeToggle).toBeVisible()
+  await expect(mysteryboxColumnHeader).toHaveText("Box Name")
   await expect(mysteryboxCreateBtn).toBeVisible()
   await expect(mysteryboxSearchFilter).toBeVisible()
   await expect(mysteryboxCommunityFilter).toBeVisible()
   await expect(mysteryboxColumnHeader).toBeVisible()
-  console.log("[INFO] Done checking Mysterybox tab.")
-  console.log("[INFO] End NFT / Mysterybox page check.")
+  await expect(mysteryboxSettingToggle.first()).toBeVisible({ timeout: 15000 })
+  await mysteryboxSettingToggle.first().click()
+  const mysteryboxSettingToggleOptions = await getMysteryboxSettingToggleOptions(page)
+  await expect(mysteryboxSettingToggleOptions.first()).toBeVisible()
+  await closeWindowPopup(page)
+  console.log("[INFO] End Mysterybox page check.")
 }
 
 async function brandStamppassportPageCheck(page) {
@@ -538,6 +574,8 @@ async function brandMissionPageCheck(page) {
   const missionCreateBtn = await getMissionCreateBtn(page)
   const missionCardView = (await getMissionCardListView(page))[0]
   const missionListView = (await getMissionCardListView(page))[1]
+  const missionSettingsBtn = await getMissionSettingsBtn(page)
+  // const missionSettingsBtn = (await getMissionSettingsBtn(page))[0]
   await expect(missionText).toBeVisible()
   await expect(missionSearchFilter).toBeVisible()
   await expect(missionShowonZAPDropdown).toBeVisible()
@@ -545,6 +583,9 @@ async function brandMissionPageCheck(page) {
   await expect(missionCreateBtn).toBeVisible()
   await expect(missionCardView).toBeVisible()
   await expect(missionListView).toBeVisible()
+  await expect(missionSettingsBtn.first()).toBeVisible({timeout: 15000})
+  /*await waitForAnElement(page, missionSettingsBtn)
+  await expect(missionSettingsBtn).toBeVisible()*/
   console.log("[INFO] End Mission page check.")
 }
 
@@ -704,11 +745,11 @@ async function brandMessagePageCheck(page) {
   console.log("[INFO] End checking Airdrop tab")
 }
 
-async function brandDailytrendPageCheck(page) {
-  console.log("[INFO] Start Dailytrend page check.")
-  const dailytrendMenuSelected = await getDailytrendMenuSelected(page)
-  await expect(dailytrendMenuSelected).toBeVisible()
-  console.log("[INFO] End Dailytrend page check.")
+async function brandInsightsPageCheck(page) {
+  console.log("[INFO] Start Insights page check.")
+  const insightsMenuSelected = await getInsightsMenuSelected(page)
+  await expect(insightsMenuSelected).toBeVisible()
+  console.log("[INFO] End Insights page check.")
 }
 
 async function brandActivitygraphPageCheck(page) {
@@ -898,15 +939,22 @@ async function brandScanPageCheck(page) {
   console.log("[INFO] End Scan page check.")
 }
 
-async function brandDevelopertoolPageCheck(page) {
-  console.log("[INFO] Start Developer page check.")
+async function brandDeveloperAPIClientsPageCheck(page) {
+  console.log("[INFO] Start Developer API Clients page check.")
   const devAPIKeysText = await getDevAPIKeysText(page)
   const devColumnHeaders = (await getDevColumnHeaders(page))[0]
   const devCreateNewAPIBtn = await getDevCreateNewAPIBtn(page)
+  // const devAPIEditBtn = (await getDevAPIEditBtn(page))[0]
+  const devAPIEditBtn = await getDevAPIEditBtn(page)
   await expect(devAPIKeysText).toBeVisible()
   await expect(devColumnHeaders).toBeVisible()
   await expect(devCreateNewAPIBtn).toBeVisible()
-  console.log("[INFO] End Developer page check.")
+  try {
+    await expect(devAPIEditBtn.first()).toBeVisible({timeout: 10000})
+  } catch (error) {
+    console.log("Brand has no API clients set up")
+  }
+  console.log("[INFO] End Developer API Clients page check.")
 }
 
 async function brandLINELIFFAppSettings(page) {

@@ -38,15 +38,20 @@ async function getDevColumnHeaders(page: Page) {
   for (let i = 0; i < count; i++) {
     textFieldArray.push(devColumnHeaders.nth(i))
   }
-  console.log("This is the value of dev tools column headers = " + textFieldArray.length + "\n")
   return textFieldArray
 }
 
+async function getDevAPIEditBtn(page: Page) {
+  return page.locator("//button[text()='Edit']")
+}
+
+
 export {
+  getDevAPIEditBtn,
   getDevAPIKeysText,
   getDevCancelBtn,
   getDevColumnHeaders,
   getDevCreateAPIName,
   getDevCreateBtn,
-  getDevCreateNewAPIBtn,
+  getDevCreateNewAPIBtn
 }

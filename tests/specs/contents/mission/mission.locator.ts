@@ -48,6 +48,7 @@ async function getMissionCardListView(page: Page) {
 
 async function getMissionSettingsBtn(page: Page) {
   // Depends on the number of missions the brand has
+  /*
   const missionSettingsBtn = page.locator("//button[@aria-label='settings']")
   const count = await missionSettingsBtn.count()
 
@@ -58,6 +59,8 @@ async function getMissionSettingsBtn(page: Page) {
   console.log("This is the value of mission settings button = " + textFieldArray.length + "\n")
 
   return textFieldArray
+  */
+  return page.locator("//button[@aria-label='settings']")
 }
 
 async function getMissionSettingsSelect(page: Page) {

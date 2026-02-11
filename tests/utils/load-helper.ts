@@ -29,8 +29,9 @@ export async function waitForPageToLoad(page: Page) {
 }
 
 export async function waitForAnElement(page: Page, locator: Locator) {
+  // await locator.waitFor({ state: 'visible' })
   await expect(locator).toBeVisible({ timeout: 5000 })
-  // console.log("The locator exists on the page.")
+  console.log("The locator exists on the page.")
 }
 
 export async function waitForAnElement2(page: Page, locator: Locator) {

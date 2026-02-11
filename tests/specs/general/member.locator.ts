@@ -19,16 +19,7 @@ async function getMemberDateFilter(page) {
 }
 
 async function getMemberColumnHeader(page: Page) {
-  const teamColumnHeader = page.locator("//th[text()]")
-  const count = await teamColumnHeader.count()
-
-  let textFieldArray: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    textFieldArray.push(teamColumnHeader.nth(i))
-  }
-  console.log("This is the value of column header = " + textFieldArray.length + "\n")
-
-  return textFieldArray
+  return page.locator("//th[text()]")
 }
 
 async function getMemberInviteText(page) {
@@ -79,22 +70,8 @@ async function getMemberDateJoinedFilter(page) {
   return memberDateJoinedFilter
 }
 
-async function getMemberColumnHeaders(page: Page) {
-  const memberColumnHeaders = page.locator("//th[text()]")
-  const count = await memberColumnHeaders.count()
-
-  let textFieldArray: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    textFieldArray.push(memberColumnHeaders.nth(i))
-  }
-  console.log("This is the value of member column headers = " + textFieldArray.length + "\n")
-
-  return textFieldArray
-}
-
 export {
   getMemberColumnHeader,
-  getMemberColumnHeaders,
   getMemberDateFilter,
   getMemberDateJoinedFilter,
   getMemberInviteBtn,
