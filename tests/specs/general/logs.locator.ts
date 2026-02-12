@@ -25,4 +25,30 @@ async function getLogsColumnHeader(page: Page) {
   return textFieldArray
 }
 
-export { getLogsColumnHeader, getLogsRefreshBtn, getLogsSearchFilter }
+async function getViewDetailLink(page: Page) {
+  return page.getByText('View Detail')
+  /*
+  const logsViewDetailLink = page.locator("//th[text()]")
+  const count = await logsViewDetailLink.count()
+
+  let textFieldArray: Locator[] = []
+  for (let i = 0; i < count; i++) {
+    textFieldArray.push(logsViewDetailLink.nth(i))
+  }
+  console.log("This is the value of logs column header = " + textFieldArray.length + "\n")
+
+  return textFieldArray
+  */
+}
+
+async function getViewDetailHeaderText(page: Page) {
+  return page.getByText('The change details')
+}
+
+export { 
+  getLogsColumnHeader, 
+  getLogsRefreshBtn, 
+  getLogsSearchFilter,
+  getViewDetailLink,
+  getViewDetailHeaderText
+}

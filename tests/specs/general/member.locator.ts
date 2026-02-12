@@ -18,40 +18,6 @@ async function getMemberDateFilter(page) {
   return teamDateFilter
 }
 
-async function getMemberColumnHeader(page: Page) {
-  return page.locator("//th[text()]")
-}
-
-async function getMemberInviteText(page) {
-  const teamInviteText = page.locator("//h5[contains(text(),'Invite')]")
-  await expect(teamInviteText).toBeVisible({ timeout: 5000 })
-  return teamInviteText
-}
-
-async function getMemberInviteEmail(page) {
-  const teamInviteEmailInput = page.locator("//input[contains(@placeholder,'people')]")
-  await expect(teamInviteEmailInput).toBeVisible({ timeout: 5000 })
-  return teamInviteEmailInput
-}
-
-async function getMemberRoleDropdown(page) {
-  const teamRoleDropdown = page.locator("//h6[contains(text(),'role')]/following-sibling::div")
-  await expect(teamRoleDropdown).toBeVisible({ timeout: 5000 })
-  return teamRoleDropdown
-}
-
-async function getMemberInviteSendBtn(page) {
-  const teamInviteSend = page.locator("//h6[contains(text(),'role')]/parent::div/following-sibling::div/button")
-  await expect(teamInviteSend).toBeVisible({ timeout: 5000 })
-  return teamInviteSend
-}
-
-async function getMemberInviteBtn(page) {
-  const memberInviteBtn = page.locator("//button[text()='Invite']")
-  await expect(memberInviteBtn).toBeVisible({ timeout: 5000 })
-  return memberInviteBtn
-}
-
 async function getMemberSearchFilter(page) {
   const memberSearchFilter = page.locator("//input[contains(@placeholder,'Search user')]")
   await expect(memberSearchFilter).toBeVisible({ timeout: 5000 })
@@ -70,15 +36,77 @@ async function getMemberDateJoinedFilter(page) {
   return memberDateJoinedFilter
 }
 
+async function getMemberColumnHeader(page: Page) {
+  return page.locator("//th[text()]")
+}
+
+async function getMemberInviteBtn(page) { 
+  return page.getByRole('button', { name: 'Invite' })
+  /*
+  const memberInviteBtn = page.locator("//button[text()='Invite']")
+  await expect(memberInviteBtn).toBeVisible({ timeout: 5000 })
+  return memberInviteBtn
+  */
+}
+
+async function getInviteMemberHeaderText(page) {
+  return page.locator("//h5[text()='Invite people to your team']")
+  // return page.getByRole('heading', { name: 'Invite people to your team' })
+  /*
+  const teamInviteText = page.locator("//h5[contains(text(),'Invite')]")
+  await expect(teamInviteText).toBeVisible({ timeout: 5000 })
+  return teamInviteText
+  */
+}
+
+async function getInviteMemberEmailInput(page) {
+  return page.getByPlaceholder('Add more people')
+  /*
+  const memberEmailInput = page.locator("//input[contains(@placeholder,'people')]")
+  await expect(memberEmailInput).toBeVisible({ timeout: 5000 })
+  return memberEmailInput
+  */
+}
+
+async function getInviteMemberAccessDropdown(page) {
+  return page.locator("//h6[contains(text(),'role')]/following-sibling::div")
+  /*
+  const memberAccessRoleDropdown = page.locator("//h6[contains(text(),'role')]/following-sibling::div")
+  await expect(memberAccessRoleDropdown).toBeVisible({ timeout: 5000 })
+  return memberAccessRoleDropdown
+  */
+}
+
+async function getInviteMemberViaLinkBtn(page) {
+  return page.locator("//button[text()='Invite via link']")
+  // return page.getByRole('button', { name: 'Invite via link' })
+  /*
+  const teamInviteSend = page.locator("//h6[contains(text(),'role')]/parent::div/following-sibling::div/button")
+  await expect(teamInviteSend).toBeVisible({ timeout: 5000 })
+  return teamInviteSend
+  */
+}
+
+async function getInviteMemberSendBtn(page) {
+  return page.locator("//button[text()='Invite']")
+  // return page.getByRole('button', { name: 'Invite' })
+  /*
+  const teamInviteSend = page.locator("//h6[contains(text(),'role')]/parent::div/following-sibling::div/button")
+  await expect(teamInviteSend).toBeVisible({ timeout: 5000 })
+  return teamInviteSend
+  */
+}
+
 export {
+  getInviteMemberAccessDropdown,
+  getInviteMemberEmailInput,
+  getInviteMemberHeaderText,
+  getInviteMemberSendBtn,
+  getInviteMemberViaLinkBtn,
   getMemberColumnHeader,
   getMemberDateFilter,
   getMemberDateJoinedFilter,
   getMemberInviteBtn,
-  getMemberInviteEmail,
-  getMemberInviteSendBtn,
-  getMemberInviteText,
-  getMemberRoleDropdown,
   getMemberRoleFilter,
   getMemberRoleSelectFilter,
   getMemberSearchFilter,
