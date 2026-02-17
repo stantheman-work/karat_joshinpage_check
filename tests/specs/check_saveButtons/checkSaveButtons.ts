@@ -148,9 +148,6 @@ async function brandDashboardSaveBtnCheck(page) {
       })
 
       // Customize home page
-
-
-      
       await test.step("[INFO] Check save buttons inside customize home button", async () => {
         let announcementFlag
         const customizeHomeBtn = await getBrandCustomizehomeBtn(page)
@@ -241,11 +238,6 @@ async function brandDashboardSaveBtnCheck(page) {
           await ch_igsetting.popupSaveBtn().click()
           await expect(ch_igsetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
           await expect(ch_igsetting.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
-          /*
-          await ch_igsetting.onoffToggle().click()
-          await expect(ch_igsetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-          await expect(ch_igsetting.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
-          */
         })
         // Friend referral
         await test.step("Check friend referral tab", async () => {
@@ -269,8 +261,6 @@ async function brandDashboardSaveBtnCheck(page) {
         const communityEditBrandBtn = await getBrandEditButton(page)
         await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 })
       })
-
-
       // Visibility setting page
       await test.step("Check visibility setting page", () => {
       })
@@ -286,8 +276,6 @@ async function brandDashboardSaveBtnCheck(page) {
     await page.waitForTimeout(5000) // no choice but to add this
     const memberColumnHeader = await getMemberColumnHeader(page)
     await expect(memberColumnHeader.first()).toBeVisible({ timeout: 20000 })
-    // const memberColumnHeader = (await getMemberColumnHeader(page))[0]
-    // await expect(memberColumnHeader).toBeVisible({ timeout: 15000 }) // This locator doesn't load automatically
     const inviteMemberBtn = await getMemberInviteBtn(page)
     await inviteMemberBtn.click()
     const im_headerText = await getInviteMemberHeaderText(page)
