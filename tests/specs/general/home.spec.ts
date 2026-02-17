@@ -45,7 +45,7 @@ import {
   getCommunityPreview,
   getCommunitySubmitBtn,
   getCommunityTokenName
-} from "../general/tokeninfo.locator"
+} from "./communityinfo.locator"
 import { AuthUtils } from "@/utils/auth-utils"
 import { waitForPageToLoad, scrollToElement } from "@/utils/load-helper"
 import { PageUtils } from "@/utils/page-utils"

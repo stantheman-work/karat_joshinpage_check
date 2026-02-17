@@ -8,7 +8,7 @@ import {
   getTokenSectionName,
   getTokenSubmitTokenBtn,
   getTokenUploadImageElement,
-} from "@/specs/general/tokeninfo.locator"
+} from "@/specs/general/communityinfo.locator"
 import { PageUtils } from "@/utils/page-utils"
 import { Page } from "@playwright/test"
 import * as path from "path"

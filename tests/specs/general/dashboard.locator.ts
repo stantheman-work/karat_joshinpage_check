@@ -62,10 +62,14 @@ async function getBrand24karatOption(page) {
   return brand24karatOption
 }
 
+// Locators below are for Communities Tab
 async function getBrandEditButton(page: Page) {
+  return page.getByText('Edit Brand')
+  /*
   const brandEditBtn = page.locator("//button[contains(text(), 'Brand')]")
   await expect(brandEditBtn).toBeVisible({ timeout: 5000 })
   return brandEditBtn
+  */
 }
 
 async function getBrandCommunityCreateBtn(page) {
@@ -147,6 +151,9 @@ async function getBrandCommunityCustomizehomeBtn(page: Page) {
 }
 
 async function getBrandCommunityEditBtn(page: Page) {
+  return page.locator("//button[@aria-label='Edit']")
+  // return page.getByRole('button', { name: 'Edit' })
+  /*
   const brandCommunityEditBtn = page.locator("//button[@aria-label='Edit']")
   const count = await brandCommunityEditBtn.count()
 
@@ -157,6 +164,11 @@ async function getBrandCommunityEditBtn(page: Page) {
   console.log("This is the value of brand community edit button = " + textFieldArray.length + "\n")
 
   return textFieldArray
+  */
+}
+
+async function getBrandCustomizehomeBtn(page: Page) {
+  return page.locator("//button[@aria-label='Customize home']")
 }
 
 async function getBrandCommunityVisibilitysettingBtn(page: Page) {
@@ -181,6 +193,7 @@ export {
   getBrandCommunityTabs,
   getBrandCommunityVisibilitysettingBtn,
   getBrandCommunityCreateBtn,
+  getBrandCustomizehomeBtn,
   getBrandDashboardNotificationCloseBtn,
   getBrandDashboardNotificationHeader,
   getBrandEditButton,
