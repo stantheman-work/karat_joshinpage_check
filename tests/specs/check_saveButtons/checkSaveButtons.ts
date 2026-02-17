@@ -5,6 +5,7 @@ import {
   getBrandEditButton,
   getBrandCommunityCreateBtn,
   getBrandCommunityTabs,
+  getBrandCustomizehomeBtn,
   getBrandSearchFilter,
   getBrandVisibilityFilter,
   getBrandStatusFilter,
@@ -19,19 +20,28 @@ import {
 import {
   communityInfoPage
 } from "@/specs/general/communityinfo.locator"
+import {
+  customizeHome_Announcement
+} from "@/specs/general/customizehome/announcement.locator"
+import {
+  customizeHome_Fanvoices
+} from "@/specs/general/customizehome/fanvoices.locator"
+import {
+  customizeHome_Instagramsetting
+} from "@/specs/general/customizehome/instagramsetting.locator"
 import { AuthUtils } from "@/utils/auth-utils"
-import { 
-  scrollToElement, 
-  waitForAnElement, 
-  waitForPageToLoad 
+import {
+  scrollToElement,
+  waitForAnElement,
+  waitForPageToLoad
 } from "@/utils/load-helper"
 import { PageUtils } from "@/utils/page-utils"
-import { 
-  expect, 
-  Page, 
-  test 
+import {
+  expect,
+  Page,
+  test
 } from "@playwright/test"
-import { 
+import {
   getInviteMemberAccessDropdown,
   getInviteMemberEmailInput,
   getInviteMemberHeaderText,
@@ -46,9 +56,9 @@ import {
   getMemberSearchFilter,
   getMemberSearchUserFilter
 } from "../general/member.locator"
-import { 
-  getLogsColumnHeader, 
-  getLogsRefreshBtn, 
+import {
+  getLogsColumnHeader,
+  getLogsRefreshBtn,
   getLogsSearchFilter,
   getViewDetailLink,
   getViewDetailHeaderText
@@ -60,7 +70,8 @@ import {
 */
 async function brandDashboardSaveBtnCheck(page) {
   await test.step("[INFO] Brand dashboard page save buttons check", async () => {
-    await test.step("[INFO] Check save buttons in communities tab", async () =>  {
+    await test.step("[INFO] Check save buttons in communities tab", async () => {
+      
       await test.step("[INFO] Check elements and save button while editing brand", async () => {
         const communityEditBrandBtn = await getBrandEditButton(page)
         await expect(communityEditBrandBtn).toBeVisible()
@@ -83,6 +94,7 @@ async function brandDashboardSaveBtnCheck(page) {
         await bi_Elements.saveBtn().click()
         await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 })
       })
+
       await test.step("[INFO] Check elements and save button while editing community", async () => {
         const communityEditBtn = await getBrandCommunityEditBtn(page)
         await expect(communityEditBtn.first()).toBeVisible({ timeout: 15000 })
@@ -134,44 +146,175 @@ async function brandDashboardSaveBtnCheck(page) {
         const communityEditBrandBtn = await getBrandEditButton(page)
         await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 }) // added timeout in case the page loads slowly
       })
-      // Add settings and visibility checks here
-    })
-    await test.step("[INFO] Check save buttons in members tab", async () =>  {
-      const memberTab = (await getBrandCommunityTabs(page))[1]
-      await expect(memberTab).toBeVisible()
-      await memberTab.click()
-      await expect(memberTab).toHaveAttribute('aria-selected', 'true')
-      const memberColumnHeader = await getMemberColumnHeader(page)
-      await expect(memberColumnHeader.first()).toBeVisible({ timeout: 15000 })
-      // const memberColumnHeader = (await getMemberColumnHeader(page))[0]
-      // await expect(memberColumnHeader).toBeVisible({ timeout: 15000 }) // This locator doesn't load automatically
-      const inviteMemberBtn = await getMemberInviteBtn(page)
-      await inviteMemberBtn.click()
-      const im_headerText = await getInviteMemberHeaderText(page)
-      const im_emailInput = await getInviteMemberEmailInput(page)
-      const im_memberAccessDropdown = await getInviteMemberAccessDropdown(page)
-      const im_inviteViaLinkBtn = await getInviteMemberViaLinkBtn(page)
-      const im_inviteBtn = await getInviteMemberSendBtn(page)
-      await expect(im_headerText).toBeVisible()
-      await expect(im_emailInput).toBeVisible()
-      await expect(im_memberAccessDropdown).toBeVisible()
-      await expect(im_inviteViaLinkBtn).toBeVisible()
-      await expect(im_inviteBtn.last()).toBeVisible()
-      await closeWindowPopup(page)
-    })
-    await test.step("[INFO] Check save buttons in logs tab", async () =>  {
-      const logsTab = (await getBrandCommunityTabs(page))[2]
-      await expect(logsTab).toBeVisible()
-      await logsTab.click()
-      await expect(logsTab).toHaveAttribute('aria-selected', 'true')
-      const logsViewDetailLink = (await getViewDetailLink(page)).nth(0)
-      await expect(logsViewDetailLink).toBeVisible({ timeout: 15000 })
-      await logsViewDetailLink.click()
-      const vd_headerText = await getViewDetailHeaderText(page)
-      await expect(vd_headerText).toBeVisible()
-      await closeWindowPopup(page)
+
+      // Customize home page
+
+
+      
+      await test.step("[INFO] Check save buttons inside customize home button", async () => {
+        let announcementFlag
+        const customizeHomeBtn = await getBrandCustomizehomeBtn(page)
+        await customizeHomeBtn.first().click()
+        const ch_announce = new customizeHome_Announcement(page)
+        await expect(ch_announce.topOfTokenPageTab()).toBeVisible({ timeout: 15000 })
+        await expect(ch_announce.topOfTokenPageTab()).toHaveAttribute('aria-selected', 'true')
+        await expect(ch_announce.bottomOfTokenPageTab()).toBeVisible({ timeout: 15000 })
+        await expect(ch_announce.customizeHomeTablist().first()).toBeVisible()
+        await expect(ch_announce.disableAllBtn().first()).toBeVisible()
+        await expect(ch_announce.saveOrderBtn().first()).toBeVisible()
+        // Announcement
+        await test.step("Checks whether this community has an existing announcement", async () => {
+          for (let ctr = 0; ctr < 2; ctr++) {
+            if (ctr === 1) {
+              await ch_announce.bottomOfTokenPageTab().click()
+            }
+            try {
+              // Check whether this community has an existing announcement or none
+              await expect(ch_announce.addNewFromAnnouncementListBtn()).toBeVisible()
+              announcementFlag = false
+            } catch (error) {
+              await expect(ch_announce.addNewTopBtn()).toBeVisible()
+              announcementFlag = true
+            }
+            if (announcementFlag === true) {
+              console.log("Community has an existing announcement")
+              await expect(ch_announce.settingsBtn()).toBeVisible()
+              ch_announce.settingsBtn().click()
+              await expect(ch_announce.settingsOptionsList().first()).toBeVisible({ timeout: 15000 })
+              await expect(ch_announce.settingsOptionsList().last()).toBeVisible()
+              ch_announce.settingsOptionsList().last().click()
+              // Now inside existing announcement edit page
+              await expect(ch_announce.infoBannerImg()).toBeVisible({ timeout: 15000 })
+              await expect(ch_announce.infoTitle()).toBeVisible()
+              await expect(ch_announce.infoContentTypeDropdown()).toBeVisible()
+              await expect(ch_announce.infoPositionDropdown()).toBeVisible()
+              await expect(ch_announce.infoCustomizeContent()).toBeVisible()
+              await expect(ch_announce.infoPreview()).toBeVisible()
+              await expect(ch_announce.infoCancelBtn()).toBeVisible()
+              await expect(ch_announce.infoSaveBtn()).toBeVisible()
+              ch_announce.infoSaveBtn().click()
+              await expect(ch_announce.topOfTokenPageTab()).toBeVisible({ timeout: 15000 })
+            } else {
+              console.log("Community has no existing announcement")
+            }
+          }
+        })
+        // Fan voices
+        await test.step("Check fan voices tab", async () => {
+          const ch_announce = new customizeHome_Announcement(page)
+          await ch_announce.customizeHomeTablist().nth(1).click()
+          await expect(ch_announce.customizeHomeTablist().nth(1)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+          const ch_fanvoices = new customizeHome_Fanvoices(page)
+          await expect(ch_fanvoices.onoffToggle()).toBeVisible({ timeout: 15000 })
+          await expect(ch_fanvoices.headerText()).toBeVisible()
+          await expect(ch_fanvoices.sourceMaterialText()).toBeVisible({ timeout: 15000 }) // for some reason, this is not being visible
+          await scrollToElement(page, ch_fanvoices.addMissionBtn())
+          await expect(ch_fanvoices.addMissionBtn()).toBeVisible({ timeout: 15000 })
+          await expect(ch_fanvoices.saveBtn()).toBeVisible()
+          ch_fanvoices.saveBtn().click()
+          await expect(ch_fanvoices.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+          await expect(ch_fanvoices.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+        })
+        // Showoff on Instagram
+        await test.step("Check instagram settings tab", async () => {
+          const ch_announce = new customizeHome_Announcement(page)
+          await ch_announce.customizeHomeTablist().nth(2).click()
+          await expect(ch_announce.customizeHomeTablist().nth(2)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+          const ch_igsetting = new customizeHome_Instagramsetting(page)
+          await expect(ch_igsetting.headerText()).toBeVisible({ timeout: 15000 })
+          try {
+            await expect(ch_igsetting.onoffToggle()).toHaveAttribute('value', 'true', { timeout: 15000 })
+          } catch (error) {
+            // turn on toggle if it is off
+            await expect(ch_igsetting.onoffToggle()).toHaveAttribute('value', 'false', { timeout: 15000 })
+            ch_igsetting.onoffToggle().click()
+          }
+          await expect(ch_igsetting.hashtagTextfield()).toBeVisible({ timeout: 15000 })
+          await expect(ch_igsetting.viewOnInstagramBtn()).toBeVisible()
+          await expect(ch_igsetting.featuredpostsText()).toBeVisible()
+          await expect(ch_igsetting.postTextfield().first()).toBeVisible()
+          await expect(ch_igsetting.addContentBtn()).toBeVisible()
+          await expect(ch_igsetting.saveBtn()).toBeVisible()
+          await ch_igsetting.saveBtn().click()
+          await expect(ch_igsetting.popupCancelBtn()).toBeVisible()
+          await expect(ch_igsetting.popupSaveBtn()).toBeVisible()
+          await ch_igsetting.popupSaveBtn().click()
+          await expect(ch_igsetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+          await expect(ch_igsetting.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          /*
+          await ch_igsetting.onoffToggle().click()
+          await expect(ch_igsetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+          await expect(ch_igsetting.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          */
+        })
+        // Friend referral
+        await test.step("Check friend referral tab", async () => {
+          const ch_announce = new customizeHome_Announcement(page)
+          await ch_announce.customizeHomeTablist().nth(3).click()
+          await expect(ch_announce.customizeHomeTablist().nth(3)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+        })
+        // Products showcase
+        await test.step("Check products showcase tab", async () => {
+          const ch_announce = new customizeHome_Announcement(page)
+          await ch_announce.customizeHomeTablist().nth(4).click()
+          await expect(ch_announce.customizeHomeTablist().nth(4)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+        })
+        // User status
+        await test.step("Check user status tab", async () => {
+          const ch_announce = new customizeHome_Announcement(page)
+          await ch_announce.customizeHomeTablist().nth(5).click()
+          await expect(ch_announce.customizeHomeTablist().nth(5)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+        })
+        await ch_announce.backToDashboardBtn().click()
+        const communityEditBrandBtn = await getBrandEditButton(page)
+        await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 })
+      })
+
+
+      // Visibility setting page
+      await test.step("Check visibility setting page", () => {
+      })
     })
   })
+  
+  await test.step("[INFO] Check save buttons in members tab", async () =>  {
+    const memberTab = (await getBrandCommunityTabs(page))[1]
+    await expect(memberTab).toBeVisible()
+    await memberTab.click()
+    await expect(memberTab).toHaveAttribute('aria-selected', 'true')
+    await page.reload()
+    await page.waitForTimeout(5000) // no choice but to add this
+    const memberColumnHeader = await getMemberColumnHeader(page)
+    await expect(memberColumnHeader.first()).toBeVisible({ timeout: 20000 })
+    // const memberColumnHeader = (await getMemberColumnHeader(page))[0]
+    // await expect(memberColumnHeader).toBeVisible({ timeout: 15000 }) // This locator doesn't load automatically
+    const inviteMemberBtn = await getMemberInviteBtn(page)
+    await inviteMemberBtn.click()
+    const im_headerText = await getInviteMemberHeaderText(page)
+    const im_emailInput = await getInviteMemberEmailInput(page)
+    const im_memberAccessDropdown = await getInviteMemberAccessDropdown(page)
+    const im_inviteViaLinkBtn = await getInviteMemberViaLinkBtn(page)
+    const im_inviteBtn = await getInviteMemberSendBtn(page)
+    await expect(im_headerText).toBeVisible()
+    await expect(im_emailInput).toBeVisible()
+    await expect(im_memberAccessDropdown).toBeVisible()
+    await expect(im_inviteViaLinkBtn).toBeVisible()
+    await expect(im_inviteBtn.last()).toBeVisible()
+    await closeWindowPopup(page)
+  })
+  await test.step("[INFO] Check save buttons in logs tab", async () =>  {
+    const logsTab = (await getBrandCommunityTabs(page))[2]
+    await expect(logsTab).toBeVisible()
+    await logsTab.click()
+    await expect(logsTab).toHaveAttribute('aria-selected', 'true')
+    const logsViewDetailLink = (await getViewDetailLink(page)).nth(0)
+    await expect(logsViewDetailLink).toBeVisible({ timeout: 15000 })
+    await logsViewDetailLink.click()
+    const vd_headerText = await getViewDetailHeaderText(page)
+    await expect(vd_headerText).toBeVisible()
+    await closeWindowPopup(page)
+  })
+  
 }
 
 export {

@@ -167,6 +167,10 @@ async function getBrandCommunityEditBtn(page: Page) {
   */
 }
 
+async function getBrandCustomizehomeBtn(page: Page) {
+  return page.locator("//button[@aria-label='Customize home']")
+}
+
 async function getBrandCommunityVisibilitysettingBtn(page: Page) {
   const brandCommunityVisibilitysettingBtn = page.locator("//button[@aria-label='Visibility setting']")
   const count = await brandCommunityVisibilitysettingBtn.count()
@@ -189,6 +193,7 @@ export {
   getBrandCommunityTabs,
   getBrandCommunityVisibilitysettingBtn,
   getBrandCommunityCreateBtn,
+  getBrandCustomizehomeBtn,
   getBrandDashboardNotificationCloseBtn,
   getBrandDashboardNotificationHeader,
   getBrandEditButton,
