@@ -1,5 +1,6 @@
 import {
-  closeWindowPopup
+  closeWindowPopup,
+  addDataOnTextfield
 } from "@/utils/keyboard-helper"
 import {
   getBrandEditButton,
@@ -26,6 +27,9 @@ import {
 import {
   customizeHome_Fanvoices
 } from "@/specs/general/customizehome/fanvoices.locator"
+import {
+  customizeHome_FriendReferral
+} from "@/specs/general/customizehome/friendreferral.locator"
 import {
   customizeHome_Instagramsetting
 } from "@/specs/general/customizehome/instagramsetting.locator"
@@ -63,6 +67,7 @@ import {
   getViewDetailLink,
   getViewDetailHeaderText
 } from "../general/logs.locator"
+import { generateTokenRewardAmount } from "@/utils/data-utils"
 
 /* 
   There are times where clicking save button returns an error message.
@@ -244,6 +249,46 @@ async function brandDashboardSaveBtnCheck(page) {
           const ch_announce = new customizeHome_Announcement(page)
           await ch_announce.customizeHomeTablist().nth(3).click()
           await expect(ch_announce.customizeHomeTablist().nth(3)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+          const ch_friendRefer = new customizeHome_FriendReferral(page)
+          await expect(ch_friendRefer.onoffToggle()).toBeVisible({ timeout: 15000 })
+          await expect(ch_friendRefer.headerText()).toBeVisible()
+          try {
+            // toggle is ON
+            await expect(ch_friendRefer.onoffToggle()).toBeChecked()
+          } catch(error) {
+            // toggle is OFF
+            await ch_friendRefer.onoffToggle().click()
+            await expect(ch_friendRefer.onoffToggle()).toBeChecked()
+          }
+          // Select reward type for inviter
+          await expect(ch_friendRefer.inviterRewardTypeDropdown()).toBeVisible()
+          await ch_friendRefer.inviterRewardTypeDropdown().click()
+          await expect(ch_friendRefer.inviterRewardTypeDropdownOptions().first()).toBeVisible()
+          await ch_friendRefer.inviterRewardTypeDropdownOptions().first().click()
+          // Select token reward for inviter
+          await expect(ch_friendRefer.inviterSelectTokenRewardDropdown()).toBeVisible()
+          await ch_friendRefer.inviterSelectTokenRewardDropdown().click()
+          await expect(ch_friendRefer.inviterSelectTokenRewardDropdownOptions().first()).toBeVisible()
+          await ch_friendRefer.inviterSelectTokenRewardDropdownOptions().first().click()
+          await addDataOnTextfield(page, ch_friendRefer.inviterTokenRewardAmount(), generateTokenRewardAmount())
+          // Select reward type for invited
+          await expect(ch_friendRefer.invitedRewardTypeDropdown()).toBeVisible()
+          await ch_friendRefer.invitedRewardTypeDropdown().click()
+          await expect(ch_friendRefer.invitedRewardTypeDropdownOptions().first()).toBeVisible()
+          await ch_friendRefer.invitedRewardTypeDropdownOptions().first().click()
+          // Select token reward for invited
+          await expect(ch_friendRefer.invitedSelectTokenRewardDropdown()).toBeVisible()
+          await ch_friendRefer.invitedSelectTokenRewardDropdown().click()
+          await expect(ch_friendRefer.invitedSelectTokenRewardDropdownOptions().first()).toBeVisible()
+          await ch_friendRefer.invitedSelectTokenRewardDropdownOptions().first().click()
+          await addDataOnTextfield(page, ch_friendRefer.invitedTokenRewardAmount(), generateTokenRewardAmount())
+          await ch_friendRefer.savebtn().click()
+          await expect(ch_friendRefer.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+          await expect(ch_friendRefer.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          await ch_friendRefer.onoffToggle().click()
+          await ch_friendRefer.savebtn().click()
+          await expect(ch_friendRefer.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+          await expect(ch_friendRefer.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
         })
         // Products showcase
         await test.step("Check products showcase tab", async () => {

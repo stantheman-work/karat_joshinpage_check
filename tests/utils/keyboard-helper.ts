@@ -8,6 +8,7 @@ async function closeWindowPopup(page: Page) {
 }
 
 async function addDataOnTextfield(page: Page, locator: Locator, value: string) {
+  await locator.clear()
   await locator.fill(value)
 }
 
