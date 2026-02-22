@@ -1,26 +1,80 @@
 import { Page } from "@playwright/test";
 
-export class customizeHome_Fanvoices {
+export class customizeHome_ProductShowcase {
   constructor(private page: Page) {}
 
   headerText() {
-    return this.page.locator("//h6[text()='Fan voices']")
+    return this.page.locator("//h6[contains(text(),'Products showcase')]")
   }
 
-  onoffToggle() {
-    return this.page.locator("//input[@name='useFanVoices']")
+  toggleBtn() {
+    return this.page.locator("//input[@type='checkbox']").first()
   }
 
-  sourceMaterialText() {
-    return this.page.getByText('Source of materials')
+  addBtn() {
+    return this.page.locator("//div[text()='Add card']")
   }
 
-  addMissionBtn() {
-    return this.page.locator("//button[text()='Add mission']");
+  cardImage() {
+    /*
+      becomes an array if featured card toggle is ON
+      .first() > card image
+      .last() > featured card image
+    */
+    return this.page.locator("//div[@role='presentation']")
   }
 
-  saveBtn() {
-    return this.page.getByText("Save");
+  cardImageUploadField() {
+    /*
+      becomes an array if featured card toggle is ON
+      .first() > card image upload field
+      .last() > card image upload field
+    */
+    return this.page.locator("//input[@accept]")
+  }
+
+  title() {
+    return this.page.getByPlaceholder("Input section title")
+  }
+
+  subTitle() {
+    return this.page.getByPlaceholder("Input subtitle")
+  }
+
+  description() {
+    return this.page.locator("//div[@data-placeholder='Enter content...']")
+  }
+
+  websiteUrl() {
+    return this.page.locator("//input[@name='website_url']")
+  }
+
+  price() {
+    return this.page.locator("//input[@name='price']")
+  }
+
+  tagsTextfield() {
+    return this.page.getByPlaceholder("Enter tags")
+  }
+
+  featuredCardToggle() {
+    return this.page.locator("//input[@type='checkbox']").last()
+  }
+
+  featuredCardDoneBtn() {
+    return this.page.getByRole('button', { name: 'Done' })
+  }
+
+  featuredCardCancelBtn() {
+    return this.page.getByRole('button', { name: 'Cancel' })
+  }
+
+  productEditDeleteBtn() {
+    /*
+      .first() > edit
+      .last() > delete
+    */
+    return this.page.locator("//div[contains(@data-rbd-drag-handle-draggable-id,'productsShowcase-0')]/following-sibling::div/descendant::button")
   }
 
   pleaseWaitPopup() {

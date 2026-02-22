@@ -33,6 +33,9 @@ import {
 import {
   customizeHome_Instagramsetting
 } from "@/specs/general/customizehome/instagramsetting.locator"
+import {
+  customizeHome_ProductShowcase
+} from "@/specs/general/customizehome/productshowcase.locator"
 import { AuthUtils } from "@/utils/auth-utils"
 import {
   scrollToElement,
@@ -67,7 +70,11 @@ import {
   getViewDetailLink,
   getViewDetailHeaderText
 } from "../general/logs.locator"
-import { generateTokenRewardAmount } from "@/utils/data-utils"
+import { inputDataForTextfields } from "@/utils/data-utils"
+import {
+  create_FriendReferral,
+  create_productShowcase
+} from "@/functions/create-functions"
 
 /* 
   There are times where clicking save button returns an error message.
@@ -76,7 +83,7 @@ import { generateTokenRewardAmount } from "@/utils/data-utils"
 async function brandDashboardSaveBtnCheck(page) {
   await test.step("[INFO] Brand dashboard page save buttons check", async () => {
     await test.step("[INFO] Check save buttons in communities tab", async () => {
-      
+
       await test.step("[INFO] Check elements and save button while editing brand", async () => {
         const communityEditBrandBtn = await getBrandEditButton(page)
         await expect(communityEditBrandBtn).toBeVisible()
@@ -255,36 +262,13 @@ async function brandDashboardSaveBtnCheck(page) {
           try {
             // toggle is ON
             await expect(ch_friendRefer.onoffToggle()).toBeChecked()
-          } catch(error) {
+          } catch (error) {
             // toggle is OFF
             await ch_friendRefer.onoffToggle().click()
             await expect(ch_friendRefer.onoffToggle()).toBeChecked()
           }
-          // Select reward type for inviter
-          await expect(ch_friendRefer.inviterRewardTypeDropdown()).toBeVisible()
-          await ch_friendRefer.inviterRewardTypeDropdown().click()
-          await expect(ch_friendRefer.inviterRewardTypeDropdownOptions().first()).toBeVisible()
-          await ch_friendRefer.inviterRewardTypeDropdownOptions().first().click()
-          // Select token reward for inviter
-          await expect(ch_friendRefer.inviterSelectTokenRewardDropdown()).toBeVisible()
-          await ch_friendRefer.inviterSelectTokenRewardDropdown().click()
-          await expect(ch_friendRefer.inviterSelectTokenRewardDropdownOptions().first()).toBeVisible()
-          await ch_friendRefer.inviterSelectTokenRewardDropdownOptions().first().click()
-          await addDataOnTextfield(page, ch_friendRefer.inviterTokenRewardAmount(), generateTokenRewardAmount())
-          // Select reward type for invited
-          await expect(ch_friendRefer.invitedRewardTypeDropdown()).toBeVisible()
-          await ch_friendRefer.invitedRewardTypeDropdown().click()
-          await expect(ch_friendRefer.invitedRewardTypeDropdownOptions().first()).toBeVisible()
-          await ch_friendRefer.invitedRewardTypeDropdownOptions().first().click()
-          // Select token reward for invited
-          await expect(ch_friendRefer.invitedSelectTokenRewardDropdown()).toBeVisible()
-          await ch_friendRefer.invitedSelectTokenRewardDropdown().click()
-          await expect(ch_friendRefer.invitedSelectTokenRewardDropdownOptions().first()).toBeVisible()
-          await ch_friendRefer.invitedSelectTokenRewardDropdownOptions().first().click()
-          await addDataOnTextfield(page, ch_friendRefer.invitedTokenRewardAmount(), generateTokenRewardAmount())
-          await ch_friendRefer.savebtn().click()
-          await expect(ch_friendRefer.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-          await expect(ch_friendRefer.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          await create_FriendReferral(page) // Create new friend referral process
+          // turn off the switch
           await ch_friendRefer.onoffToggle().click()
           await ch_friendRefer.savebtn().click()
           await expect(ch_friendRefer.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
@@ -295,6 +279,30 @@ async function brandDashboardSaveBtnCheck(page) {
           const ch_announce = new customizeHome_Announcement(page)
           await ch_announce.customizeHomeTablist().nth(4).click()
           await expect(ch_announce.customizeHomeTablist().nth(4)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+          const ch_product = new customizeHome_ProductShowcase(page)
+          await expect(ch_product.toggleBtn()).toBeVisible({ timeout: 15000 })
+          // Tests whether toggle works fine
+          try {
+            // If toggle = ON, class contains text Mui-checked
+            // Afterwards, click it again to return to original state
+            await expect(ch_product.toggleBtn().last()).toHaveClass(/Mui-checked/)
+            await ch_product.toggleBtn().click()
+            await expect(ch_product.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+            await expect(ch_product.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          } catch (error) {
+            // Else, turn it ON
+            // Afterwards, click it again to return to original state
+            await ch_product.toggleBtn().click()
+            await expect(ch_product.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+            await expect(ch_product.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          }
+          // return to previous (original) state
+          await ch_product.toggleBtn().click()
+          await expect(ch_product.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+          await expect(ch_product.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          await create_productShowcase(page) // start creation process
+          await expect(ch_product.productEditDeleteBtn().first()).toBeVisible()
+          await expect(ch_product.productEditDeleteBtn().last()).toBeVisible()
         })
         // User status
         await test.step("Check user status tab", async () => {
@@ -311,8 +319,8 @@ async function brandDashboardSaveBtnCheck(page) {
       })
     })
   })
-  
-  await test.step("[INFO] Check save buttons in members tab", async () =>  {
+
+  await test.step("[INFO] Check save buttons in members tab", async () => {
     const memberTab = (await getBrandCommunityTabs(page))[1]
     await expect(memberTab).toBeVisible()
     await memberTab.click()
@@ -335,7 +343,7 @@ async function brandDashboardSaveBtnCheck(page) {
     await expect(im_inviteBtn.last()).toBeVisible()
     await closeWindowPopup(page)
   })
-  await test.step("[INFO] Check save buttons in logs tab", async () =>  {
+  await test.step("[INFO] Check save buttons in logs tab", async () => {
     const logsTab = (await getBrandCommunityTabs(page))[2]
     await expect(logsTab).toBeVisible()
     await logsTab.click()
@@ -347,7 +355,7 @@ async function brandDashboardSaveBtnCheck(page) {
     await expect(vd_headerText).toBeVisible()
     await closeWindowPopup(page)
   })
-  
+
 }
 
 export {
