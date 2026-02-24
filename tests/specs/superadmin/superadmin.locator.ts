@@ -2,11 +2,6 @@ import { expect, Locator, Page } from "@playwright/test"
 
 async function getSuperadminTabs(page: Page) {
   return page.locator("//div[@role='tablist']/button")
-  /*
-  const superadminTabs = page.locator("//div[@role='tablist']/button")
-  await expect(superadminTabs).toBeVisible({ timeout: 5000 })
-  return superadminTabs
-  */
 }
 
 async function getSuperadminBrandmanagementBtn(page) {

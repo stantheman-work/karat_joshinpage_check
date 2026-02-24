@@ -14,7 +14,7 @@ test.describe("Brand Admin page", () => {
     })
   })
 
-  test("Superadmin page check", async ({ page }) => {
+  test("Dashboard page save button check", async ({ page }) => {
     console.log("[INFO] Dashboard save buttons check START")
     await brandDashboardSaveBtnCheck(page)
     console.log("[INFO] Dashboard save buttons check END")
