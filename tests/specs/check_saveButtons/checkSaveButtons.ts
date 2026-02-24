@@ -4,16 +4,12 @@ import {
 } from "@/utils/keyboard-helper"
 import {
   getBrandEditButton,
-  getBrandCommunityCreateBtn,
   getBrandCommunityTabs,
   getBrandCustomizehomeBtn,
   getBrandSearchFilter,
-  getBrandVisibilityFilter,
-  getBrandStatusFilter,
-  getBrandCommunityColumnHeaders,
-  getSideBarItems,
-  getSideBarParentMenu,
-  getBrandCommunityEditBtn
+  getBrandCommunityEditBtn,
+  getBrand24karatCommunityVisibilitySettingBtn,
+  getBrand24karatFilterResultSettingBtn
 } from "@/specs/general/dashboard.locator"
 import {
   brandInfo
@@ -36,6 +32,12 @@ import {
 import {
   customizeHome_ProductShowcase
 } from "@/specs/general/customizehome/productshowcase.locator"
+import {
+  customizeHome_userStatus
+} from "@/specs/general/customizehome/userstatus.locator"
+import {
+  visibilitySetting
+} from "@/specs/general/visibilitysetting.locator"
 import { AuthUtils } from "@/utils/auth-utils"
 import {
   scrollToElement,
@@ -55,26 +57,21 @@ import {
   getInviteMemberSendBtn,
   getInviteMemberViaLinkBtn,
   getMemberColumnHeader,
-  getMemberDateFilter,
-  getMemberDateJoinedFilter,
   getMemberInviteBtn,
-  getMemberRoleFilter,
-  getMemberRoleSelectFilter,
-  getMemberSearchFilter,
-  getMemberSearchUserFilter
 } from "../general/member.locator"
 import {
-  getLogsColumnHeader,
-  getLogsRefreshBtn,
-  getLogsSearchFilter,
   getViewDetailLink,
   getViewDetailHeaderText
 } from "../general/logs.locator"
 import { inputDataForTextfields } from "@/utils/data-utils"
 import {
   create_FriendReferral,
-  create_productShowcase
+  create_productShowcase,
+  create_userStatus
 } from "@/functions/create-functions"
+import {
+  redirect_24karatCommunity
+} from "@/functions/redirect-functions"
 
 /* 
   There are times where clicking save button returns an error message.
@@ -160,10 +157,18 @@ async function brandDashboardSaveBtnCheck(page) {
       })
 
       // Customize home page
+
       await test.step("[INFO] Check save buttons inside customize home button", async () => {
         let announcementFlag
         const customizeHomeBtn = await getBrandCustomizehomeBtn(page)
-        await customizeHomeBtn.first().click()
+        const comm_searchFilter = await getBrandSearchFilter(page)
+        await expect(comm_searchFilter).toBeVisible({ timeout: 15000 })
+        await redirect_24karatCommunity(page)
+        const searchResult = await getBrand24karatFilterResultSettingBtn(page)
+        await expect(searchResult).toBeVisible({ timeout: 15000 })
+        await searchResult.click()
+
+        // Announcement
         const ch_announce = new customizeHome_Announcement(page)
         await expect(ch_announce.topOfTokenPageTab()).toBeVisible({ timeout: 15000 })
         await expect(ch_announce.topOfTokenPageTab()).toHaveAttribute('aria-selected', 'true')
@@ -171,7 +176,6 @@ async function brandDashboardSaveBtnCheck(page) {
         await expect(ch_announce.customizeHomeTablist().first()).toBeVisible()
         await expect(ch_announce.disableAllBtn().first()).toBeVisible()
         await expect(ch_announce.saveOrderBtn().first()).toBeVisible()
-        // Announcement
         await test.step("Checks whether this community has an existing announcement", async () => {
           for (let ctr = 0; ctr < 2; ctr++) {
             if (ctr === 1) {
@@ -244,10 +248,17 @@ async function brandDashboardSaveBtnCheck(page) {
           await expect(ch_igsetting.postTextfield().first()).toBeVisible()
           await expect(ch_igsetting.addContentBtn()).toBeVisible()
           await expect(ch_igsetting.saveBtn()).toBeVisible()
+          try {
+            // Instagram post textfield not blank
+            await expect(ch_igsetting.postTextfield().first()).not.toHaveValue('')
+          } catch (error) {
+            // Instagram post textfield is blank
+            await ch_igsetting.saveBtn().click()
+            await expect(ch_igsetting.popupCancelBtn()).toBeVisible()
+            await expect(ch_igsetting.popupSaveBtn()).toBeVisible()
+            await ch_igsetting.popupSaveBtn().click()
+          }
           await ch_igsetting.saveBtn().click()
-          await expect(ch_igsetting.popupCancelBtn()).toBeVisible()
-          await expect(ch_igsetting.popupSaveBtn()).toBeVisible()
-          await ch_igsetting.popupSaveBtn().click()
           await expect(ch_igsetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
           await expect(ch_igsetting.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
         })
@@ -304,18 +315,58 @@ async function brandDashboardSaveBtnCheck(page) {
           await expect(ch_product.productEditDeleteBtn().first()).toBeVisible()
           await expect(ch_product.productEditDeleteBtn().last()).toBeVisible()
         })
+
         // User status
         await test.step("Check user status tab", async () => {
           const ch_announce = new customizeHome_Announcement(page)
           await ch_announce.customizeHomeTablist().nth(5).click()
           await expect(ch_announce.customizeHomeTablist().nth(5)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+          // start in user status page
+          const ch_userStat = new customizeHome_userStatus(page)
+          await expect(ch_userStat.toggleBtn()).toBeVisible({ timeout: 15000 })
+          await expect(ch_userStat.headerText()).toBeVisible()
+          await expect(ch_userStat.title()).toBeVisible()
+          // Check whether customized home is selected
+          try {
+            // Radio button is selected
+            await expect(ch_userStat.statusCustomizedRadioBtn()).toBeChecked()
+            await expect(ch_userStat.customizerank_editBtn()).toBeVisible()
+            await ch_userStat.customizerank_editBtn().click()
+          } catch (error) {
+            // Radio button is not selected
+            await ch_userStat.statusCustomizedRadioBtn().click()
+            await expect(ch_userStat.statusCustomized_customizeBtn()).toBeVisible()
+            await ch_userStat.statusCustomized_customizeBtn().click()
+          }
+          await create_userStatus(page)
+          await expect(ch_userStat.customizerank_saveBtn().first()).toBeVisible()
+          await scrollToElement(page, ch_userStat.customizerank_saveBtn().first())
+          await ch_userStat.customizerank_saveBtn().first().click()
+          await expect(ch_userStat.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+          await expect(ch_userStat.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
         })
-        await ch_announce.backToDashboardBtn().click()
+        await page.goto(`/${AuthUtils.getDefaultBrand().id}`) // use this temporarily because back button has an issue
+        // await ch_announce.backToDashboardBtn().click()
         const communityEditBrandBtn = await getBrandEditButton(page)
         await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 })
       })
       // Visibility setting page
-      await test.step("Check visibility setting page", () => {
+      await test.step("Check visibility setting page", async () => {
+        await redirect_24karatCommunity(page)
+        const visibilitySettingBtn = await getBrand24karatCommunityVisibilitySettingBtn(page)
+        await expect(visibilitySettingBtn).toBeVisible({ timeout: 15000 })
+        await visibilitySettingBtn.click()
+        const visibleSetting = new visibilitySetting(page)
+        await expect(visibleSetting.headerText()).toBeVisible()
+        await expect(visibleSetting.setting_options().first()).toBeVisible()
+        await expect(visibleSetting.setting_options().nth(1)).toBeVisible()
+        await expect(visibleSetting.setting_options().last()).toBeVisible()
+        await expect(visibleSetting.saveBtn()).toBeVisible()
+        await visibleSetting.saveBtn().click()
+        await expect(visibleSetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+        await expect(visibleSetting.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+        const communityEditBrandBtn = await getBrandEditButton(page)
+        await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 })
       })
     })
   })
@@ -326,7 +377,6 @@ async function brandDashboardSaveBtnCheck(page) {
     await memberTab.click()
     await expect(memberTab).toHaveAttribute('aria-selected', 'true')
     await page.reload()
-    await page.waitForTimeout(5000) // no choice but to add this
     const memberColumnHeader = await getMemberColumnHeader(page)
     await expect(memberColumnHeader.first()).toBeVisible({ timeout: 20000 })
     const inviteMemberBtn = await getMemberInviteBtn(page)
@@ -355,7 +405,6 @@ async function brandDashboardSaveBtnCheck(page) {
     await expect(vd_headerText).toBeVisible()
     await closeWindowPopup(page)
   })
-
 }
 
 export {

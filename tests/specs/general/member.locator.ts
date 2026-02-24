@@ -42,59 +42,26 @@ async function getMemberColumnHeader(page: Page) {
 
 async function getMemberInviteBtn(page) { 
   return page.getByRole('button', { name: 'Invite' })
-  /*
-  const memberInviteBtn = page.locator("//button[text()='Invite']")
-  await expect(memberInviteBtn).toBeVisible({ timeout: 5000 })
-  return memberInviteBtn
-  */
 }
 
 async function getInviteMemberHeaderText(page) {
   return page.locator("//h5[text()='Invite people to your team']")
-  // return page.getByRole('heading', { name: 'Invite people to your team' })
-  /*
-  const teamInviteText = page.locator("//h5[contains(text(),'Invite')]")
-  await expect(teamInviteText).toBeVisible({ timeout: 5000 })
-  return teamInviteText
-  */
 }
 
 async function getInviteMemberEmailInput(page) {
   return page.getByPlaceholder('Add more people')
-  /*
-  const memberEmailInput = page.locator("//input[contains(@placeholder,'people')]")
-  await expect(memberEmailInput).toBeVisible({ timeout: 5000 })
-  return memberEmailInput
-  */
 }
 
 async function getInviteMemberAccessDropdown(page) {
   return page.locator("//h6[contains(text(),'role')]/following-sibling::div")
-  /*
-  const memberAccessRoleDropdown = page.locator("//h6[contains(text(),'role')]/following-sibling::div")
-  await expect(memberAccessRoleDropdown).toBeVisible({ timeout: 5000 })
-  return memberAccessRoleDropdown
-  */
 }
 
 async function getInviteMemberViaLinkBtn(page) {
   return page.locator("//button[text()='Invite via link']")
-  // return page.getByRole('button', { name: 'Invite via link' })
-  /*
-  const teamInviteSend = page.locator("//h6[contains(text(),'role')]/parent::div/following-sibling::div/button")
-  await expect(teamInviteSend).toBeVisible({ timeout: 5000 })
-  return teamInviteSend
-  */
 }
 
 async function getInviteMemberSendBtn(page) {
   return page.locator("//button[text()='Invite']")
-  // return page.getByRole('button', { name: 'Invite' })
-  /*
-  const teamInviteSend = page.locator("//h6[contains(text(),'role')]/parent::div/following-sibling::div/button")
-  await expect(teamInviteSend).toBeVisible({ timeout: 5000 })
-  return teamInviteSend
-  */
 }
 
 export {

@@ -12,7 +12,7 @@ async function getBrandDashboardNotificationCloseBtn(page) {
   return brandDashboardNotifCloseBtn
 }
 
-// parang hindi mo ata ginagamit ito
+// used in sanity.spec, checkSaveButtons
 async function getSideBarParentMenu(page: Page) {
   const brandDashboardSideParentMenu = page.locator("//div[@class='-mr-10']/div[1]/div/span")
   const count = await brandDashboardSideParentMenu.count()
@@ -21,12 +21,11 @@ async function getSideBarParentMenu(page: Page) {
   for (let i = 0; i < count; i++) {
     textFieldArray.push(brandDashboardSideParentMenu.nth(i))
   }
-  console.log("This is the value of side parent menu = " + textFieldArray.length + "\n")
 
   return textFieldArray
 }
 
-// parang hindi mo ata ginagamit ito
+// used in sanity.spec, checkSaveButtons
 async function getSideBarItems(page: Page) {
   const brandDashboardSideMenuItems = page.locator("//a[@href]/div")
   const count = await brandDashboardSideMenuItems.count()
@@ -35,7 +34,6 @@ async function getSideBarItems(page: Page) {
   for (let i = 0; i < count; i++) {
     textFieldArray.push(brandDashboardSideMenuItems.nth(i))
   }
-  console.log("This is the value of side items = " + textFieldArray.length + "\n")
 
   return textFieldArray
 }
@@ -65,11 +63,6 @@ async function getBrand24karatOption(page) {
 // Locators below are for Communities Tab
 async function getBrandEditButton(page: Page) {
   return page.getByText('Edit Brand')
-  /*
-  const brandEditBtn = page.locator("//button[contains(text(), 'Brand')]")
-  await expect(brandEditBtn).toBeVisible({ timeout: 5000 })
-  return brandEditBtn
-  */
 }
 
 async function getBrandCommunityCreateBtn(page) {
@@ -96,6 +89,14 @@ async function getBrandSearchFilter(page) {
   const brandSearchFilter = page.locator("//input[@placeholder='Search']")
   await expect(brandSearchFilter).toBeVisible({ timeout: 5000 })
   return brandSearchFilter
+}
+
+export async function getBrandSearchLoadingIcon(page: Page) {
+  return page.locator("//div[@id='lottie']")
+}
+
+export async function getBrand24karatFilterResultSettingBtn(page: Page) {
+  return page.locator("//div[text()='24KARAT']/ancestor::td/following-sibling::td/descendant::button[@aria-label='Customize home']")
 }
 
 async function getBrandVisibilityFilter(page) {
@@ -152,19 +153,6 @@ async function getBrandCommunityCustomizehomeBtn(page: Page) {
 
 async function getBrandCommunityEditBtn(page: Page) {
   return page.locator("//button[@aria-label='Edit']")
-  // return page.getByRole('button', { name: 'Edit' })
-  /*
-  const brandCommunityEditBtn = page.locator("//button[@aria-label='Edit']")
-  const count = await brandCommunityEditBtn.count()
-
-  let textFieldArray: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    textFieldArray.push(brandCommunityEditBtn.nth(i))
-  }
-  console.log("This is the value of brand community edit button = " + textFieldArray.length + "\n")
-
-  return textFieldArray
-  */
 }
 
 async function getBrandCustomizehomeBtn(page: Page) {
@@ -172,16 +160,11 @@ async function getBrandCustomizehomeBtn(page: Page) {
 }
 
 async function getBrandCommunityVisibilitysettingBtn(page: Page) {
-  const brandCommunityVisibilitysettingBtn = page.locator("//button[@aria-label='Visibility setting']")
-  const count = await brandCommunityVisibilitysettingBtn.count()
+  return this.page.locator("//button[@aria-label='Visibility setting']")
+}
 
-  let textFieldArray: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    textFieldArray.push(brandCommunityVisibilitysettingBtn.nth(i))
-  }
-  console.log("This is the value of brand community edit button = " + textFieldArray.length + "\n")
-
-  return textFieldArray
+export async function getBrand24karatCommunityVisibilitySettingBtn(page: Page) {
+  return page.locator("//div[text()='24KARAT']/ancestor::td/following-sibling::td/descendant::button[@aria-label='Visibility setting']")
 }
 
 export {

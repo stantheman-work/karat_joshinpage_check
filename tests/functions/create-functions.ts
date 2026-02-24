@@ -18,6 +18,12 @@ import {
 import { 
   inputDataForTextfields
 } from "@/utils/data-utils"
+import { 
+  PageUtils
+} from "@/utils/page-utils"
+import { 
+  customizeHome_userStatus
+} from "@/specs/general/customizehome/userstatus.locator"
 
 export async function create_FriendReferral(page: Page) {
   const ch_friendRefer = new customizeHome_FriendReferral(page)
@@ -54,6 +60,7 @@ export async function create_productShowcase(page: Page) {
   const ch_prodShow = new customizeHome_ProductShowcase(page)
   // Card image upload field
   await expect(ch_prodShow.addBtn()).toBeVisible()
+  await PageUtils.scrollToElement(page, ch_prodShow.addBtn())
   await ch_prodShow.addBtn().click()
   const product_input = new inputDataForTextfields(page)
   await expect(ch_prodShow.cardImage().first()).toBeVisible()
@@ -80,4 +87,35 @@ export async function create_productShowcase(page: Page) {
   await ch_prodShow.featuredCardDoneBtn().click()
   await expect(ch_prodShow.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
   await expect(ch_prodShow.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+}
+
+export async function create_userStatus(page: Page) {
+  // start create user status
+  // .first() = Token
+  const ch_userStat = new customizeHome_userStatus(page)
+  const userInput = new inputDataForTextfields(page)
+  await expect(ch_userStat.customizerank_statusBy().first()).toBeVisible()
+  await expect(ch_userStat.customizerank_statusBy().first()).toBeChecked()
+  await expect(ch_userStat.customizerank_settingName()).toBeVisible()
+  await expect(ch_userStat.customizerank_settingFrom()).toBeVisible()
+  await expect(ch_userStat.customizerank_addRanking()).toBeVisible()
+  // .last() = NFT
+  await expect(ch_userStat.customizerank_statusBy().last()).toBeVisible()
+  await ch_userStat.customizerank_statusBy().last().click()
+  await expect(ch_userStat.customizerank_statusBy().last()).toBeChecked()
+  await expect(ch_userStat.customizerank_settingName()).toBeVisible()
+  await expect(ch_userStat.customizerank_nftTemplateTextfield()).toBeVisible()
+  await expect(ch_userStat.customizerank_nftTemplateChooseBtn()).toBeVisible()
+  await expect(ch_userStat.customizerank_addRanking()).toBeVisible()
+  // return to token page and add sample input
+  await ch_userStat.customizerank_statusBy().first().click()
+  await ch_userStat.customizerank_addRanking().click()
+  await expect(ch_userStat.customizerank_closeBtn().last()).toBeVisible()
+  await ch_userStat.customizerank_closeBtn().last().click()
+  await addDataOnTextfield(ch_userStat.customizerank_settingName(), userInput.userStatusTitle())
+  await addDataOnTextfield(ch_userStat.customizerank_settingFrom(), userInput.userStatusFrom())
+  await expect(ch_userStat.customizerank_discardBtn()).toBeVisible()
+  // Save button in pop up
+  await expect(ch_userStat.customizerank_saveBtn().last()).toBeVisible()
+  await ch_userStat.customizerank_saveBtn().last().click()
 }
