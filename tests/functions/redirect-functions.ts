@@ -1,26 +1,16 @@
-import { AuthUtils } from "@/utils/auth-utils"
-import { waitForPageToLoad } from "@/utils/load-helper"
+import { waitForUIReady } from "@/utils/load-helper"
 import {
   Page,
   expect
 } from "@playwright/test"
 import {
   addDataOnTextfield,
-  uploadImage,
-  hitEnterKey
 } from "@/utils/keyboard-helper"
-import {
-  customizeHome_FriendReferral
-} from "@/specs/general/customizehome/friendreferral.locator"
-import {
-  customizeHome_ProductShowcase
-} from "@/specs/general/customizehome/productshowcase.locator"
 import {
   inputDataForTextfields
 } from "@/utils/data-utils"
 import {
   getBrandSearchFilter,
-  getBrand24karatFilterResultSettingBtn,
   getBrandSearchLoadingIcon
 } from "../specs/general/dashboard.locator"
 
@@ -31,6 +21,10 @@ export async function redirect_24karatCommunity(page: Page) {
   const comm_searchFilter = await getBrandSearchFilter(page)
   await addDataOnTextfield(comm_searchFilter, comm_input.communityInput24karat())
   const comm_loadingIcon = await getBrandSearchLoadingIcon(page)
+  await expect(comm_loadingIcon).toBeVisible({ timeout: 15000 })
+  await expect(comm_loadingIcon).toBeHidden({ timeout: 15000 })
+  //await waitForUIReady(page)
+  /*
   while (loadingFlag == false) {
     try {
       await expect(comm_loadingIcon).toBeVisible({ timeout: 15000 })
@@ -39,4 +33,5 @@ export async function redirect_24karatCommunity(page: Page) {
       console.log("Loading icon is still not present")
     }
   }
+    */
 }

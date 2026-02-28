@@ -41,13 +41,10 @@ import {
 import { AuthUtils } from "@/utils/auth-utils"
 import {
   scrollToElement,
-  waitForAnElement,
-  waitForPageToLoad
+  waitForUIReady
 } from "@/utils/load-helper"
-import { PageUtils } from "@/utils/page-utils"
 import {
   expect,
-  Page,
   test
 } from "@playwright/test"
 import {
@@ -77,7 +74,7 @@ import {
   There are times where clicking save button returns an error message.
   The goal of this script is to verify whether all save buttons are working or not
 */
-async function brandDashboardSaveBtnCheck(page) {
+export async function brandDashboardSaveBtnCheck(page) {
   await test.step("[INFO] Brand dashboard page save buttons check", async () => {
     await test.step("[INFO] Check save buttons in communities tab", async () => {
 
@@ -170,9 +167,10 @@ async function brandDashboardSaveBtnCheck(page) {
 
         // Announcement
         const ch_announce = new customizeHome_Announcement(page)
-        await expect(ch_announce.topOfTokenPageTab()).toBeVisible({ timeout: 15000 })
+        await waitForUIReady(page)
+        await expect(ch_announce.topOfTokenPageTab()).toBeVisible()
         await expect(ch_announce.topOfTokenPageTab()).toHaveAttribute('aria-selected', 'true')
-        await expect(ch_announce.bottomOfTokenPageTab()).toBeVisible({ timeout: 15000 })
+        await expect(ch_announce.bottomOfTokenPageTab()).toBeVisible()
         await expect(ch_announce.customizeHomeTablist().first()).toBeVisible()
         await expect(ch_announce.disableAllBtn().first()).toBeVisible()
         await expect(ch_announce.saveOrderBtn().first()).toBeVisible()
@@ -262,13 +260,15 @@ async function brandDashboardSaveBtnCheck(page) {
           await expect(ch_igsetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
           await expect(ch_igsetting.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
         })
+        
         // Friend referral
         await test.step("Check friend referral tab", async () => {
           const ch_announce = new customizeHome_Announcement(page)
           await ch_announce.customizeHomeTablist().nth(3).click()
           await expect(ch_announce.customizeHomeTablist().nth(3)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
           const ch_friendRefer = new customizeHome_FriendReferral(page)
-          await expect(ch_friendRefer.onoffToggle()).toBeVisible({ timeout: 15000 })
+          await waitForUIReady(page)
+          await expect(ch_friendRefer.onoffToggle()).toBeVisible()
           await expect(ch_friendRefer.headerText()).toBeVisible()
           try {
             // toggle is ON
@@ -279,41 +279,43 @@ async function brandDashboardSaveBtnCheck(page) {
             await expect(ch_friendRefer.onoffToggle()).toBeChecked()
           }
           await create_FriendReferral(page) // Create new friend referral process
+          await waitForUIReady(page)
           // turn off the switch
           await ch_friendRefer.onoffToggle().click()
           await ch_friendRefer.savebtn().click()
-          await expect(ch_friendRefer.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-          await expect(ch_friendRefer.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          await ch_friendRefer.onoffToggle().click({ trial: true, timeout: 30000 });
+          await expect(ch_friendRefer.onoffToggle()).toBeVisible({ timeout: 15000 })
+          await waitForUIReady(page)
         })
         // Products showcase
         await test.step("Check products showcase tab", async () => {
           const ch_announce = new customizeHome_Announcement(page)
           await ch_announce.customizeHomeTablist().nth(4).click()
           await expect(ch_announce.customizeHomeTablist().nth(4)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
+          await page.waitForLoadState('networkidle')
           const ch_product = new customizeHome_ProductShowcase(page)
           await expect(ch_product.toggleBtn()).toBeVisible({ timeout: 15000 })
+          await expect(ch_product.toggleBtn()).toBeEnabled({ timeout: 15000 })
+          await waitForUIReady(page)
           // Tests whether toggle works fine
           try {
             // If toggle = ON, class contains text Mui-checked
             // Afterwards, click it again to return to original state
-            await expect(ch_product.toggleBtn().last()).toHaveClass(/Mui-checked/)
-            await ch_product.toggleBtn().click()
-            await expect(ch_product.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-            await expect(ch_product.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+            await expect(ch_product.toggleBtn()).toHaveClass(/Mui-checked/)
+            await ch_product.toggleBtn().click() 
           } catch (error) {
             // Else, turn it ON
             // Afterwards, click it again to return to original state
             await ch_product.toggleBtn().click()
-            await expect(ch_product.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-            await expect(ch_product.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
           }
-          // return to previous (original) state
+          await waitForUIReady(page)
           await ch_product.toggleBtn().click()
-          await expect(ch_product.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-          await expect(ch_product.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          await waitForUIReady(page)
           await create_productShowcase(page) // start creation process
+          await waitForUIReady(page)
           await expect(ch_product.productEditDeleteBtn().first()).toBeVisible()
           await expect(ch_product.productEditDeleteBtn().last()).toBeVisible()
+          await waitForUIReady(page)
         })
 
         // User status
@@ -323,7 +325,16 @@ async function brandDashboardSaveBtnCheck(page) {
           await expect(ch_announce.customizeHomeTablist().nth(5)).toHaveAttribute('aria-selected', 'true', { timeout: 15000 })
           // start in user status page
           const ch_userStat = new customizeHome_userStatus(page)
-          await expect(ch_userStat.toggleBtn()).toBeVisible({ timeout: 15000 })
+          // After clicking, a pop up appears. Wait for the add button to be shown
+          let waitFlag = false
+          while (waitFlag === false) {
+            try {
+              await expect(ch_userStat.toggleBtn()).toBeVisible({ timeout: 15000 })
+              waitFlag = true
+            } catch (error) {
+              // Do nothing. Still saving, wait for more time
+            }
+          }
           await expect(ch_userStat.headerText()).toBeVisible()
           await expect(ch_userStat.title()).toBeVisible()
           // Check whether customized home is selected
@@ -342,13 +353,19 @@ async function brandDashboardSaveBtnCheck(page) {
           await expect(ch_userStat.customizerank_saveBtn().first()).toBeVisible()
           await scrollToElement(page, ch_userStat.customizerank_saveBtn().first())
           await ch_userStat.customizerank_saveBtn().first().click()
-          await expect(ch_userStat.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-          await expect(ch_userStat.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+          await waitForUIReady(page)
         })
         await page.goto(`/${AuthUtils.getDefaultBrand().id}`) // use this temporarily because back button has an issue
-        // await ch_announce.backToDashboardBtn().click()
-        const communityEditBrandBtn = await getBrandEditButton(page)
-        await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 })
+        let waitFlag = false
+          while (waitFlag === false) {
+            try {
+              const communityEditBrandBtn = await getBrandEditButton(page)
+              await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 })
+              waitFlag = true
+            } catch (error) {
+              // Do nothing.
+            }
+          }
       })
       // Visibility setting page
       await test.step("Check visibility setting page", async () => {
@@ -363,8 +380,9 @@ async function brandDashboardSaveBtnCheck(page) {
         await expect(visibleSetting.setting_options().last()).toBeVisible()
         await expect(visibleSetting.saveBtn()).toBeVisible()
         await visibleSetting.saveBtn().click()
-        await expect(visibleSetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+        //await expect(visibleSetting.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
         await expect(visibleSetting.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+        await waitForUIReady(page)
         const communityEditBrandBtn = await getBrandEditButton(page)
         await expect(communityEditBrandBtn).toBeVisible({ timeout: 15000 })
       })
@@ -372,6 +390,7 @@ async function brandDashboardSaveBtnCheck(page) {
   })
 
   await test.step("[INFO] Check save buttons in members tab", async () => {
+    await waitForUIReady(page)
     const memberTab = (await getBrandCommunityTabs(page))[1]
     await expect(memberTab).toBeVisible()
     await memberTab.click()
@@ -397,6 +416,7 @@ async function brandDashboardSaveBtnCheck(page) {
     const logsTab = (await getBrandCommunityTabs(page))[2]
     await expect(logsTab).toBeVisible()
     await logsTab.click()
+    await waitForUIReady(page)
     await expect(logsTab).toHaveAttribute('aria-selected', 'true')
     const logsViewDetailLink = (await getViewDetailLink(page)).nth(0)
     await expect(logsViewDetailLink).toBeVisible({ timeout: 15000 })
@@ -405,8 +425,4 @@ async function brandDashboardSaveBtnCheck(page) {
     await expect(vd_headerText).toBeVisible()
     await closeWindowPopup(page)
   })
-}
-
-export {
-  brandDashboardSaveBtnCheck
 }

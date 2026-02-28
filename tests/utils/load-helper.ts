@@ -73,3 +73,17 @@ export async function refreshPage(page: Page) {
 export async function waitForElementToBeHidden(page: Page, locator: Locator) {
   await expect(locator).toBeHidden({ timeout: 5000 })
 }
+
+export async function waitForUIReady(page: Page) {
+  const portalRoot = page.locator('#headlessui-portal-root');
+  
+  // 1. If the portal is currently visible, wait for it to disappear
+  if (await portalRoot.isVisible()) {
+    await portalRoot.waitFor({ state: 'hidden', timeout: 15000 });
+  }
+  
+  // 2. Additional check: wait for network to settle 
+  // (use only if your app isn't too 'chatty' with analytics)
+  // await page.waitForLoadState('networkidle');
+  await page.waitForLoadState('domcontentloaded');
+}

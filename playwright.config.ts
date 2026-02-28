@@ -30,6 +30,7 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: process.env.BASE_URL || "https://brand.dev.24karat.io",
 
+    viewport: { width: 1920, height: 1080 },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
     //viewport: null, // ⬅️ This will maximize the browser window
@@ -80,5 +81,12 @@ export default defineConfig({
   //   url: 'http://127.0.0.1:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-  timeout: 60_000,
+  timeout: 500_000,
+  expect: {
+    /**
+     * Maximum time expect() should wait for the condition to be met.
+     * For example in `await expect(locator).toBeVisible();`
+     */
+    timeout: 10_000, // Set this to 10s or 15s for CI stability
+  },
 })

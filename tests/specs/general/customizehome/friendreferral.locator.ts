@@ -60,6 +60,7 @@ export class customizeHome_FriendReferral {
   }
   
   pleaseWaitPopup() {
-    return this.page.locator("//*[contains(text(),'please wait')]")
+    return this.page.locator('[role="dialog"][aria-modal="true"][data-headlessui-state="open"]').filter({ hasText: /Saving/i });
+    // return this.page.locator("//*[contains(text(),'please wait')]")
   }
 }

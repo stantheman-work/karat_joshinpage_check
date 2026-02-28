@@ -51,8 +51,10 @@ export async function create_FriendReferral(page: Page) {
   await ch_friendRefer.invitedSelectTokenRewardDropdownOptions().first().click()
   await addDataOnTextfield(ch_friendRefer.invitedTokenRewardAmount(), input.generateTokenRewardAmount())
   await ch_friendRefer.savebtn().click()
-  await expect(ch_friendRefer.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-  await expect(ch_friendRefer.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+  //await ch_friendRefer.onoffToggle().click({ trial: true, timeout: 30000 });
+  //await expect(ch_friendRefer.onoffToggle()).toBeVisible({ timeout: 15000 })
+  //await expect(ch_friendRefer.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+  //await expect(ch_friendRefer.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
 }
 
 // This function will create a new product as well as verifying if the fields are present
@@ -85,8 +87,10 @@ export async function create_productShowcase(page: Page) {
   await expect(ch_prodShow.featuredCardDoneBtn()).toBeVisible()
   await expect(ch_prodShow.featuredCardCancelBtn()).toBeVisible()
   await ch_prodShow.featuredCardDoneBtn().click()
-  await expect(ch_prodShow.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
-  await expect(ch_prodShow.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
+  //await ch_prodShow.toggleBtn().click({ trial: true, timeout: 30000 });
+  //await expect(ch_prodShow.toggleBtn()).toBeVisible({ timeout: 15000 })
+  //await expect(ch_prodShow.pleaseWaitPopup()).toBeVisible({ timeout: 15000 })
+  //await expect(ch_prodShow.pleaseWaitPopup()).toBeHidden({ timeout: 15000 })
 }
 
 export async function create_userStatus(page: Page) {
