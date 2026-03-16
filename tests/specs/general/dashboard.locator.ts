@@ -125,6 +125,10 @@ async function getBrandCommunityColumnHeaders(page: Page) {
   return textFieldArray
 }
 
+export async function getBrandCommunityNoCommunityText(page) {
+  return page.locator("//div[text()='You currently have no community']")
+}
+
 async function getBrandCommunitySubmitBtn(page: Page) {
   const brandCommunitySubmitBtn = page.locator("//button[@aria-label='Submit']")
   const count = await brandCommunitySubmitBtn.count()

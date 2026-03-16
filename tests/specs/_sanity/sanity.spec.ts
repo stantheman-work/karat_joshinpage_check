@@ -107,18 +107,10 @@ import {
   getSocialpostTab
 } from "../contents/feed/feed.locator"
 import {
-  getNFTSearchNFTFilter,
-  getNFTSelectionModeToggle,
-  getNFTCollectionFilter,
-  getNFTCommunityFilter,
-  getNFTCreateBtn,
-  getNFTColumnHeader,
-  getNFTCreateMoreOptionsDropdown,
-  getNFTCreateMoreOptionsDropdownItems,
-  getNFTMoreOptions
+  nftPage
 } from "../digital-item/nft/nft.locator"
 import {
-  getCollectionManagementBtn
+  collectionmanagementPage
 } from "../digital-item/nft/collectionmanagement.locator"
 import {
   getEditMysteryboxText,
@@ -474,29 +466,21 @@ async function brandCommunityLogsTabCheck(page) {
 async function brandNFTPageCheck(page) {
   console.log("[INFO] Start NFT page check.")
   await waitForPageToLoad(page)
-  const nftSelectionModeToggle = await getNFTSelectionModeToggle(page)
-  const nftSearchNFTFilter = await getNFTSearchNFTFilter(page)
-  const nftCollectionFilter = await getNFTCollectionFilter(page)
-  const nftCommunityFilter = await getNFTCommunityFilter(page)
-  const collectionManagementBtn = await getCollectionManagementBtn(page)
-  const nftCreateBtn = await getNFTCreateBtn(page)
-  const nftColumnHeader = getNFTColumnHeader(page)
-  const nftMoreOptions = getNFTMoreOptions(page)
-  await expect(nftSelectionModeToggle).toBeVisible()
-  await expect(collectionManagementBtn).toBeVisible()
-  await expect(nftCreateBtn).toBeVisible()
-  await expect(nftSearchNFTFilter).toBeVisible()
-  await expect(nftCollectionFilter).toBeVisible()
-  await expect(nftCommunityFilter).toBeVisible()
-  await expect((await nftMoreOptions).first()).toBeVisible({timeout: 15000})
-  await expect((await nftColumnHeader).first()).toBeVisible()
-  await expect((await nftColumnHeader).first()).toHaveText("NFT Name")
-  await expect((await nftColumnHeader).first()).toBeVisible()
-  const nftCreateMoreOptionsDropdown = await getNFTCreateMoreOptionsDropdown(page)
-  await expect(nftCreateMoreOptionsDropdown).toBeVisible()
-  await nftCreateMoreOptionsDropdown.click()
-  const nftCreateMoreOptionsDropdownItems = (await getNFTCreateMoreOptionsDropdownItems(page))[0]
-  await expect(nftCreateMoreOptionsDropdownItems).toBeVisible()
+  const nft = new nftPage(page)
+  const collectionmgmt = new collectionmanagementPage(page)
+  await expect(nft.mainSelectionModeToggle()).toBeVisible()
+  await expect(collectionmgmt.collectionmanagementBtn()).toBeVisible()
+  await expect(nft.mainCreateBtn()).toBeVisible()
+  await expect(nft.mainSearchNFTFilter()).toBeVisible()
+  await expect(nft.mainCollectionFilter()).toBeVisible()
+  await expect(nft.mainCommunityFilter()).toBeVisible()
+  await expect((await nft.mainNFTSettingBtn()).first()).toBeVisible({timeout: 15000})
+  await expect((await nft.mainNFTSettingBtn()).first()).toBeVisible()
+  await expect((await nft.mainColumnHeader()).first()).toHaveText("NFT Name")
+  await expect((await nft.mainColumnHeader()).first()).toBeVisible()
+  await expect(nft.mainCreateOptionsBtn()).toBeVisible()
+  await nft.mainCreateOptionsBtn().click()
+  await expect(nft.mainCreateOptionsBtnItems().first()).toBeVisible()
   await closeWindowPopup(page)
   console.log("[INFO] End NFT page check.")
 }

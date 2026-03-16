@@ -8,6 +8,7 @@ import {
   getBrandCustomizehomeBtn,
   getBrandSearchFilter,
   getBrandCommunityEditBtn,
+  getBrandCommunityNoCommunityText,
   getBrand24karatCommunityVisibilitySettingBtn,
   getBrand24karatFilterResultSettingBtn
 } from "@/specs/general/dashboard.locator"
@@ -40,6 +41,7 @@ import {
 } from "@/specs/general/visibilitysetting.locator"
 import { AuthUtils } from "@/utils/auth-utils"
 import {
+  refreshPage,
   scrollToElement,
   waitForUIReady
 } from "@/utils/load-helper"
@@ -58,7 +60,8 @@ import {
 } from "../general/member.locator"
 import {
   getViewDetailLink,
-  getViewDetailHeaderText
+  getViewDetailHeaderText,
+  getViewDetailCloseBtn
 } from "../general/logs.locator"
 import { inputDataForTextfields } from "@/utils/data-utils"
 import {
@@ -102,6 +105,11 @@ export async function brandDashboardSaveBtnCheck(page) {
       })
 
       await test.step("[INFO] Check elements and save button while editing community", async () => {
+        // Refresh the page if no communities appear
+        const noCommunity = await getBrandCommunityNoCommunityText(page)
+        if(await noCommunity.isVisible()) {
+          await refreshPage(page)
+        } 
         const communityEditBtn = await getBrandCommunityEditBtn(page)
         await expect(communityEditBtn.first()).toBeVisible({ timeout: 15000 })
         await communityEditBtn.first().click()
@@ -154,7 +162,6 @@ export async function brandDashboardSaveBtnCheck(page) {
       })
 
       // Customize home page
-
       await test.step("[INFO] Check save buttons inside customize home button", async () => {
         let announcementFlag
         const customizeHomeBtn = await getBrandCustomizehomeBtn(page)
@@ -423,6 +430,8 @@ export async function brandDashboardSaveBtnCheck(page) {
     await logsViewDetailLink.click()
     const vd_headerText = await getViewDetailHeaderText(page)
     await expect(vd_headerText).toBeVisible()
-    await closeWindowPopup(page)
+    const vd_closeBtn = await getViewDetailCloseBtn(page)
+    await expect(vd_closeBtn).toBeVisible()
+    await vd_closeBtn.click()
   })
 }

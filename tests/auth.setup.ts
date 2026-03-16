@@ -6,8 +6,16 @@ import path from "path"
 const superAdminAuthFile = path.join(__dirname, "../.auth/super-admin.json")
 
 setup("authenticate as super-admin", async ({ page }) => {
-  await page.goto("https://brand.dev.24karat.io/login")
-  await page.getByRole("button", { name: "Connect to 24karat" }).click()
+  let loginFlag = false
+  while (loginFlag === false) {
+    await page.goto("https://brand.dev.24karat.io/login")
+    await page.getByRole("button", { name: "Connect to 24karat" }).click()
+    if(!await page.locator("//button[text()='続ける']").isVisible()) {
+      loginFlag = true
+    }
+  }
+  //await page.goto("https://brand.dev.24karat.io/login")
+  //await page.getByRole("button", { name: "Connect to 24karat" }).click()
   await page.locator("iframe").contentFrame().getByRole("textbox", { name: "you@example.com" }).click()
   await page
     .locator("iframe")

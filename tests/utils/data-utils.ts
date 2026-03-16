@@ -68,4 +68,9 @@ export class inputDataForTextfields {
   pleaseWaitPopup() {
     return this.page.locator("//*[contains(text(),'please wait')]")
   }
+
+  collectionmgmtInput() {
+    const input = "24karat"
+    return input
+  }
 }

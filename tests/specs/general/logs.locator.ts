@@ -33,6 +33,10 @@ async function getViewDetailHeaderText(page: Page) {
   return page.getByText('The change details')
 }
 
+export async function getViewDetailCloseBtn(page: Page) {
+  return page.locator("//*[name()='svg' and @alt='close']")
+}
+
 export { 
   getLogsColumnHeader, 
   getLogsRefreshBtn, 

@@ -1,71 +1,85 @@
-import { expect, Locator, Page } from "@playwright/test"
-import { waitForAnElement } from "@/utils/load-helper"
+import { Page } from "@playwright/test"
 
-async function getCollectionManagementInfoText(page) {
-  const collectionMgmtInfoText = page.locator("//h5[contains(text(),'Information')]")
-  await expect(collectionMgmtInfoText).toBeVisible({ timeout: 5000 })
-  return collectionMgmtInfoText
-}
+export class collectionmanagementPage {
+  constructor(private page: Page) {}
 
-async function getCollectionManagementSearchFilter(page: Page) {
-  const collectionMgmtSearchFilter = page.locator("//input[@placeholder='Search']")
-  await expect(collectionMgmtSearchFilter).toBeVisible({ timeout: 5000 })
-  return collectionMgmtSearchFilter
-}
-
-async function getCollectionManagementColumnHeader(page: Page) {
-  const collectionMgmtColumnHeader = page.locator(
-    "//h5[contains(text(),'Information')]/parent::h2/following-sibling::div/div[2]/descendant::th[text()]"
-  )
-  const count = await collectionMgmtColumnHeader.count()
-  let columns: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    columns.push(collectionMgmtColumnHeader.nth(i))
+  collectionmanagementBtn() {
+    return this.page.locator("//span[contains(text(),'Collection')]/parent::button")
   }
-  return columns
-}
 
-async function getCollectionManagementCreateCollectionBtn(page) {
-  const collectionMgmtCreateCollectionBtn = page.locator("//span[text()='Create collection']/parent::button")
-  await expect(collectionMgmtCreateCollectionBtn).toBeVisible({ timeout: 5000 })
-  return collectionMgmtCreateCollectionBtn
-}
-
-async function getCollectionManagementCreateBtnSelection(page: Page) {
-  const collectionMgmtCreateBtnSelection = page.locator("//li[@role='menuitem']")
-  const count = await collectionMgmtCreateBtnSelection.count()
-  let columns: Locator[] = []
-  for (let i = 0; i < count; i++) {
-    columns.push(collectionMgmtCreateBtnSelection.nth(i))
+  headerText() {
+    return this.page.getByRole('heading', { name: 'Collection Information' })
   }
-  return columns
-}
 
-async function getCollectionManagementCloseBtn(page) {
-  const collectionMgmtCreateCloseBtn = page.locator("//button[text()='Close']")
-  await expect(collectionMgmtCreateCloseBtn).toBeVisible({ timeout: 5000 })
-  return collectionMgmtCreateCloseBtn
-}
+  searchFilter() {
+    return this.page.locator("//input[@placeholder='Search']")
+  }
 
-async function getCollectionManagementXBtn(page) {
-  const collectionMgmtXBtn = page.locator("//*[name()='svg' and @data-testid='CloseIcon']/parent::button")
-  await expect(collectionMgmtXBtn).toBeVisible({ timeout: 5000 })
-  return collectionMgmtXBtn
-}
+  loadingIcon() {
+    return this.page.locator("//*[name()='svg']/parent::div[@id='lottie']");
+  }
 
-async function getCollectionManagementBtn(page) {
-  const collectionManagementBtn = page.locator("//span[contains(text(),'Collection')]/parent::button")
-  await expect(collectionManagementBtn).toBeVisible({ timeout: 5000 })
-  return collectionManagementBtn
-}
+  columnHeader() {
+    return this.page.locator("//h5[contains(text(),'Information')]/parent::h2/following-sibling::div/div[2]/descendant::th[text()]")
+  }
 
-export {
-  getCollectionManagementCloseBtn,
-  getCollectionManagementColumnHeader,
-  getCollectionManagementCreateBtnSelection,
-  getCollectionManagementCreateCollectionBtn,
-  getCollectionManagementInfoText,
-  getCollectionManagementSearchFilter,
-  getCollectionManagementBtn,
-  getCollectionManagementXBtn
+  resultFromSearch(input: string) {
+    return this.page.locator(`//div[normalize-space()="${input}"]`)
+  }
+
+  createCollectionBtn() {
+    return this.page.locator("//span[text()='Create collection']/parent::button")
+  }
+
+  createCollectionBtnSelection() {
+    return this.page.locator("//li[@role='menuitem']")
+  }
+
+  closeBtn() {
+    return this.page.getByRole('button', { name: 'Close' })
+  }
+
+  xBtn() {
+    return this.page.locator("//*[name()='svg' and @data-testid='CloseIcon']/parent::button")
+  }
+
+  info_title(input: string) {
+    return this.page.locator(`//div[normalize-space()="${input}"]`)
+  }
+
+  info_imageFile() {
+    return this.page.locator("//div[text()='Information']/preceding-sibling::div/img")
+  }
+
+  info_createdDate() {
+    return this.page.locator("//div[text()='Created date']")
+  }
+
+  info_totalNFTs() {
+    return this.page.locator("//div[text()='Total NFTs']")
+  }
+
+  info_nftItems() {
+    return this.page.locator("//div[text()='NFT items")
+  }
+
+  info_stamppassportBtn() {
+    return this.page.getByRole('button', { name: 'Make stamp passport' })
+  }
+
+  info_editcollectionBtn() {
+    return this.page.getByRole('button', { name: 'Edit collection' })
+  }
+
+  info_edit_name() {
+    return this.page.locator("//input[@name='name']")
+  }
+
+  info_edit_image() {
+    return this.page.locator("//div[text()='Change']/parent::div")
+  }
+
+  info_edit_web3Toggle() {
+    return this.page.getByRole('checkbox')
+  }
 }
