@@ -1,9 +1,11 @@
 import {
-    Page
+  Page
 } from "@playwright/test"
 
 export class inputDataForTextfields {
-  constructor(private page: Page) {}
+  constructor(private page: Page) {
+
+  }
 
   communityInput24karat() {
     const communityInput = "24KARAT"
@@ -72,5 +74,33 @@ export class inputDataForTextfields {
   collectionmgmtInput() {
     const input = "24karat"
     return input
+  }
+
+  // Used in joshin API test
+  userSeedPhrase() {
+    const seedPhrase = "dizzy unveil empty garden matter wash range east measure nut dog cost"
+    return seedPhrase
+  }
+
+  clientID() {
+    const id = "BivYdb2X329zcVxxoAv0"
+    return id
+  }
+
+  api_generalURL() {
+    const url = "https://wallet.24karat.io"
+    return url
+  }
+
+  api_getAccessTokenURL() {
+    const accesstokenURL = "/v1/auth/seed/login"
+    const url = this.api_generalURL() + accesstokenURL
+    return url
+  }
+
+  api_getJoshinURL() {
+    const joshinURL = "/api/v1/brands/JOSHIN_TEST/tokens/JOSHIN/zap-url"
+    const url = this.api_generalURL() + joshinURL
+    return url
   }
 }
