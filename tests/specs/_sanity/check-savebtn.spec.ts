@@ -23,7 +23,7 @@ test.describe("Check save buttons in all pages", () => {
   test("Dashboard page save button check", async ({ page }) => {
     console.log("[INFO] Check save buttons START")
     await brandDashboardSaveBtnCheck(page)
-    // go to nft page
+    // go to nft page 
     const NFTpage = new nftPage(page)
     const nftActions = new nft_actions(page)
     await nftActions.navigateToNFTPage()
