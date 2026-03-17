@@ -28,19 +28,7 @@ jobs:
       - name: Run sanity test only
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
-        run: npx playwright test tests/specs/_sanity/sanity.spec.ts tests/specs/_sanity/check-savebtn.spec.ts tests/specs/superadmin/superadmin.spec.ts
-
-      - name: Find 2 screenshots
-        if: always()
-        shell: bash
-        run: |
-          mapfile -t shots < <(find test-results -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" \) | sort | head -n 2)
-
-          echo "SCREENSHOT_1=${shots[0]}" >> $GITHUB_ENV
-          echo "SCREENSHOT_2=${shots[1]}" >> $GITHUB_ENV
-
-          echo "Found screenshot 1: ${shots[0]}"
-          echo "Found screenshot 2: ${shots[1]}"
+        run: npx playwright test tests/Joshin/tests/pagecheck.spec.ts --project=chromium-without-auth
 
       - name: Upload joshin-community screenshot to Slack
         if: always()
