@@ -28,7 +28,7 @@ export class api_joshinRequests {
         'Content-Type': 'application/json',
       },
       data: {
-        seed: this.apiData.userSeedPhrase(),
+        seed: this.apiData.userSeedPhraseSuperadmin(),
       },
     })
 
