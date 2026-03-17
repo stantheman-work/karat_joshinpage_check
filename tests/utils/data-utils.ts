@@ -83,7 +83,8 @@ export class inputDataForTextfields {
   }
 
   userSeedPhraseSuperadmin() {
-    const seedPhrase = "giggle million afford utility exhibit century board recall only faculty frame coconut"
+    // giggle million afford utility exhibit century board recall only faculty frame coconut
+    const seedPhrase = "topic three hard work still obey orient mean crazy deputy sun asset"
     return seedPhrase
   }
 
