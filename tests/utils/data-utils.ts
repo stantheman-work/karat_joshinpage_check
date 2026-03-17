@@ -82,6 +82,11 @@ export class inputDataForTextfields {
     return seedPhrase
   }
 
+  userSeedPhraseSuperadmin() {
+    const seedPhrase = "giggle million afford utility exhibit century board recall only faculty frame coconut"
+    return seedPhrase
+  }
+
   clientID() {
     const id = "BivYdb2X329zcVxxoAv0"
     return id
@@ -101,6 +106,12 @@ export class inputDataForTextfields {
   api_getJoshinURL() {
     const joshinURL = "/api/v1/brands/JOSHIN_TEST/tokens/JOSHIN/zap-url"
     const url = this.api_generalURL() + joshinURL
+    return url
+  }
+
+  api_getJoshinSocialroomURL() {
+    const socialroomURL = "/api/v1/social/rooms/86f5d247-faf5-4f88-a751-a925c2bc6190/entry-url"
+    const url = this.api_generalURL() + socialroomURL
     return url
   }
 }
