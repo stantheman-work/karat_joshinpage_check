@@ -111,7 +111,7 @@ export class inputDataForTextfields {
   }
 
   api_getJoshinSocialroomURL() {
-    const socialroomURL = "/api/v1/social/rooms/86f5d247-faf5-4f88-a751-a925c2bc6190/entry-url"
+    const socialroomURL = "/api/v1/social/rooms/27d56b9d-8c0b-4a0f-8996-845cf12c4a54/entry-url"
     const url = this.api_generalURL() + socialroomURL
     return url
   }
