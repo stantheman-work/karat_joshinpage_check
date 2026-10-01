@@ -26,7 +26,7 @@ import {
   getCampaignText,
   getCampaignTypeFilter
 } from "@/specs/campaign/campaign.locator"
-import { 
+import {
   getInsightsMenuSelected
 } from "@/locators/insights.locator"
 import {
@@ -62,7 +62,7 @@ import {
   getLeaderboardTokenDropdown
 } from "@/locators/leaderboard.locator"
 import {
-  getUsersearchText, 
+  getUsersearchText,
   getUsersearchAllcommunitiesDropdown,
   getUsersearchSearchfilter,
   getUsersearchSearchBy,
@@ -137,13 +137,13 @@ import {
   getQuizText,
   getQuizUploadBtn
 } from "@/specs/contents/quiz/quiz.locator"
-import { 
-  getSalesreportText, 
+import {
+  getSalesreportText,
   getSalesreportColumnHeader
 } from "@/specs/reports/salesreport.locator"
-import { 
-  getScanColumnHeader, 
-  getScanNewScanBtn, 
+import {
+  getScanColumnHeader,
+  getScanNewScanBtn,
   getScanText
 } from "@/locators/scans.locator"
 import {
@@ -190,16 +190,16 @@ import {
   getVMNFTtab
 } from "@/locators/vendingmachine.locator"
 import { AuthUtils } from "@/utils/auth-utils"
-import { 
-  scrollToElement, 
-  waitForAnElement, 
-  waitForPageToLoad 
+import {
+  scrollToElement,
+  waitForAnElement,
+  waitForPageToLoad
 } from "@/utils/load-helper"
 import { PageUtils } from "@/utils/page-utils"
-import { 
-  expect, 
-  Page, 
-  test 
+import {
+  expect,
+  Page,
+  test
 } from "@playwright/test"
 import {
   getExternalcollabDashboardColumnHeader,
@@ -474,7 +474,7 @@ async function brandNFTPageCheck(page) {
   await expect(nft.mainSearchNFTFilter()).toBeVisible()
   await expect(nft.mainCollectionFilter()).toBeVisible()
   await expect(nft.mainCommunityFilter()).toBeVisible()
-  await expect((await nft.mainNFTSettingBtn()).first()).toBeVisible({timeout: 15000})
+  await expect((await nft.mainNFTSettingBtn()).first()).toBeVisible({ timeout: 15000 })
   await expect((await nft.mainNFTSettingBtn()).first()).toBeVisible()
   await expect((await nft.mainColumnHeader()).first()).toHaveText("NFT Name")
   await expect((await nft.mainColumnHeader()).first()).toBeVisible()
@@ -621,11 +621,11 @@ async function brandMissionPageCheck(page) {
   await expect(missionCardView).toBeVisible()
   await expect(missionListView).toBeVisible()
   try {
-    await expect(missionSettingsBtn.first()).toBeVisible({timeout: 15000})
+    await expect(missionSettingsBtn.first()).toBeVisible({ timeout: 15000 })
   } catch (error) {
     console.error("This brand does not have any missions")
   }
-  
+
   /*await waitForAnElement(page, missionSettingsBtn)
   await expect(missionSettingsBtn).toBeVisible()*/
   console.log("[INFO] End Mission page check.")
@@ -899,11 +899,11 @@ async function brandExternalcollabPageCheck(page: Page) {
   }
   */
   try {
-      const externalCollaborateBtn = await getExternalCollaborateBtn(page)
-      await expect(externalCollaborateBtn).toBeVisible({timeout: 20000})
-      flag = true
+    const externalCollaborateBtn = await getExternalCollaborateBtn(page)
+    await expect(externalCollaborateBtn).toBeVisible({ timeout: 20000 })
+    flag = true
   } catch (error) {
-      console.error("This brand does not have any external collaborations")
+    console.error("This brand does not have any external collaborations")
   }
   if (flag == true) { // If there are existing collaborations
     const externalText = await getExternalcollabText(page)
@@ -1000,7 +1000,7 @@ async function brandDeveloperAPIClientsPageCheck(page) {
   await expect(devColumnHeaders).toBeVisible()
   await expect(devCreateNewAPIBtn).toBeVisible()
   try {
-    await expect(devAPIEditBtn.first()).toBeVisible({timeout: 10000})
+    await expect(devAPIEditBtn.first()).toBeVisible({ timeout: 10000 })
   } catch (error) {
     console.log("Brand has no API clients set up")
   }
